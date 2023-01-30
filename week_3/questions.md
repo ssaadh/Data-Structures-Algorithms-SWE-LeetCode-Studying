@@ -2,6 +2,78 @@
 
 ### Hashmaps
 
+1. What does a hashmap do? What are the functions a hashmap class provides?
+A. A hash map stores key value pairs allowing quick operations in constant runtime. The keys are hashed to allow finding the index in the array. A hash function takes in a key and returns an integer between 0 to M (large prime number to modulo)
+
+get(key) -> get value based off key, put(key, value) -> insert or update key value pair, contains(key) -> if key is in hash map. There can also be delete(key) -> delete the key value pair and _hash(key) -> get the hash value from key
+
+
+2. What is the benefit of using a hashmap over an array or linked list?
+A. Store a key value pair vs just a value. Runtime complexity for most operations is constant vs linear. Hashmaps have collision control where multiple keys can point to the same index. Hashmap efficiency and benefits also help if ordering of elements doesn't matter. Hashmap order doesn't matter.
+Specifically over arrays, hashmaps aren't necessarily a set size. Over linked lists, space complexity is less with it being an array vs linked list data structure
+
+
+3. What are the runtimes of the get/set functions in a hashmap? Best, average, and worst-case?
+A. get and set both have the same runtimes. Best and average is O(1). Worst case is O(n) because all key collisions could be in one index.
+
+
+4. What type of input gives the worst case for hashmap? How can we prevent this from happening?
+A. An input with a lot of collisions because of a poor hash function.
+Have a good uniform hash function. Hash function should repeat hashes pointing to same index as infrequently as possible.
+
+
+5. Here are some hash functions: Which one(s) of them are good and why? How would you improve the bad ones?
+  a. Hashing a phone number - use the area code. 
+  A. Not good. Area code is a really short thing to hash. Tons of collisions with so many numbers having the same area code. Some area codes are maxed out and every number is used. Some area codes are going to be in the hash map more like a metro/city area code. This allows for more collision.
+  Could be better by hashing the whole number, salting, or using SHA-2.
+
+  b. Hashing a social security number - use the last four digits. 
+  A. Same issues as area code's collision issues. Last four of social as hash won't be as bad as area code, but it will still cause needless collisions and it's not uniform.
+  Could be better by hashing the whole number, more of it, and/or salting or using SHA-2.
+
+  c. Hashing a string - use the sum of each of the character's ASCII codes
+  A. Not good. This doesn't care about the order of characters. That will cause collisions. "saadh" and "hdaas" would be the same hash. This is better than the rest, but the uniformity issue of bad distribution in the array should still happen.
+  Could be better by salting or using SHA-2. Hashing the whole string is not as effective here because of duplicates.
+
+  d. Hashing a Person object - using the Person's age
+  A. The collisions would be enormous. Every one in the world is only up to 120 years. The distribution and uniformity of the hash map would be awful.
+  Something else entirely has to be used. This is even worse than area codes. A combo of 2-3 attributes of the person, and/or salting, and/or using SHA-2 works better.
+
+
+6. How are collisions handled in linear probing? How are collisions handled in separate chaining? Describe the differences in detail.
+A. Linear probing looks at following array index values to see if there is any empty one. Add the colliding hash value in the next empty one. When retrieving a value, keep checking for the value after the index it resolves to. Stop searching if an empty index value comes up.
+Separate chaining creates a linked list in the index value spot. The get operation will go through the linked list until the value is retrieved or the whole linked list is traversed.
+They are completely different approaches. Separate chaining seems to make more sense to use. Linear probing seems like it would fine for small scale or quick algo or code. Otherwise runtime can start getting long.
+
+
+7. Suppose I implement a hashmap with the hash function h(x) = x mod 10, a list of length 10, and with linear probing. I insert the elements 32, 47, 42, 43, 15, 19, 16, 27 in that order. Write out what the list of the hashmap looks like after each insert. 
+A. 
+OG
+[0: , 1: , 2: , 3: , 4: , 5: , 6: , 7: , 8: , 9: ]
+
+Insert 32
+[0: , 1: , 2: 32, 3: , 4: , 5: , 6: , 7: , 8: , 9: ]
+
+Insert 47
+[0: , 1: , 2: 32, 3: , 4: , 5: , 6: , 7: 47, 8: , 9: ]
+
+Insert 42
+[0: , 1: , 2: 32, 3: 42, 4: , 5: , 6: , 7: 47, 8: , 9: ]
+
+Insert 43
+[0: , 1: , 2: 32, 3: 42, 4: 43, 5: , 6: , 7: 47, 8: , 9: ]
+
+Insert 15
+[0: , 1: , 2: 32, 3: 42, 4: 43, 5: 15, 6: , 7: 47, 8: , 9: ]
+
+Insert 19
+[0: , 1: , 2: 32, 3: 42, 4: 43, 5: 15, 6: , 7: 47, 8: , 9: 19]
+
+Insert 16
+[0: , 1: , 2: 32, 3: 42, 4: 43, 5: 15, 6: 16, 7: 47, 8: , 9: 19]
+
+Insert 27/Final
+[0: , 1: , 2: 32, 3: 42, 4: 43, 5: 15, 6: 16, 7: 47, 8: 27, 9: 19]
 
 
 ### Recursion
