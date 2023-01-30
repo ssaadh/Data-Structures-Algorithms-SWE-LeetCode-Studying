@@ -78,6 +78,44 @@ Insert 27/Final
 
 ### Recursion
 
+1. What is recursion? How do you make sure recursion does not run infinitely?
+A. When a function calls itself. The code repeats the recursive calls until a base case terminates the code.
+
+
+2. How do you convert a function with iteration (e.g., a for loop) to a recursive function? For example, how can I loop through numbers in a list using recursion?
+A. Add a base case at the start of the function for the first stack call^ and to stop the recursion from going any deeper. The iteration/loop logic has to be converted to a recursive call.
+
+^I'm not sure if this is called the first or last. I think of it as the first because its value gets returned first
+
+Here's an example written out by me of looping through a list:
+```
+# Iteration
+def fn_i(lst):
+  totes = ''
+  for i in lst:
+    totes += str(i)
+  return totes
+
+# Recursion
+def fn_r(lst, n):
+  if n == 0:
+    return ''
+  return fn_r(lst, n - 1) + str(lst[n])
+
+# Test
+arr = [1, 2, 3, 4, 5]
+n = len(arr) - 1
+print(fn_i(arr))
+print(fn_r(arr, n))
+```
+
+
+3. What is binary search? What is the requirement for the thing (e.g., list) that you are doing a binary search on?
+A. An efficient way to search a sorted array or list by slicing off half of the array during each loop iteration. The list has to be sorted. Or at least rotated sorted of some kind.
+
+
+4. What is the runtime and space complexity for binary search?
+A. The runtime is O(log n). Every recursive call reduces the elements in half. This is logarithmic. Space complexity is O(log n) because of the number of recursive calls done.
 
 
 ## Runtime Analysis 
