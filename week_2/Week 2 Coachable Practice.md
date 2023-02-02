@@ -105,28 +105,56 @@ c. What does this function do?
 d. What is the runtime complexity? And why?
 e. What is the space complexity? And why?
 
-01. (a) 25  (b) 75  (c) All the elements of the nums parameter are added to all_nums. This is repeated n times. The long array is length n*n or n^2. The values of all the elements in the list are added together.  (d) O(n+n2). ~O(n^2). Nested loop  (e) O(2 + n^2). ~O(n^2). all_nums
+01. (a) 25  (b) 75  (c) All the elements of the nums parameter are added to all_nums. This is repeated n times. The long array is length n*n or n^2. The values of all the elements in the list are added together.  
 
-02. (a) 25  (b) 75  (c) The same thing as before except the aadding up of values is done in the nested loop. There's no list.  (d) O(n^2) nested loop (e) O(2). ~O(1).  2 variables
+(d) O(n^2). Nested loop  (e) O(2 + n^2). ~O(n^2). all_nums
 
-03. (a) 3  (b) 12  (c) Looping while n, length of nums argument, is greater than 0. It is greater than zero while n is being divided by n - 1 index in nums argument.  (d) O(n). One loop. (e) O(1). 2 variables.  
+# 1. func_one([1,1,1,1,1]) = 15
+# 2. func_one([1,2,3,4,5]) = 25
+# 3. This function takes a list of numbers and adds them all together
+# 4. O(n^2) because there are two for loops
+# 5. O(n) because the output is the same size as the input
 
-04. (a) 10  (b) 30  (c) double_nums.append(num + num)  (d) O(n^2). one loop and sum.  (e) O(n). double_nums is the same size 
+02. (a) 25  (b) 75  (c) The same thing as before except the aadding up of values is done in the nested loop. There's no list. 
 
-05. (a) 32  (b) 98  (c) Nested loop. First loops as long as nums length. Inner loop does as many loops as that current array element value. Loop gets the value of power_sum. Return remainder of dividing by 99.  (d) O(n^3 or n^4). Not sure how much inner loop adds.  (e) O(1). 2 variables
+(d) O(n^2) nested loop (e) O(2). ~O(1).  2 variables
 
-06. (a) 3  (b) 2  (c) Loop skips 0. To length of array. Checks if current value is less than previous index value times 2 and current value is more than the next value divided by 2. If so, iterate count. Return count.  (d) O(n). Loop?  (e) O(1). 1 variable 
+03. (a) 3  (b) 12  (c) Looping while n, length of nums argument, is greater than 0. It is greater than zero while n is being divided by n - 1 index in nums argument. Adds the value of the top half of numbers in an array of integers 
+
+(d) O(log n). One loop dividing in half (e) O(1). 2 variables.
+
+04. (a) 10  (b) 30  (c) loop for the sum of the value by itself. Then get sum of the new array.  
+
+(d) O(2n) = ~O(n). one loop and sum.  (e) O(n). double_nums is size n.
+
+05. (a) 32  (b) 98  (c) Nested loop. First loops as long as nums length. Inner loop does as many loops as that current array element value. Loop gets the value of power_sum. Return remainder of dividing by 99.  
+
+(d) O(n^2) = ~O(n*n^2). Inner loop is n^2. Separate loop is n.   (e) O(1). 2 variables
+
+06. (a) 3  (b) 2  (c) Loop skips 0. To length of array. Checks if current value is less than previous index value times 2 and current value is more than the next value divided by 2. If so, iterate count. Return count.  
+
+(d) O(n). Loop in range N-2  (e) O(1). 1 variable 
 
 #new
-07. (a) 8  (b) 19  (c) n and N is length of list argument. While n is greater than 0, loop through range of length of array. total is total plus current arr value. Inside while loop, n is floor of dividing by 2. Return total. (d) Not sure. O(n log(n)). log(n) is while loop. for loop uses same variable, n, which is being cut in half rounded down. I don't know why its run time isnt what 7 or 8 is. (e) O(1). N, total, n are simple variables.   
+07. (a) 8  (b) 19  (c) n and N is length of list argument. While n is greater than 0, loop through range of length of array. total is total plus current arr value. Inside while loop, n is floor of dividing by 2. Return total. 
 
-08. (a) 7  (b) 14  (c) Same initial as before. While loop for i being less than length of argument. range 0 to i. Add the current value to total. Multiply i by 2. Return total.  (d) O(log(n)^2). The outer loop is log N. The inner loop is dynamic but ends up being close to log N. Not sure about this.  (e) O(1). N, total, i, j are single variables only. 
+(d) O(n log(n)). log(n) is while loop. for loop uses same variable, n, which is being cut in half rounded down. I don't know why its run time isnt what 7 or 8 is. (e) O(1). N, total, n are simple variables.   
 
-09. (a) 15  (b) 45  (c) Same initial as before. Same while loop for i being less than the length of the argument. Range 0 to set length of argument. Add current arr value to total. Iterate by multiplying i by 2. Return total.  (d) O(n log(n)). The outer and inner loop are the same every time based on input length. Not sure what that makes this specifically. Outer loop is log N. Inner loop is always input length or n.  (e) O(1). N, total, i, j are single variables only  
+08. (a) 7  (b) 14  (c) Same initial as before. While loop for i being less than length of argument. range 0 to i. Add the current value to total. Multiply i by 2. Return total.  
 
-10. (a) [2, 2, 2, 2, 2]  (b) [6, 6, 6, 6, 6]  (c) Dunction takes in a list of integers. Sorts ascending by default. Reverses the array. Creates empty array for complements var. Loops through both array and reversed array adding both numbers to the end of complements array. (d) O(n^3 log(n)). reverse_array, complements as n. sort as O(n log n).  (e) O(n^2). reverse_arr and complements.
+(d) O(log(n)^2). The outer loop is log N. The inner loop is dynamic but ends up being close to log N. Not sure about this.  (e) O(1). N, total, i, j are single variables only. 
 
-11. (a) Incorrect input?  (b) Incorrect input?  (c) run helper_func() without argument. O(1). Loop i in range N. Run helper_func(i). another loop then helper_func(). The inner loop runs helper_func(j) for 0 to N. Return.  (d) O(n^2)  (e) Not enough info  
+09. (a) 15  (b) 45  (c) Same initial as before. Same while loop for i being less than the length of the argument. Range 0 to set length of argument. Add current arr value to total. Iterate by multiplying i by 2. Return total.  
+
+(d) O(n log(n)). The outer and inner loop are the same every time based on input length. Not sure what that makes this specifically. Outer loop is log N. Inner loop is always input length or n.  (e) O(1). N, total, i, j are single variables only  
+
+10. (a) [2, 2, 2, 2, 2]  (b) [6, 6, 6, 6, 6]  (c) Dunction takes in a list of integers. Sorts ascending by default. Reverses the array. Creates empty array for complements var. Loops through both array and reversed array adding both numbers to the end of complements array. 
+
+(d) O(n^3 log(n)). reverse_array, complements as n. sort as O(n log n).  (e) O(n^2). reverse_arr and complements.
+
+11. (a) Incorrect input?  (b) Incorrect input?  (c) run helper_func() without argument. O(1). Loop i in range N. Run helper_func(i). another loop then helper_func(). The inner loop runs helper_func(j) for 0 to N. Return.  
+
+(d) O(n^3). nested loop in range N and helper_func(j) in nested loop which is O(n)  (e) O(1)
 
 
 ## Linked List
