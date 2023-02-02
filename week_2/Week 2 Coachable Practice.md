@@ -18,28 +18,61 @@ A.
 2^3^28
 (222)^28
 8^28
+**8**
 
 4. How much larger is 1 billion than 1 million ?
 A. 1000x larger
 
 5. How much larger is log(1 million) than log(1 billion) ?
-A. 1 billion is 10x larger. 30 vs 20.
+million^ is largesr. subtract
+A. 3 units larger. 10^3 is the difference. Subtract.
 
 6. If log(64) = y  , write log(128) in terms of y   
-A. y + 1
+Add one to y. Base is 2. 64*2=y + 1. Add 1
 
+log(2^6) = y
+log(2^7) = x
+6 = y
+7 = x
+6 + 1 = x
+**y + 1 = x**
+
+
+2 raised to log of anything is that thing. like: 2^log(x) = x
+log of something asks log(x) = 128 then e  = 2^128
 7. If log(x) = 128  , write 128 in terms of x without using the logarithm.
 A. x = 2^128
+
+log x divided y = log x log y
+log x / log y = (log x)(log y)
+
+
+log x / y = 4
+2^(log x / y) = 2^4
+16 = 16
+x^y = 2^4
+
 
 8. If log(x / y) = 4 , write a relationship between x/y without using the logarithm.
 A. Not sure how to do this. I can multiply each side by y then divide by x:
 2^4 = 16. x/y = 16. x = 16y
 
 9. If log(x * y) = 8 write a relationship of x,y without using the logarithm. 
-A. x * y = 2^8 = 256. x = 256/y. Or. x * y = 256
+A.
+log(x * y) = 8
+x * y = 2^8 = 256
 
 10. If the x = 2^8​. Rewrite x using base 4. If x = 4^y what is y? 
-A. 4
+A. 
+x = 2^(2^3)
+x = (2^2)^y
+log(4^y) = 2^8
+2^8 = 4^y
+256 = 4
+
+
+
+4 = y
 
 
 ### Runtime Analysis 
