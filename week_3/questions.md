@@ -173,3 +173,60 @@ a. For n=2,4,8,16 compute f(n).
 b. What does the code block return? (In terms of n). Explain your answer.
 c. What is the runtime of the code? Explain your answer.
 
+# Code Block A
+def fn_a(n: int) -> int:
+  if n == 1:
+    return n
+  return fn_a(n - 1) + 1
+
+1. 
+a. f(2) = 2. f(4) = 4. f(8) = 8. f(16) = 16
+b. The base case returns 1. Each number over 1 adds 1
+c. O(n)
+
+# Code Block B
+def fn_b(n: int) -> int:
+  if n == 1:
+    return n
+  return fn_b(n - 1) + fn_b(n-1)
+
+2. 
+a. f(2) = 2, f(4) = 8, f(8) = 128, f(16) = 32768 ? 32768 / 16 / 16 / 16 = 8
+f(2) = n, f(4) = 2n f(8) = 16n. f(16) = 
+b. Like Fibonacci. The 
+c. 2^n
+
+# Code Block C
+def fn_c(n: int) -> int:
+  if n == 1:
+    return n
+  return fn_c(n - 1) * n
+
+(1) 1
+(2) 1 * 2 = 2
+(4) 3 * 2 
+
+3. fn_c
+a. 
+b. 
+c. 
+
+4. fn_d
+a. 
+b. 
+c. 
+
+5. fn_e
+a. 
+b. 
+c. 
+
+6. fn_f
+a. 
+b. 
+c. 
+
+7. fn_g
+a. 
+b. 
+c. 
