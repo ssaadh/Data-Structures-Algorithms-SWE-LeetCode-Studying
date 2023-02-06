@@ -12,67 +12,58 @@ A. 1, 2, 4, 8, 16, 32, 64, 132, 256, 512, 1024
 A. The power to which a number must be raised to get a value. "n" is a number. It is to base "b" which defaults to 2. The base being raised by a power is the logarithm.
 
 3. How much larger is 2^31​ than 2^28? Hint: Do not compute them each.
-A. 
-2^n = (2^(n-m))^m.
-(2^(31-28))^28
-2^3^28
-(222)^28
-8^28
-**8**
+A.
+2^31 - 2^28
+2^3
+8x larger
 
 4. How much larger is 1 billion than 1 million ?
 A. 1000x larger
 
 5. How much larger is log(1 million) than log(1 billion) ?
 million^ is largesr. subtract
-A. 3 units larger. 10^3 is the difference. Subtract.
+A. 3 units larger. 10^3 (1000x) is the difference
 
 6. If log(64) = y  , write log(128) in terms of y   
 Add one to y. Base is 2. 64*2=y + 1. Add 1
 
+log(64) = y
 log(2^6) = y
+
+log(2^7) = log(128)
 log(2^7) = x
+
 6 = y
 7 = x
 6 + 1 = x
 **y + 1 = x**
 
 
+7. If log(x) = 128  , write 128 in terms of x without using the logarithm.
+A. log(x) = log(2^128) = 128
+x = 2^128
 2 raised to log of anything is that thing. like: 2^log(x) = x
 log of something asks log(x) = 128 then e  = 2^128
-7. If log(x) = 128  , write 128 in terms of x without using the logarithm.
-A. x = 2^128
 
-log x divided y = log x log y
-log x / log y = (log x)(log y)
-
-
-log x / y = 4
-2^(log x / y) = 2^4
-16 = 16
-x^y = 2^4
 
 
 8. If log(x / y) = 4 , write a relationship between x/y without using the logarithm.
-A. Not sure how to do this. I can multiply each side by y then divide by x:
-2^4 = 16. x/y = 16. x = 16y
+A. x / y = 2^4
+x = 16y
+
 
 9. If log(x * y) = 8 write a relationship of x,y without using the logarithm. 
 A.
-log(x * y) = 8
 x * y = 2^8 = 256
+
 
 10. If the x = 2^8​. Rewrite x using base 4. If x = 4^y what is y? 
 A. 
-x = 2^(2^3)
-x = (2^2)^y
-log(4^y) = 2^8
-2^8 = 4^y
-256 = 4
-
-
-
-4 = y
+log(x) = 8
+log(4^y) = 8
+4^y = 2^8
+2^2y = 2^8
+y = 4
 
 
 ### Runtime Analysis 
@@ -150,11 +141,11 @@ e. What is the space complexity? And why?
 
 10. (a) [2, 2, 2, 2, 2]  (b) [6, 6, 6, 6, 6]  (c) Dunction takes in a list of integers. Sorts ascending by default. Reverses the array. Creates empty array for complements var. Loops through both array and reversed array adding both numbers to the end of complements array. 
 
-(d) O(n^3 log(n)). reverse_array, complements as n. sort as O(n log n).  (e) O(n^2). reverse_arr and complements.
+(d) O(n log(n) + 2n) = ~O(n (log (n)))). first sort is biggest time sink.  (e) O(2n) = ~O(n). reverse_arr and complements
 
 11. (a) Incorrect input?  (b) Incorrect input?  (c) run helper_func() without argument. O(1). Loop i in range N. Run helper_func(i). another loop then helper_func(). The inner loop runs helper_func(j) for 0 to N. Return.  
 
-(d) O(n^3). nested loop in range N and helper_func(j) in nested loop which is O(n)  (e) O(1)
+(d) O((n^2)(log(n))). nested loop in range N and helper_func(j) in nested loop which is log(n)  (e) O(1)
 
 
 ## Linked List
