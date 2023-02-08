@@ -3,12 +3,12 @@ from __future__ import annotations
 '''
 Return the list of numbers as a string separated by space using recursion
 '''
-# this isnt recursion. it's iterative?
 def recurse(lst: list[int]) -> None:
   new_lst = []
   for i in lst:
-    new_lst.append(str(i))
-  return " ".join(new_lst)
+    new_lst.append(str(i) + ' ')
+  return ''.join(new_lst)
+
 
 
 '''
@@ -33,34 +33,32 @@ Return -1 if number does not exist. Assume that the list is sorted.
 def find_index(lst: list[int], val: int) -> int:
   lo = 0
   hi = len(lst) - 1
-  
   while lo <= hi:
-    mid = (lo + hi) // 2
+    mid = (lo+hi) // 2
     if lst[mid] == val:
       return mid
     elif lst[mid] < val:
-      lo = mid + 1
+      lo = mid+1
     else:
-      hi = mid - 1
+      hi = mid-1
   return -1
 
+
 '''
-4. Use binary search to find the index of a list that is the biggest number less than or equal to the given value. 
+4. Use binary search to find the index of a list that is the 
+biggest number less than or equal to the given value. 
 Return -1 if such a number does not exist. Assume that the list is sorted.
 '''
 def find_closest(lst: list[int], val: int) -> int:
   lo = 0
   hi = len(lst) - 1
-  # diff code
-  num = 0
-
   while lo <= hi:
-    mid = (lo + hi) // 2
-    if lst[mid] <= val:      
-      # diff code
-      num = mid
-      lo = mid + 1
+    mid = (lo+hi) // 2
+    if lst[mid] == val:
+      return mid
+    elif lst[mid] < val:
+      lo = mid+1
     else:
-      hi = mid - 1
-  # diff code
-  return num || -1 
+      hi = mid-1
+  # diff
+  return lo-1 or -1
