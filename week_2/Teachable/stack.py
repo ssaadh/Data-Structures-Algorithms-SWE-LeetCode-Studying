@@ -26,9 +26,14 @@ class Stack:
         #add 5
         #5 -> 4 -> 3 -> 2
         #O(1) time and space
+        
+        # old_head = self.head
         old_first_item = self.first_item
-        self.first_item = Node(item)
+        # self.head = Node(item)
+        self.first_item = Node(item)      
+        # self.head.next = old_head
         self.first_item.next = old_first_item
+
         self._size += 1
 
 
@@ -39,8 +44,7 @@ class Stack:
             return
 
         #4->3->2
-        #3->2
-
+        #3->2        
         old_first_item = self.first_item
         self.first_item = self.first_item.next
         self._size -= 1
