@@ -109,7 +109,6 @@ print(fn_i(arr))
 print(fn_r(arr, n))
 ```
 
-
 3. What is binary search? What is the requirement for the thing (e.g., list) that you are doing a binary search on?
 A. An efficient way to search a sorted array or list by slicing off half of the array during each loop iteration. The list has to be sorted. Or at least rotated sorted of some kind.
 
@@ -121,54 +120,6 @@ A. The runtime is O(log n). Every recursive call reduces the elements in half. T
 ## Runtime Analysis 
 
 ### For each of the following code blocks, please answer the following and explain your answer choices.
-
-# Code Block A
-def fn_a(n: int) -> int:
-  if n == 1:
-    return n
-  return fn_a(n - 1) + 1
-  
-  
-# Code Block B
-def fn_b(n: int) -> int:
-  if n == 1:
-    return n
-  return fn_b(n - 1) + fn_b(n-1)
-  
-# Code Block C
-def fn_c(n: int) -> int:
-  if n == 1:
-    return n
-  return fn_c(n - 1) * n
-
-# Code Block D
-def fn_d(n: int) -> int:
-  if n <= 1:
-    return 1
-  count = 0
-  for i in range(n):
-    count += i
-  return fn_d(n//2) + fn_d(n // 2) + count
-  
-  
-# Code Block E
-def fn_e(n: int) -> int:
-  if n == 0:
-    return 1
-  return fn_e(n // 2) + fn_e(n // 2)
-  
-# Code Block F
-def fn_f(n: int) -> int:
-  if n + 1 < 0:
-    return n
-  return fn_f(n // 2) + fn_f(n // 2)
-
-# Code Block G
-def fn_g(n: int, m: int) -> int:
-    if n <= 0 or m <= 0:
-        return 1
-    return fn_g(n//2, m) + fn_g(n, m//2)
-
 a. For n=2,4,8,16 compute f(n). 
 b. What does the code block return? (In terms of n). Explain your answer.
 c. What is the runtime of the code? Explain your answer.
@@ -178,55 +129,140 @@ def fn_a(n: int) -> int:
   if n == 1:
     return n
   return fn_a(n - 1) + 1
-
 1. 
-a. f(2) = 2. f(4) = 4. f(8) = 8. f(16) = 16
-b. The base case returns 1. Each number over 1 adds 1
+a.
+f(16) = f(15) + 1 = 16
+f(8) = f(7) + 1 = 8
+f(4) = f(3) + 1 = 4
+# f(3) = f(2) + 1 = 3
+f(2) = f(1) + 1 = 2
+# f(1) = 1
+
+b. f(n) = f(n) .The base case returns 1. Each number over 1 adds 1
 c. O(n)
+
 
 # Code Block B
 def fn_b(n: int) -> int:
   if n == 1:
     return n
   return fn_b(n - 1) + fn_b(n-1)
-
 2. 
-a. f(2) = 2, f(4) = 8, f(8) = 128, f(16) = 32768 ? 32768 / 16 / 16 / 16 = 8
-f(2) = n, f(4) = 2n f(8) = 16n. f(16) = 
-b. Like Fibonacci. The 
-c. 2^n
+a.
+f(16) = f(8) + f(8) = 32
+f(8) = f(4) + f(4) = 16
+f(4) = f(3) + f(3) = 8
+# f(3) = f(2) + f(2) = 4
+f(2) = f(1) + f(1) = 2
+# f(1) = 1
+
+b. f(n) = 2^n-1 (Like Fibonacci)
+c. O(2^n)
+
 
 # Code Block C
 def fn_c(n: int) -> int:
   if n == 1:
     return n
   return fn_c(n - 1) * n
-
-(1) 1
-(2) 1 * 2 = 2
-(4) 3 * 2 
-
 3. fn_c
 a. 
-b. 
-c. 
+f(16) = 20.9T
+f(8) = 5040 * 8 = 40320
+# f(7) = 720 * 7 = 5040
+# f(6) = 120 * 6 = 720
+# f(5) = f(4) * 5 = 120
+f(4) = f(3) * 4 = 24
+# f(3) = f(2) * 3 = 6
+f(2) = f(1) * 2 = 2
+# f(1) = 1
 
+b. f(n) = n!
+c. O(n)
+
+
+# Code Block D
+def fn_d(n: int) -> int:
+  if n <= 1:
+    return 1
+  count = 0
+  for i in range(n):
+    count += i
+  return fn_d(n//2) + fn_d(n // 2) + count
 4. fn_d
 a. 
-b. 
-c. 
+f(6) = f(3) + f(3) + 15 = 23
+f(5) = f(2) + f(2) + 10 = 16
+f(4) = f(2) + f(2) + 6 = 12
+f(3) = f(1) + f(1) + 2 = 4
+f(2) = f(1) + f(1) + 1 = 3
+f(1) = 1
 
+b. f(n) = ?
+c. O(2^n)
+
+
+# Code Block E
+def fn_e(n: int) -> int:
+  if n == 0:
+    return 1
+  return fn_e(n // 2) + fn_e(n // 2)
 5. fn_e
 a. 
-b. 
-c. 
+f(16) = f(8) + f(8) = 32
+# f12 = f6+f6 = 16
+# f10 = f5+f5 = 16
+# f9 = f4 + f4 = 16
+f(8) = f(4)+f(4) = 16
+# f7 = f3+f3 = 8
+# f6 = f3+f3 = 8
+# f(5) = f(2) + f(2) = 8
+f(4) = f(2) + f(2) = 8
+# f(3) = f(1) + f(1) = 4
+f(2) = f(1) + f(1) = 4
+# f(1) = f(0) + f(0) = 2
+# f(0) = 1
 
+b. 2^n-1 (floor power of 2) < f(n) <= 2^n (ceiling power of 2)
+c. O(2^n)
+
+
+# Code Block F
+def fn_f(n: int) -> int:
+  if n + 1 < 0:
+    return n
+  return fn_f(n // 2) + fn_f(n // 2)
 6. fn_f
 a. 
-b. 
-c. 
+f
+f(4) = f(2) + f(2)
+f(2) = f(1) + f(1)
+f(1) = f(0) + f(0)
+f(0) = f(0) + f(0)
+**loops infinity**
 
+b. f(n) = infinity
+c. O(infinity)
+
+
+# Code Block G
+def fn_g(n: int, m: int) -> int:
+    if n <= 0 or m <= 0:
+        return 1
+    return fn_g(n//2, m) + fn_g(n, m//2)
 7. fn_g
 a. 
-b. 
-c. 
+No proper way of calculating. Two arguments
+f(4,4) = f(2,4) + f(4,2)
+
+f(2,4) = f(1,4) + f(2,2)
+f(4,2) = f(2,2) + f(4,1)
+
+f(1,4) = f(0,4) + f(1,2)
+f(2,2) = 
+
+f(2,2)
+f(4,1)
+
+b. f(n,m) = ?
+c. O(2^n +2^m)
