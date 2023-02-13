@@ -25,6 +25,7 @@ def fact_recursive(n: int) -> int:
     return 1
   else:
     return n * fact_recursive(n-1)
+    
 
 '''
 3. Use binary search to find the index of a list that a certain number exists at. 
