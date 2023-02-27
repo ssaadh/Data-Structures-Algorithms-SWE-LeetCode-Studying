@@ -1,19 +1,24 @@
-def insertionSort(arr):
-    num_swaps = 0
-    for i in range(1,len(arr)):
-        for j in range(i,0,-1):
-            if arr[j] < arr[j-1]:
-                num_swaps += 1
-                arr[j], arr[j-1] = arr[j-1], arr[j]
-            else:
-                break
+def insertionSortBack(arr):
+  num_swaps = 0
+  for i in range(1,len(arr)):
+    for j in range(i,0,-1):
+      if arr[j] < arr[j-1]:
+        num_swaps += 1
+        arr[j], arr[j-1] = arr[j-1], arr[j]
+      else:
+        break
+  return num_swaps
 
-    return num_swaps
-
-
-
-
-
+def insertionSortFwd( n ):
+  for i in range( 1, len( n ) ):
+      current = n[ i ]
+      j = i - 1
+      while ( j >= 0 and current < n[ j ] ):
+        n[ j + 1 ] = n[ j ]
+        j -= 1
+      n[ j + 1 ] = current
+      # print( n )
+  return n
 
 if __name__ == '__main__':
     #best case
