@@ -21,6 +21,7 @@ def most_freq_substring(s: str, n: int) -> str:
   # do ord for alphabetically smallest if there's a tie
   sub_dict = {}
   most_freq = 0
+  # so sub_set is init as a set
   sub_set = {'a','b'}
   sub_set.clear()
   for i in range(len(s) - n):
@@ -36,10 +37,10 @@ def most_freq_substring(s: str, n: int) -> str:
     for i in sub_set:
       total = 0
       for j in i:
-        total += ord(j)
+        total += ord(j)f
 
 '''
-What is the alphabetically smallest subsequence of length n in a string? 
+What its the alphabetically smallest subsequence of length n in a string? 
 For example, a string “agbf” and length 2 subsequence would be “ab”. Time complexity does not need to be optimal.
 '''
 def smallest_subsequence(s: str, n: int) -> str:
@@ -47,8 +48,9 @@ def smallest_subsequence(s: str, n: int) -> str:
   # loop for each lowest char to n  
   total = 0
   for j in s:
-    for i in range(n):
-      total += ord(j)      
+    if len(total) == n:
+      return total
+    total += ord(j)
   pass
 
 '''
@@ -61,8 +63,42 @@ Example
 Input: [[1, 5, 8], [0, 2, 10], [4, 8, 9]]
 Output: [0, 1, 2, 4, 5, 8, 8, 9, 10]
 '''
+
+# Other idea: loop around all the arrays at each index. Sort these in a new array?
 def merge_n_lists(lst: list[list[int]]) -> list[int]:
-  pass
+  k = len(lsts)
+  if k <= 1:
+    return lst[0]
+  
+  mid = k // 2
+  lo = lst[:mid]
+  hi = lst[mid:]
+  left = merge_n_lists(lo)
+  right = merge_n_lists(hi)
+  # return merge(left, right)
+
+# def merge(left, right):
+  p1 = len(left)
+  p2 = len(right)
+  x = 0
+  y = 0
+  new_size = p1 + p2
+  new_arr = [0] * new_size
+  
+  while p1 < x and p2 < y:
+    if left[p1] <= right[p2]:
+      new_arr.append(left[x])
+      p1 += 1
+    else:
+      new_arr.append(right[y])
+      p2 += 1
+  while p1 < x:
+    new_arr.append(left[p1])
+    p1 += 1
+  while p2 < y:
+    new_arr.append(right[p2])
+    p2 += 1
+  return new_arr
 
 ''' 
 Given a list of coordinates, sort them by increasing order for X values, then decreasing order for Y values
@@ -70,5 +106,21 @@ Example
 Input: [(1,1), (2,2), (2,1), (1,2)]
 Output: [(1,2), (1,1), (2,2), (2,1)]
 '''
-def sort_tuples(lst: list[tuple[int, int]]) -> list[tuple[int, int]]:
-  pass
+def sort_tuples(lst: list[tuple[int, int]]) -> list[tuple[int, int]]:  
+  for i in range(len(lst) - 1):
+    i2 = i += 1
+    most = 0    
+    if lst[i][0] > lst[i + 1][0]:
+      most = lst[i]
+    lst[i], lst[i + 1] = most, lst[i]
+
+  for i in range(len(lst) - 1):
+    cur_val = lst[i]
+    cur = lst[i]
+    most = 0
+    while cur == cur_val
+      if lst[i][1] < lst[i + 1][1]:
+        most = lst[i]
+    lst[i], lst[i + 1] = most, lst[i]
+  
+  return lst
