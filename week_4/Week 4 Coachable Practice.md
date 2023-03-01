@@ -49,47 +49,53 @@ Space: O(1)
 
 
 5. Describe how insertion sort works and its runtime and space complexity
-A. 
-Runtime: O(n^2). 
+A. Insertion sort works by being partially sorted to the left. The integer to the immediate right of the sorted side gets sorted. This means the integer moves X amount of spots to the left and X amount of sorted integers move to the right.
+Runtime: O(n^2). Nested full loops.
 Space: O(1)
 
 
 6. Describe how merge sort works and its runtime and space complexity
-A. 
-Runtime: O(n^2). 
-Space: O(1)
+A. Merge sort splits the array into two halves again and again until each split is 1 element. Then two elements are merged together and sorted. This continues until there are two halves left and one more merge and sort to have the sorted array. Merge sort is not done in place like the other sort algorithms. It requires an additional array of size n.
+Runtime: O(n log n) log n comes from the dividing in two part. n comes from the needing to merge n length elements together. Bit worse than quick sort.
+Space: O(n) sorted copy of the array
 
 
 7. Describe how quick sort works and its runtime and space complexity
-A. 
-Runtime: O(n^2). 
-Space: O(1)
+A. Quick sort starts with a random pivot element to partition the array. Items that are smaller than the pivot are placed on the left side while items that are greater are placed on the right side. Then the two sides are each sorted which makes the whole array sorted.
+Runtime: O(n log n) usually and best case. O(n^2) in a rare worst case. This is why shuffling is important. Bit better than merge sort on average
+Space: O(log n) is average using stack to store items that need to be sorted. O(n) is worst when the split is size 0 and length n - 1.
 
 
 8. Suppose we have applied quicksort to a list, and we have [1,0,2,3,5,4] as an intermediate stage. Which elements could have been the pivot element in a previous iteration?
-A. I'm not sure I understand this. 2 or 3?
+A. I'm not sure I understand this. 2 or 3. Or would it be any number?
 
 
 9. What's different between quicksort and mergesort? What are the tradeoffs between the two?
-A. 
+A. The common part is they are both divide and conquer algos. Merge sort immediately divides the array into more and more subarrays. While quick sort has a pivot element that partitions the array into two equal or unequal sides, left smaller than and right greater than the pivot. Then the two sides are sorted while merge sort keeps merging subarrays the size of 1 with another sub array until it's all merged.
+
+- Quick sort has a better average run time and is usually the fastest sort algo.
+- Merge sort is always O(n log n)
+- Quick sort space complexity only uses O(log n) usually but could be O(n) in rare cases. Merge sort is always O(n)
 
 
 10. What does divide and conquer mean? Which sorting algorithms use this approach?
-A. 
+A. Merge sort, quick sort, and heap sort use divide and conquer. Divide part means the array is divided into smaller sub-arrays. Then the conquer part is the sub-arrays are merged and sorted with one another.
 
 
 11. What is the difference between 3-way quicksort and standard quicksort? 
-A. 
+A. 3-way quicksort makes a separate third sub array of all the pivots. While standard puts the equal value to pivots on either side. Not its own section.
 
 
 12. Describe one specific input where you'd prefer to use 3-way quicksort over standard quicksort. Why is it faster here?
-A. 
+A. 3-way quicksort is better when there aren't many different values or if there are a lot of duplicates. Not sure how the pivot or integer with the most duplicates would be identified.
 
 
 13. Suppose you have an array with only 5 distinct elements (only the numbers 1-5). 
 A. 
-A.  What is the worst-case runtime of quicksort? Why?
+a.  What is the worst-case runtime of quicksort? Why?
+O(n^2). When the pivot is 1 or 5.
 b. What is the worst-case runtime of 3-way quicksort? Why?
+O(n^2). Same thing. If all values are distinct 3-way won't do any better or different.
 
 ## Match Sorting Algorithms
 
