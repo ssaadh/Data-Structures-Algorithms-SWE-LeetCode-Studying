@@ -3,8 +3,10 @@ from __future__ import annotations
 class StringBuilder:
     # Optional argument for a string and a capacity (optional). 
     # Otherwise defaults to an empty string and has no limit on characters.
+
     def __init__(self, string = "", capacity = None):
-        pass 
+        self.string = string
+        self.capacity = capacity
   
     # Returns the string that is built.
     def __str__(self) -> str:
@@ -13,11 +15,11 @@ class StringBuilder:
     # Appends s to the array in O(len(s)) at the end. 
     # Should raise an exception if over capacity.
     def append(self, s: str) -> None: 
-        pass
+      
   
     # Returns the length of the string.
     def size(self) -> int:
-        pass
+        len(self.string)
     
     # Returns the character at location index. 
     def char_at(self, index: int) -> str:

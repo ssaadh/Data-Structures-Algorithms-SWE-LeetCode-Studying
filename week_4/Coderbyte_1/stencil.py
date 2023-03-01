@@ -14,6 +14,7 @@ def reverse_str(s: str) -> str:
 '''
 Find the most frequent substring of length n in a string. If there’s a tie, return the alphabetically smallest.
 '''
+# @TODO finish
 def most_freq_substring(s: str, n: int) -> str:
   # sliding window right?
   # look at n length of char each loop
@@ -37,7 +38,7 @@ def most_freq_substring(s: str, n: int) -> str:
     for i in sub_set:
       total = 0
       for j in i:
-        total += ord(j)f
+        total += ord(j)
 
 '''
 What its the alphabetically smallest subsequence of length n in a string? 
@@ -108,7 +109,8 @@ Output: [(1,2), (1,1), (2,2), (2,1)]
 '''
 def sort_tuples(lst: list[tuple[int, int]]) -> list[tuple[int, int]]:  
   for i in range(len(lst) - 1):
-    i2 = i += 1
+    # i2 = i += 1
+    i += 1
     most = 0    
     if lst[i][0] > lst[i + 1][0]:
       most = lst[i]
@@ -118,9 +120,8 @@ def sort_tuples(lst: list[tuple[int, int]]) -> list[tuple[int, int]]:
     cur_val = lst[i]
     cur = lst[i]
     most = 0
-    while cur == cur_val
+    while cur == cur_val:
       if lst[i][1] < lst[i + 1][1]:
         most = lst[i]
     lst[i], lst[i + 1] = most, lst[i]
-  
   return lst
