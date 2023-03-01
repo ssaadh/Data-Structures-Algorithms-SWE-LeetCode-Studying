@@ -1,15 +1,16 @@
-def insertionSortBack(arr):
-  num_swaps = 0
+def insertion_sort_back(arr):
+  # num_swaps = 0
   for i in range(1,len(arr)):
     for j in range(i,0,-1):
       if arr[j] < arr[j-1]:
-        num_swaps += 1
+        # num_swaps += 1
         arr[j], arr[j-1] = arr[j-1], arr[j]
       else:
         break
-  return num_swaps
+  # return [ num_swaps, arr ]
+  return arr
 
-def insertionSortFwd( n ):
+def insertion_sort_fwd( n ):
   for i in range( 1, len( n ) ):
       current = n[ i ]
       j = i - 1
@@ -25,7 +26,7 @@ if __name__ == '__main__':
     arr1 = [1,2,3,4,10,6,7,8,9,5]
     #O(N) - runtime
     #O(1) - space
-    print(insertionSort(arr1))
+    print(insertion_sort_back(arr1))
     print(arr1)
 
     #worst case
@@ -33,5 +34,5 @@ if __name__ == '__main__':
     #O(1) - space
     print("////////////////")
     arr2 = [10,9,8,7,6,5,4,3,2,1]
-    print(insertionSort(arr2))
+    print(insertion_sort_back(arr2))
     print(arr2)
