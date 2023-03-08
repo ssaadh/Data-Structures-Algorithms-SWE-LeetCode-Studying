@@ -124,6 +124,7 @@ a. For n=2,4,8,16 compute f(n).
 b. What does the code block return? (In terms of n). Explain your answer.
 c. What is the runtime of the code? Explain your answer.
 
+```
 # Code Block A
 def fn_a(n: int) -> int:
   if n == 1:
@@ -266,3 +267,4 @@ f(4,1)
 
 b. f(n,m) = ?
 c. O(2^n +2^m)
+```
