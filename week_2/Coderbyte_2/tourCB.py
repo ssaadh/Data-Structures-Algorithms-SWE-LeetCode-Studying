@@ -13,8 +13,6 @@ The constructor creates an empty tour.
 from point import Point
 
 # Hint: You will want to use a classic LinkedList Node to implement the tour.
-
-
 class Node:
     def __init__(self, point):
       # This node's point
@@ -22,7 +20,6 @@ class Node:
 
       # The next node
       self.next = None
-
 
 class Tour:
     # Creates an empty tour

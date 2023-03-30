@@ -56,7 +56,7 @@ class Tour:
     curr = self.head
     total = curr.point.distance_to(curr.next.point)
     curr = curr.next
-    while curr is not None:
+    while curr is not self.head:
       total += curr.point.distance_to(curr.next.point)
       curr = curr.next
     return total
@@ -84,21 +84,37 @@ class Tour:
       self.head = Node(p)
       self.head.next = self.head
       self._count += 1
-    elif self._count() == 1:
+    elif self.size() == 1:
       self._insert_at(p, self.head)
     else:
       curr = self.head
       new = Node(p)
       least = self.head
       dist = float('inf')
+      # do
+      diff = new.point.distance_to(curr.point)
+      if dist > diff:
+        dist = diff
+        least = curr
       while curr.next is not self.head:
+        curr = curr.next
         # find the smallest distance between new point and any current point    
         diff = new.point.distance_to(curr.point)
         if dist > diff:
           dist = diff
           least = curr
-        curr = curr.next
       self._insert_at(p, least)
+
+
+  def _smallest(self, curr, new):
+    # diff two original points/nodes as they are right now
+    og = curr.point.distance_to(curr.next.point)
+    # diff between two new points. the original node/point and the new distance to new node/point
+    new_dist = new.point.distance_to(curr.point)
+    # add new distance from new point and new next point (which is the original next point)
+    new_dist += new.point.distance_to(curr.next.point)
+    # subtract original diff from new distance
+    return new_dist - og
 
   # Insert a new Point p to the Tour using smallest increase heuristic
   def insert_smallest(self, p):                
@@ -106,26 +122,24 @@ class Tour:
       self.head = Node(p)
       self.head.next = self.head
       self._count += 1
-    elif self._count == 1:
+    elif self.size() == 1:
       self._insert_at(p, self.head)
     else:
       curr = self.head
       new = Node(p)
       least = self.head
       dist = float('inf')
+      # do
+      diff = self._smallest(curr, new)
+      if dist > diff:
+        dist = diff
+        least = curr
       while curr.next is not self.head:
-        # diff two original points/nodes as they are right now
-        og = curr.point.distance_to(curr.next.point)
-        # diff between two new points. the original node/point and the new distance to new node/point
-        new_dist = new.point.distance_to(curr.point)
-        # add new distance from new point and new next point (which is the original next point)
-        new_dist += new.point.distance_to(curr.next.point)
-        # subtract original diff from new distance
-        diff = new_dist - og
+        curr = curr.next
+        diff = self._smallest(curr, new)
         # updating if smallest distance
         if dist > diff:
           dist = diff
           least = curr
-        curr = curr.next
       self._insert_at(p, least)
   
