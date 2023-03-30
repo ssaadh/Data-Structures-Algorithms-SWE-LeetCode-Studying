@@ -107,23 +107,18 @@ e. What is the space complexity? And why?
 # 5. O(n) because the output is the same size as the input
 
 02. (a) 25  (b) 75  (c) The same thing as before except the aadding up of values is done in the nested loop. There's no list. 
-
 (d) O(n^2) nested loop (e) O(2). ~O(1).  2 variables
 
 03. (a) 3  (b) 12  (c) Looping while n, length of nums argument, is greater than 0. It is greater than zero while n is being divided by n - 1 index in nums argument. Adds the value of the top half of numbers in an array of integers 
-
 (d) O(log n). One loop dividing in half (e) O(1). 2 variables.
 
 04. (a) 10  (b) 30  (c) loop for the sum of the value by itself. Then get sum of the new array.  
-
 (d) O(2n) = ~O(n). one loop and sum.  (e) O(n). double_nums is size n.
 
 05. (a) 32  (b) 98  (c) Nested loop. First loops as long as nums length. Inner loop does as many loops as that current array element value. Loop gets the value of power_sum. Return remainder of dividing by 99.  
-
 (d) O(n^2) = ~O(n*n^2). Inner loop is n^2. Separate loop is n.   (e) O(1). 2 variables
 
 06. (a) 3  (b) 2  (c) Loop skips 0. To length of array. Checks if current value is less than previous index value times 2 and current value is more than the next value divided by 2. If so, iterate count. Return count.  
-
 (d) O(n). Loop in range N-2  (e) O(1). 1 variable 
 
 #new
@@ -162,7 +157,7 @@ A. Worst case is O(n).
 
 
 4. What is one example of when a linked list is preferred over an array of a fixed size?
-A. Browser history. The last site added in the browser history is the first to be used (last in, first out)
+A. Browser history. The last site added in the browser history is the first to be used (stack aka last in, first out)
 
 
 5. What is one example of when an array of fixed size is preferred over a linked list?
@@ -200,7 +195,7 @@ Linked list with no cycle
 2. slow moves to 4, fast moves to 3.
 3. slow moves to 3, fast moves to None.
 4. fast is at none, there is no cycle. Within O(n)
-
+ 
 
 9. Explain how you would reverse a linked list. Explain using the following example. 
 `a. 1 --> 4 --> 3 --> 2 --> None`
@@ -216,9 +211,29 @@ A. Reversing will look like this: (head) 2 -> 3 -> 4 -> 1 -> None
   - Set curr to next (which was curr's next).
   - Now 4 is curr and can iterate through the loop again
 
+```
+def reverse(lst):
+  curr = lst
+  next = None
+  prev = None
+  while curr is not None:
+    next = curr.next
+    curr.next = prev    
+    prev = curr
+    curr = next
+  return lst
+```
 
 10. How do you iterate through a linked list? Describe this process in detail if you want to print every element in a linked list. 
 A. Iterate by traversing from the head to next elements. Assign the head to a curr var. Have a loop while curr is not None. print the current node, then assign curr var to the next node.
+
+```
+def iterate(lst):
+  curr = lst
+  while curr is not None:  
+    curr = curr.next
+  return lst
+```
 
 11. How can we use linked lists to implement a stack?
 A. Stacks are LIFO. The top of the stack is implemented as the head of the list. Push a new node by adding it to the top. Pop the list by removing the top.
@@ -228,10 +243,10 @@ Queues is FIFO. Enqueue (add) an item by adding to the tail/back of the list. De
 A. A queue requires interacting with both sides of a doubly linked list. Enqueue/add to the tail of the list. Dequeue/remove from the head of the list.
 
 13. When would you want to use a doubly linked list?
-A. When you need to push, pop and/or enqueue/dequeue on both sides. When need to go both ways, down and up/left and right.
+A. When you need to push, pop and/or enqueue/dequeue on both sides. When need to go both ways.
 
 14. What are the differences between stack/queue/deque?
-A. stack is LIFO. Queue is FIFO. Stack only pushes and pops on one end (head). Queue adds to the tail, removes from the head. Deque allows adding and removing on both ends.
+A. Stack is LIFO. Queue is FIFO. Stack only pushes and pops on one end (head). Queue adds to the tail, removes from the head. Deque allows adding and removing on both ends.
 
 15. What are their core functions and runtimes?
 A.
