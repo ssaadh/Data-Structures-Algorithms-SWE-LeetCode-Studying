@@ -16,17 +16,17 @@ Write a function that returns a string representation of the list.
 Format-wise, for an input Node(1, Node(2, Node(3, None))) you must return
 1 -> 2 -> 3
 '''
+# this is RIGHT or?
 def str_list(head: Node) -> str:
   curr = head
-  str = []
+  stry = []
   while curr is not None:
     if curr.val == 0:
       next
-    str.append(int(curr.val))
-    str.append(' -> ')
+    stry.append(str(curr.val))
+    stry.append(' -> ')
     curr = curr.next_node
-  str = str[:-1]
-  return ''.join(str)
+  return ''.join(stry[:-1])
 
 '''
 Write a function that inserts to the end of a linked list and returns the head.
@@ -66,6 +66,7 @@ def has_cycle(head: Node) -> bool:
 Given the head of a circular linked list, write a method to sum all elements of the list up. 
 Assume all the values of the node are integers.
 '''
+# this is RIGHT or?
 def get_circular_list_sum(head: Node) -> int:
   slow = head
   fast = head.next_node

@@ -123,19 +123,27 @@ Output: [(1,2), (1,1), (2,2), (2,1)]
 '''
 def sort_tuples(lst: list[tuple[int, int]]) -> list[tuple[int, int]]:  
   for i in range(len(lst) - 1):
-    # i2 = i += 1
-    i += 1
-    most = 0    
-    if lst[i][0] > lst[i + 1][0]:
-      most = lst[i]
-    lst[i], lst[i + 1] = most, lst[i]
+    most = 0
+    track = 0
+    while lst[i][0] == lst[i + 1][0]:
+      if lst[i][0] > most:
+        most = lst[i][0]pirat
+        track = i
+    lst[i], lst[track] = lst[track], lst[i]
 
   for i in range(len(lst) - 1):
-    cur_val = lst[i]
-    cur = lst[i]
-    most = 0
-    while cur == cur_val:
-      if lst[i][1] < lst[i + 1][1]:
-        most = lst[i]
-    lst[i], lst[i + 1] = most, lst[i]
+    least = 0
+    track = 0
+    while lst[i][1] == lst[i + 1][1]:
+      if lst[i][1] < least:
+        least = lst[i][1]
+        track = i
+    lst[i], lst[track] = lst[track], lst[i]
   return lst
+
+def comparison_tuples(lst: list[tuple[int, int]], num: int) -> int:
+  if lst[i][1] < lst[i + 1][1]:
+    most = lst[i]
+  lst[i], lst[i + 1] = most, lst[i]
+
+print(sort_tuples([(1,1), (2,2), (2,1), (1,2)]))
