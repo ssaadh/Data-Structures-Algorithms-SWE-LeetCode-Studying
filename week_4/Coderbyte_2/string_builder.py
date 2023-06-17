@@ -6,6 +6,7 @@ class StringBuilder:
 
     def __init__(self, string = "", capacity = None):
         self.s = string
+        # self.copy = []
         for c in self.s:
           self.copy.append(c)
         self.capacity = capacity
@@ -82,3 +83,7 @@ class StringBuilder:
       for c in s:
         self.copy.append(c)
       return None
+
+stringy = StringBuilder("abc", 20)
+# print(stringy.replace('a', 'dc'))
+# print(str(stringy))
