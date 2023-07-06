@@ -286,26 +286,29 @@ A A B C C H C E K L O O R S
 
 C O A C H A B L E R O C K S
 
-K is pivot
-
-C A C H A B E C K O L R O S
+K is pivot. everything to left is smaller. everything to right is bigger.
 
 C A C H A B E C [K] O L R O S
 
-C is next iteration
+C is next iteration. (why?)
 
-A A B C C C E H [K] O L R O S
+A A B [C] C C E H K O L R O S
 
-O is next
+O is next (why?)
 
-A A C C C B E C [K] O L R O S
+A A B C C C E H K L [O] O R S
 
+Array is sorted but still have to go over any pivots not gone thru yet. For sure R and S will run and be in the correct spot already
 
+A A B C C C E H K L O O R S
 
 
 4.  #### Quicksort 3-way (No Shuffle)
 
 C O A C H A B L E R O C K S
+
+I studied this a lot but there wasn't a lot of material on it before. I found two different major algorithms. I can't recall exactly how it works but this is how I belive one of them works:
+
 
 
 
@@ -314,6 +317,36 @@ C O A C H A B L E R O C K S
 
 C O A C H A B L E R O C K S
 
+###### L side
+C O
+A C
+A C C O
+
+A H
+B
+A B H
+
+A A B C C H O
+
+##### R side
+
+E L
+O R
+E L O R
+
+C K
+S
+C K S
+
+C E K L O R S
+
+--
+
+A A B C C H O
+C E K L O R S
+
+A A C C C B E C K O L R O S
+
 
 
 
@@ -321,6 +354,34 @@ C O A C H A B L E R O C K S
 
 C O A C H A B L E R O C K S
 
+C O
+A C
+
+A H
+B
+
+L E
+R O
+
+C K 
+S
+--
+
+A C C O
+
+A B H
+
+E L O R
+
+C K S
+--
+
+A A B C C H O 
+
+C E K L O R S
+--
+
+A A C C C B E C K O L R O S
 
 
 
