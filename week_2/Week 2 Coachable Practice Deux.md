@@ -140,17 +140,26 @@ It will still equal close to 2
 #### 8. Now assume the sum goes from 64 down to 0 like this
 64+32+16+8+4+2+1+1/2+1/4+1/8.....​ What is this equal to?
 
-~128
+127-128
 
 #### 9. Compute  9+90+900+9000 as a power of 10 minus an additional term.
+
+
 
 
 #### 10. What integer does following expression approach? 
 9000+900+90+9+9/10 +9/100 +.... . 
 
+10000 because I can tell by adding up 900 + 90 + 9 and that's 999 and it'll never reach 1000. 
+
 
 #### 11. Compute 54+27+9+3+1​
 
+finite
+It should be 81 for first number?
+
+a = 54
+r = 0.5
 
 #### 12. Generaling a sum of powers of 3, estimate 1+3+9+....+3^n​. 
   ##### a. What is the sum in terms of big O notation?
@@ -158,6 +167,36 @@ It will still equal close to 2
 
 
 
-### Runtime Analysis
+### Runtime Analysis      
+
+
+#### 1. What is the runtime to iterate through a list of size n​?
+O(n)
+
+
+#### 2. Write a function that runs in each of the following runtimes O(1), O(log n), O(n), O(n log n), O(n^2), O(n^2 log n), O(n (log n)^2), O(2^n).
+
+
+def static(k):
+  return k + 1
+
+def log_n(k):
+
+
+
+#### 3. When we say an algorithm has O(1) runtime, what does that say about the runtime in terms of the input?
+The input doesn't make a difference
+
+
+#### 4. How can you calculate the runtime when operations are nested? 
+
+Nested operations multiply with one another
+
+
+#### 5. Give an example of an algorithm or write a function with O(1) runtime.
+
+
+#### 6. Given a table of code runtime (input size/runtime), can you determine what order of growth these functions have? Hint: Applying the doubling principle.
+
 
 ### Explain and Analyze Code

@@ -305,13 +305,102 @@ A A B C C C E H K L O O R S
 
 4.  #### Quicksort 3-way (No Shuffle)
 
+while i <= gt
+
+Let v be partitioning item a[lo].
+– (a[i] < v): exchange a[lt] with a[i];increment both lt and i
+– (a[i] > v): exchange a[gt] with a[i]; decrement gt
+– (a[i] == v): increment i
+
 C O A C H A B L E R O C K S
 
-I studied this a lot but there wasn't a lot of material on it before. I found two different major algorithms. I can't recall exactly how it works but this is how I belive one of them works:
+C  S  A  C  H  A  B  L  E  R  O  C  K  O
+lt i                                gt
+
+C  K  A  C  H  A  B  L  E  R  O  C  S  O
+lt i                            gt
+
+C  C  A  C  H  A  B  L  E  R  O  K  S  O
+lt i                         gt
+
+C  C  A  C  H  A  B  L  E  R  O  K  S  O
+lt    i                      gt
+
+A  C  C  C  H  A  B  L  E  R  O  K  S  O
+   lt    i                    gt
+
+A  C  C  C  H  A  B  L  E  R  O  K  S  O
+   lt    i                    gt
+
+A  C  C  C  H  A  B  L  E  R  O  K  S  O
+   lt       i                 gt
+
+do 4 operations to get to next one:
+
+A  C  C  C  L  A  B  E  R  O  H  K  S  O
+   lt       i     gt
+
+A  C  C  C  B  A  L  E  R  O  H  K  S  O
+   lt       i  gt
+
+A  B  C  C  C  A  L  E  R  O  H  K  S  O
+      lt       gt
+               i
+
+A  B  A  C  C  C  L  E  R  O  H  K  S  O
+         lt    gt 
+                  i
 
 
+##### now do Left for:
+low (0) to lt - 1 (2)
+A   B   A
 
+A  A  B
+lt gt
+   i
 
+A  A  B
+lt gt
+      i
+
+##### do Right for:
+gt+1 (6) to len-1 (13)
+
+L  E  R  O  H  K  S  O
+lt i                 gt
+
+E  L  R  O  H  K  S  O
+   lt i              gt
+
+3 operations later:
+
+E  L  K  O  H  S  O  R
+   lt i     gt
+
+E  K  L  O  H  S  O  R
+      lt i  gt
+
+E  K  L   H  O  S  O  R
+      lt  gt
+          i  
+
+E  K  H  L  O  S  O  R
+         gt
+         lt i
+
+I believe now it can go right again for:
+gt+1 (10) to len-1 (13)
+
+O   S   O   R
+lt  i       gt
+         
+O   R   O   S
+lt  i   gt
+
+O   O   R   S
+lt  gt
+    i
 
 5.  #### Mergesort Bottom Up
 
