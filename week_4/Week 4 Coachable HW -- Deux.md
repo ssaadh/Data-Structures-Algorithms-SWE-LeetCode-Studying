@@ -406,6 +406,91 @@ Matched S[0], S[4], S[7]
 
 ##### Consider the input string S = 'ABCBACBABCA' and the substring P = 'ABC'. Walk through the steps of the Boyer-Moore algorithm to find all occurrences of P in S. Show the tables used to implement the 'bad character' and 'good suffix' rules, and indicate the starting index of each occurrence of P in S. Explain how the algorithm identifies each occurrence and how it uses the 'bad character' and 'good suffix' rules to skip unnecessary comparisons. Note any edge or corner cases the algorithm needs to handle, and explain how it handles them.
 
+__I missed having to study for this. Working on it now__
+
+Learn from character comparisons to skip pointless alignments.
+Try alignments in left-to-right order. Try character comparisons in right-to-left order.
+
+##### Bad Character Rule: 
+Upon mismatch, skip alignments until (a) mismatch becomes a match, or (b) P moves past mismatched character
+
+If there is no occurences in the string S, then P has to be moved all the way over past the mismatched character
+
+step 1
+T: G C T T C T G C T A C C T T T T G C G C G C
+P: C C T T T T G C
+
+going from right to left: C, then G, T match, but T[4], C, and P[4], T, are mismatches
+
+step 2
+T: G C T T C T G C T A C C T T T T G C G C G C
+P:       C C T T T T G C
+
+T[4] and P[1] match now. Going from right to left we see C match, but then T[9], A, and P[6], G, don't match.
+
+step 3:
+T: G C T T C T G C T A C C T T T T G C G C G C
+P:                     C C T T T T G C
+
+Move P past T[9], A, and now the string matches up
+
+-----
+
+##### Good Suffix Rule:
+Let t = substring matched by inner loop; skip until (a) there are no mismatches between P and t or (b) P moves past t
+aka: t is what is currently matched
+
+Example:
+
+step 1:
+               t<->t
+T: C G T G C C T A C T T A C T T A C T T A
+P: C T T A C T T A C
+
+Move P over to match another substring where the substring currently matches up with where t is (T[6] to T[8]). That would be moving P[2] along T[6]
+
+step 2
+               t    <->    t
+T: C G T G C C T A C T T A C T T A C T T A
+P:         C T T A C T T A C
+
+now t covers a lot more matching. T[6] to T[12].
+Move P over 3 alignments. It started at T[4] and now will begin at T[8]
+
+step 3
+T: C G T G C C T A C T T A C T T A C T T A
+P:                 C T T A C T T A C
+
+A match
 
 
+bad match table:
+
+
+Value = max(1, lengthOfPattern - indexOfActualChar - 1)
+
+letters: A B C
+values:  2 1 1
+
+But the last character is a wildcard:
+
+letters: A B *
+values:  2 1 1
+
+
+good suffix table:
+
+--
+
+
+S = 'ABCBACBABCA'
+P = 'ABC'
+
+S = A B C B A C B A B C A
+P = A B C
+
+S[0] is a match. Move it over...
+
+S = A B C B A C B A B C A
+P =       A B C
 
