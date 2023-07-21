@@ -283,11 +283,11 @@ d(8) = d(4) * 2 + 8 = (d(2) * 2 * 2) + 8 = (d(1) * 2 * 2 * 2) + 8 = 2^3 + 8 = 16
 d(16) = (d(8) * 2) + 16 = (d(4) * 2 * 2) + 16 = (d(2) * 2 * 2 * 2) + 16 = (d(1) * 2 * 2 * 2 * 2) + 16 = 2^4 + 16 = 32
 assumption:
 d(32) = 2^5 + 2^5 = 64
+
 2. d(n) = n + n
 
 3. 
-O(n) for the count adding up loop ??
-O(~2n) because the input divides in half each time 
+O(n log n) because the input divides in half each time which should be some sort of log n and the additional O(n) for the summing up of the count 
 
   
 #### Code Block E
@@ -297,16 +297,16 @@ def fn_e(n: int) -> int:
   return fn_e(n // 2) + fn_e(n // 2)
 
 1. 
-f(0) = 1
-f(1) = f(0) + f(0) = f(0) * 2 = 1 * 2 = 2
-f(2) = f(1) * 2 = f(0) * 2 * 2 = 1 * 2^2 = 2^2 = 4
-f(3) = f(1) * 2 = 2^2 = 4
-f(4) = f(2) * 2 = f(1) * 2 * 2 = f(0) * 2 * 2 * 2 = 1 * 2 * 2 * 2 = 2^3 = 8
-f(6) = f(3) * 2 = f(1) * 2 * 2 = 2^3
-f(8) = f(4) * 2 = f(2) * 2 * 2 = f(1) * 2 * 2 * 2 = f(0) * 2 * 2 * 2 * 2 = 2^4 = 16
-f(16) = f(8) * 2 = (f(4) * 2) * 2 = 2^5 = 32
+e(0) = 1
+e(1) = e(0) + e(0) = e(0) * 2 = 1 * 2 = 2
+e(2) = e(1) * 2 = e(0) * 2 * 2 = 1 * 2^2 = 2^2 = 4
+e(3) = e(1) * 2 = 2^2 = 4
+e(4) = e(2) * 2 = e(1) * 2 * 2 = e(0) * 2 * 2 * 2 = 1 * 2 * 2 * 2 = 2^3 = 8
+e(6) = e(3) * 2 = e(1) * 2 * 2 = 2^3
+e(8) = e(4) * 2 = e(2) * 2 * 2 = e(1) * 2 * 2 * 2 = e(0) * 2 * 2 * 2 * 2 = 2^4 = 16
+e(16) = e(8) * 2 = (e(4) * 2) * 2 = 2^5 = 32
 assumption:
-f(32) = 2^6 = 64
+e(32) = 2^6 = 64
 
 2. e(n) = 2n
 
@@ -332,6 +332,21 @@ def fn_g(n: int, m: int) -> int:
 g(0,0) = g(0,0) + g(0,0) = 1 * 2 = 2
 g(1,1) = g(1,1) * 2 = 
 
-2. 
-3. 
+g(2,2) = g(1,2) * 2 = 
 
+g(4,4) = g(2,4) * 2 = 
+
+g(8,8) = g(4,8) * 2 = 
+
+g(16,16) = g(8,16) * 2 = 
+
+2.
+The recursive relation is:
+g(n//2, m) + g(n, m//2)
+this can be simplified to using n for m:
+g(n, n) = g(n/2, n) + g(n, n/2)
+this can be simplified to:
+g(n, n) = 2 * g(n/2, n)
+
+
+3. O(~2*log n) or O(~log n). The final simplified value of the value of n appears to be close to the example given for merge sort in recursive relations curriculum text but without the extra addition of n.
