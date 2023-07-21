@@ -315,6 +315,31 @@ A   A   B   C   H   O   C   L   E   R   O   C   K   S
 
 ##### Consider the input string S = 'ABCABDABCA' and the substring P = 'ABCA'. Walk through the steps of the Knuth-Morris-Pratt algorithm to find all occurrences of P in S. Show the intermediate values of the failure function and the table used to match the characters in P against S. Indicate the starting index of each occurrence of P in S, and explain how the algorithm identifies each occurrence.
 
+Prefix Table:
+index: 0  1  2  3
+Char:  A  B  C  A
+prefix (PX): 0  0  0  1
+Explanation: The final A is the suffix and the prefix of A at the beginning is the same. The number put into the prefix table for P[3] is 1 because it matches the suffix and we do index + 1 to know where to stat from.
+
+Tracing:
+
+S[0] == P[0]. Continue both pointers
+S[1] == P[1]. Continue both pointers
+S[2] == P[2]. Continue both pointers
+S[3] == P[3]. Complete match from index S[0].
+Move to next S string char, S[4], but for P we have to consider the prefix table. The last match means that the prefix and suffix are a match. Looking at PX[3] we can see that we should move up by 1 index instead of starting P over. We start from P[1]
+
+S[4] == P[1]. Continue both pointers. 
+S[5] != P[2]. No match
+The matching pattern is reset to the beginning and the first P substring letter, P[0] will attempt to be matched with same S string letter as this time.
+S[5] != P[0]. No match. Only continue the S string pointer to next index. Try to begin a match again with the prefix of substring P, P[0]
+S[6] == P[0]. Continue both pointers
+S[7] == P[1]. Continue both pointers
+S[8] == P[2]. Continue both pointers
+S[9] == P[3]. Complete match from S[6].
+
+Matches at index 0 and 6
+
 
 
 
@@ -323,7 +348,57 @@ A   A   B   C   H   O   C   L   E   R   O   C   K   S
 
 ##### Consider the input string S = 'ABCCABCABCA' and the substring P = 'ABC'. Walk through the steps of the Rabin-Karp algorithm to find all occurrences of P in S, using a hash function that maps each character to its ASCII code. Assume a prime base number of 101. Show the intermediate hash values for each P window in S, and explain how the algorithm identifies each occurrence. Note any false positives the algorithm might produce, and explain why they occur.
 
+Hashing Algo:
+The formula is the number of the char * prime number to where the character is in the substring length.
+So below for A B C with a prime base number of 101, the hash is:
+A*101^0 + B*101^1 + C*101^2
+Then to switch to be able to compare to a different hash that is based off sliding one character to the right and thus removing the first character and adding a new last character is by modifying the hash above:
 
+A*101^0 + B*101^1 + C*101^2
+subtract A
+divide by the prime number (101). This leaves you with:
+B*101^0 + C*101^1
+Now the next character can be added with prime number to power of its position which is index 2 in this case
+B*101^0 + C*101^1 + C^101^2
+
+Saadh remember: This can be seen as sliding things one to the right each time and you can do this in your head/with quick jotting. When i did each hash i copy pasted the current hash for the next one. And shifted each thing to the left. I have a quick video I'll do and show for this asap. It'll take 1 min to show and remind myself.
+
+
+P substring hash:
+A B C
+1*101^0 + 2*101^1 + 3*101^2
+
+Going through S string:
+
+ABC - match (S[0])
+1*101^0 + 2*101^1 + 3*101^2
+30806
+
+BCC - no match
+2*101^0 + 3*101^1 + 3*101^2
+
+CCA - no match
+3*101^0 + 3*101^1 + 1*101^2
+
+CAB - no match
+3*101^0 + 1*101^2 + 2*101^2
+
+ABC - match (S[4])
+1*101^0 + 2*101^1 + 3*101^2
+
+BCA - no match
+2*101^0 + 3*101^1 + 1*101^2
+
+CAB - no match
+3*101^0 + 1*101^1 + 2*101^2
+
+ABC - match (S[7])
+1*101^0 + 2*101^1 + 3*101^2
+
+BCA - no match
+2*101^0 + 3*101^1 + 1*101^2
+
+Matched S[0], S[4], S[7]
 
 
 
