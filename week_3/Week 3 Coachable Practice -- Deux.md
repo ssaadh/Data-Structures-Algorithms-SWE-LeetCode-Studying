@@ -208,9 +208,19 @@ def fn_a(n: int) -> int:
     return n
   return fn_a(n - 1) + 1
 
-1.  
-2.   
-3. 
+1. 
+a(1) = 1
+a(2) = 2
+a(4) = 4
+= a(3) + 1 = (a(2) + 1) + 1 = (a(1) + 1) + 1 + 1
+a(8) = 8
+a(16) = 16
+
+2. a(n) = n. The recursive part does n calls subtracting input by 1 each time and each call adds 1.
+
+3. O(n). The recursive part does n calls subtracting input by 1 each time and each call adds 1.
+
+
 
 #### Code Block B
 def fn_b(n: int) -> int:
@@ -219,8 +229,21 @@ def fn_b(n: int) -> int:
   return fn_b(n - 1) + fn_b(n-1)
 
 1. 
-2. 
-3. 
+
+_how was i supposed to know the relation is *2. I know it's f(x-1) + f(x-1) but i wouldnt have called it's just 2 * f(x-1) without being used to this problem_
+
+b(1) = 1
+b(2) = b(1) + b(1) = b(1) * 2 = 2
+b(3) = b(2) + b(2) = b(2) * 2 = 4
+b(6) = b(5) * 2^1 = b(4) * 2^2 = b(3) * 2^3 = b(2) * 2^4 = b(1) * 2^5
+b(8) = b(7) * 2 = b(6) * 2^2 = b(5) * 2^3 = b(4) * 2^4 = b(3) * 2^5 = b(2) * 2^6 = b(1) * 2^7
+b(16) = 2^15
+
+
+2. b(n) = 2^(n-1) because the input goes down by one but is adding to itself which is the same as multiplung by 
+
+
+3. O(~2^n) because 
 
 
 #### Code Block C
@@ -229,9 +252,17 @@ def fn_c(n: int) -> int:
     return n
   return fn_c(n - 1) * n
 
-1. 
-2. 
-3. 
+1.
+c(1) = 1
+c(2) = c(1) * 2 = 1 * 2 = 2 = 2^1
+c(3) = c(2) * 3 = c(1) * 3 * 3 = 3^2 = 9
+c(4) = c(3) * 4 = c(2) * 4 * 4 = c(1) * 4 * 4 * 4 = 4^3 = 64
+c(8) = c(7) * 8 = c(6) * 8^2 = c(5) * 8^3 = c(4) * 8^4 = c(3) * 8^5 = c(2) * 8^6 = c(1) * 8^7
+c(16) = 16^15
+
+2. c(n) = n^(n-1)
+
+3. O(~>n!) or O(~n^(n-1))
 
 
 #### Code Block D
@@ -244,8 +275,19 @@ def fn_d(n: int) -> int:
   return fn_d(n//2) + fn_d(n // 2) + count
 
 1. 
-2. 
+d(1) = 1
+d(2) = (d(1) * 2) + 2 = (1 * 2) + 2 = 2^1 + 2 = 4
+d(3) = (d(1) * 2) + 2 = 2^1 + 2 = 4
+d(4) = (d(2) * 2) + 4 = (d(1) * 2 * 2) + 4 = 2^2 + 4 = 8
+d(8) = d(4) * 2 + 8 = (d(2) * 2 * 2) + 8 = (d(1) * 2 * 2 * 2) + 8 = 2^3 + 8 = 16
+d(16) = (d(8) * 2) + 16 = (d(4) * 2 * 2) + 16 = (d(2) * 2 * 2 * 2) + 16 = (d(1) * 2 * 2 * 2 * 2) + 16 = 2^4 + 16 = 32
+assumption:
+d(32) = 2^5 + 2^5 = 64
+2. d(n) = n + n
+
 3. 
+O(n) for the count adding up loop ??
+O(~2n) because the input divides in half each time 
 
   
 #### Code Block E
@@ -255,8 +297,20 @@ def fn_e(n: int) -> int:
   return fn_e(n // 2) + fn_e(n // 2)
 
 1. 
-2. 
-3.   
+f(0) = 1
+f(1) = f(0) + f(0) = f(0) * 2 = 1 * 2 = 2
+f(2) = f(1) * 2 = f(0) * 2 * 2 = 1 * 2^2 = 2^2 = 4
+f(3) = f(1) * 2 = 2^2 = 4
+f(4) = f(2) * 2 = f(1) * 2 * 2 = f(0) * 2 * 2 * 2 = 1 * 2 * 2 * 2 = 2^3 = 8
+f(6) = f(3) * 2 = f(1) * 2 * 2 = 2^3
+f(8) = f(4) * 2 = f(2) * 2 * 2 = f(1) * 2 * 2 * 2 = f(0) * 2 * 2 * 2 * 2 = 2^4 = 16
+f(16) = f(8) * 2 = (f(4) * 2) * 2 = 2^5 = 32
+assumption:
+f(32) = 2^6 = 64
+
+2. e(n) = 2n
+
+3. O(~2n)
 
 
 #### Code Block F
@@ -265,9 +319,7 @@ def fn_f(n: int) -> int:
     return n
   return fn_f(n // 2) + fn_f(n // 2)
 
-1. 
-2. 
-3. 
+this is infinity when n > -1
 
 
 #### Code Block G
@@ -277,6 +329,9 @@ def fn_g(n: int, m: int) -> int:
     return fn_g(n//2, m) + fn_g(n, m//2)
 
 1. 
+g(0,0) = g(0,0) + g(0,0) = 1 * 2 = 2
+g(1,1) = g(1,1) * 2 = 
+
 2. 
 3. 
 
