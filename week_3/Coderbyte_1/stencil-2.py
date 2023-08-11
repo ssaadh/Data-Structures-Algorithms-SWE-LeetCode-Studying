@@ -49,12 +49,12 @@ def fact_recursive(n: int) -> int:
 Return -1 if number does not exist. Assume that the list is sorted.
 '''
 def index_binary_search(lst: list[int], val: int, lo: int, hi: int):
-  if lo >= hi:
+  if lo > hi:
     return -1
 
   mid = (lo + hi)//2
   if lst[mid] > val:
-    return index_binary_search(lst, val, lo, mid)
+    return index_binary_search(lst, val, lo, mid - 1)
   elif lst[mid] < val:
     return index_binary_search(lst, val, mid + 1, hi)
   elif lst[mid] == val:
@@ -65,6 +65,8 @@ def find_index(lst: list[int], val: int) -> int:
   end = len(lst) - 1
   return index_binary_search(lst, val, start, end)
 
+print(find_index([1, 5, 10, 20, 100], 5) == 1)
+print(find_index([1, 5, 10, 20, 100], 15) == -1)
 
 '''
 4. Use binary search to find the index of a list that is the 
@@ -79,8 +81,11 @@ def closest_binary_search(lst: list[int], val: int, lo: int, hi: int, last_index
   if lst[mid] > val:
     return closest_binary_search(lst, val, lo, mid - 1, last_index)
   elif lst[mid] <= val:
+  # elif lst[mid] < val:
     last_index = mid
     return closest_binary_search(lst, val, mid + 1, hi, last_index)
+  # elif lst[mid] == val:
+    # return mid
 
 def find_closest(lst: list[int], val: int) -> int:
   start = 0
