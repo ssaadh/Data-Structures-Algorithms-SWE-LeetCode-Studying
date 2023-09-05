@@ -464,8 +464,7 @@ P:                 C T T A C T T A C
 A match
 
 
-bad match table:
-
+bad  table:
 
 Value = max(1, lengthOfPattern - indexOfActualChar - 1)
 
@@ -481,6 +480,17 @@ values:  2 1 1
 good suffix table:
 
 --
+
+bad character table ??
+
+??
+
+Character:  A B C
+Last Occur: 0 1 2
+
+In this table, each row corresponds to a unique character in the pattern, and the value represents the index (position) of the rightmost occurrence of that character in the pattern.
+
+In this case, 'A' is found at index 0, 'B' at index 1, and 'C' at index 2, so the "bad character" rule table indicates the last occurrence positions for each character in the pattern.
 
 
 S = 'ABCBACBABCA'
