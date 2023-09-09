@@ -1,12 +1,21 @@
+import pytest
+
 from binary_trees import bt_a
 from binary_trees import bt_b
 from binary_trees import bt_c
 from binary_trees import bt_d
 from binary_trees import bt_e
+from binary_trees import bt_long_legs
 
 from recursive_relations import size
 from recursive_relations import qsum
 from recursive_relations import is_symmetric
+from recursive_relations import diameter
+from recursive_relations import sum_only_child
+from recursive_relations import level_min
+
+# do not modify this function call
+retcode = pytest.main(['-v'])
 
 ## Driver code
 if __name__ == "__main__":
