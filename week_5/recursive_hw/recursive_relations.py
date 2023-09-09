@@ -22,9 +22,9 @@ def qsum(root):
 def max_val(root):
   if root is None:
     return 0
-  left = max_val(root.left)
-  right = max_val(root.right)
-  return max(root.data, max(left, right))
+  L = max_val(root.left)
+  R = max_val(root.right)
+  return max(root.data, max(L, R))
 
 
 # 4. is_symmetric
@@ -66,8 +66,8 @@ def is_symmetric_queue(root):
 
 # 5. height
 def height(root):
+  # 0 or -1?
   if root is None:
-    # 0 or -1?
     return -1
   L = height(root.left)
   R = height(root.right)
@@ -75,28 +75,33 @@ def height(root):
 
 
 # 6. diameter
-def diameter(root):
-  def _recursive(node):
+class Diameter:
+  def __init__(self):
+    # maximum diameter calculated thus far
+    self.max_diameter = 0
+    
+  def depth(self, node) -> int:
     if node is None:
-      return 0
-    L = _recursive(node.left)
-    R = _recursive(node.right)
+      return -1
+    
+    L = self.depth(node.left)
+    R = self.depth(node.right)    
+    # Calculating diameter
+    self.max_diameter = max(self.max_diameter, 2 + L + R)
+    # Returning the height.
+    # Make sure the parent gets the correct depth from this node
     return max(L, R) + 1
-  return _recursive(root.left) + _recursive(root.right)
+  
+  def calc(self, root) -> int:
+    self.depth(root)
+    return self.max_diameter
+
+def diameter(root):
+  clas = Diameter()
+  return clas.calc(root)
 
 
 # 7. leafs
-# def leafs(root):
-#   def _recursive(node):
-#     if node is None:
-#       return 0
-#     if node.left is None and node.right is None:
-#       return 1
-#     L = _recursive(node.left)
-#     R = _recursive(node.right)
-#     return L + R
-#   return _recursive(root)
-
 def leafs(root):
   if root is None:
     return 0
@@ -155,19 +160,13 @@ def sum_only_child_parents(root):
   if root is None:
     return 0
   if (root.left is None and root.right is not None) or (root.left is not None and root.right is None):
-    return sum_only_child_parents(root.left) + sum_only_child_parents(root.right) + root.data
-  L = sum_only_child_parents(root.left)
-  R = sum_only_child_parents(root.right)
-  return L + R
-
-def sum_only_child_parentsWrong(root):
-  if root is None:
-    return 0
-  if (root.left is None and root.right is not None) or (root.left is not None and root.right is None):
-    return root.data
-  L = sum_only_child_parentsWrong(root.left)
-  R = sum_only_child_parentsWrong(root.right)
-  return L + R
+    L = sum_only_child_parents(root.left)
+    R = sum_only_child_parents(root.right)
+    return L + R + root.data
+  else:
+    L = sum_only_child_parents(root.left)
+    R = sum_only_child_parents(root.right)
+    return L + R
 
 
 # 11. sum_only_child
@@ -199,7 +198,6 @@ def sum_only_child(root, is_root=True):
 def level_min(root, height):
   if root is None:
     return 0
-  # min_node = 999
   min_node = float('inf')
   queue = Queue()
   queue.put([root, 0])
@@ -211,8 +209,8 @@ def level_min(root, height):
       if h == height:
         if node.data < min_node:
           min_node = node.data
-      queue.put([node.left,h+1])
-      queue.put([node.right,h+1])
+      queue.put([node.left, h + 1])
+      queue.put([node.right, h + 1])
   return min_node
 
 
