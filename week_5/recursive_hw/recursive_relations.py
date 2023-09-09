@@ -170,28 +170,20 @@ def sum_only_child_parents(root):
 
 
 # 11. sum_only_child
-def sum_only_childOne(root):
+def sum_only_child(root, is_root = True):
   if root is None:
     return 0
+  
+  if_root = 0
+  if is_root:
+    if_root = root.data
+  
   if root.left is None and root.right is not None:
-    return sum_only_child(root.left) + sum_only_child(root.right) + root.right.data
+    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + root.right.data + if_root
   elif root.left is not None and root.right is None:
-    return sum_only_child(root.left) + sum_only_child(root.right) + root.left.data
+    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + root.left.data + if_root
   else:
-    return sum_only_child(root.left) + sum_only_child(root.right) + root.data
-  # L = sum_only_child(root.left)
-  # R = sum_only_child(root.right)
-  # return L + R + root.data
-
-def sum_only_child(root, is_root=True):
-  if root is None:
-    return 0
-  if root.left is None and root.right is not None:
-    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + root.right.data + (root.data if is_root else 0)
-  elif root.left is not None and root.right is None:
-    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + root.left.data + (root.data if is_root else 0)
-  else:
-    return sum_only_child(root.left, False) + sum_only_child(root.right, False)
+    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + if_root
 
 
 # 12. level_min
