@@ -291,6 +291,32 @@ b. base case:
     return 0
 
 c. recurrence relation: 
+
+
+d. Verified: 
+  A. find_height(root, 1) = 2 (3, 10)
+  B. find_height(root, 1) = 1 (2)
+  C. find_height(root, 1) = 2 (2, 3)
+  D. find_height(root, 1) = 2 (2, 2)
+  E. find_height(root, 1) = 2 (2, 3)
+
+  A. find_height(root, 2) = 3 (1, 6, 14)
+  B. find_height(root, 2) = 1 (3)
+  C. find_height(root, 2) = 4 (4, 5, 6, 7)
+  D. find_height(root, 2) = 4 (4, 5, 5, 4)
+  E. find_height(root, 2) = 3 (4, 5, 6)
+
+  A. find_height(root, 3) = 3 (4, 7, 12)
+  B. find_height(root, 3) = 1 (4)
+  C. find_height(root, 3) = 4 (8, 9, 10, 11)
+  D. find_height(root, 3) = 0
+  E. find_height(root, 3) = 2 (10, 8)
+
+e. N-ary solution: 
+  for child in root:
+    queue.put([child, h+1])
+
+f. full code:
 def find_height(root, height):
   if root is None:
     return 0
@@ -308,32 +334,18 @@ def find_height(root, height):
       queue.put([node.right,h+1])
   return num_nodes
 
-d. Verified: 
-  A. find_height(root, 2) = 3 (1, 6, 14)
-  B. find_height(root, 2) = 1 (3)
-  C. find_height(root, 2) = 4 (4,5,6,7)
-  D. find_height(root, 2) = 4 (4,5,5,4)
-  E. find_height(root, 2) = 3 (4,5,6)
 
-e. N-ary solution: 
-  for child in root:
-    queue.put([child, h+1])
-
-
-
-10. sum _only_child_parents
+10. sum_only_child_parents
 a. 
 
 b. base case: 
   if root is None:
     return 0
-  if (root.left is None and root.right is not None) or (root.left is not None and root.right is None):
-    return sum_only_child_parents(root.left) + sum_only_child_parents(root.right) + root.data
 
 c. recurrence relation: 
-  L = sum_only_child_parents(root.left)
-  R = sum_only_child_parents(root.right)
-  return L + R
+  if (root.left is None and root.right is not None) or (root.left is not None and root.right is None):
+    return sum_only_child_parents(root.left) + sum_only_child_parents(root.right) + root.data
+  return sum_only_child_parents(root.left) + sum_only_child_parents(root.right)
 
 d. Verified: 
   A. L: 0, R: 10 + 14 = 24
@@ -348,12 +360,26 @@ e. N-ary solution:
       return sum(sum_only_child_parents(child) for child in root.children) + root.data
   return sum(sum_only_child_parents(child) for child in root.children)
 
+f. full code: 
+def sum_only_child_parents(root):
+  if root is None:
+    return 0
+  if (root.left is None and root.right is not None) or (root.left is not None and root.right is None):
+    L = sum_only_child_parents(root.left)
+    R = sum_only_child_parents(root.right)
+    return L + R + root.data
+  else:
+    L = sum_only_child_parents(root.left)
+    R = sum_only_child_parents(root.right)
+    return L + R
+
 
 11. sum_only_child
 a. 
 
 b. base case: 
-  if root is None: return False
+  if root is None: 
+    return 0
 
 c. recurrence relation: 
   pass
@@ -367,6 +393,22 @@ d. Verified:
 
 e. N-ary solution: 
   pass
+
+f. full code:
+def sum_only_child(root, is_root = True):
+  if root is None:
+    return 0
+  
+  if_root = 0
+  if is_root:
+    if_root = root.data
+  
+  if root.left is None and root.right is not None:
+    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + root.right.data + if_root
+  elif root.left is not None and root.right is None:
+    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + root.left.data + if_root
+  else:
+    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + if_root
 
 
 12. level_min
@@ -387,6 +429,26 @@ d. Verified:
 
 e. N-ary solution: 
   pass
+
+f. full code:
+def level_min(root, height):
+  if root is None:
+    return 0
+  # min_node = 999
+  min_node = float('inf')
+  queue = Queue()
+  queue.put([root, 0])
+  while queue.empty() is False:
+    arr = queue.get()
+    node = arr[0]
+    h = arr[1]
+    if node is not None:
+      if h == height:
+        if node.data < min_node:
+          min_node = node.data
+      queue.put([node.left, h + 1])
+      queue.put([node.right, h + 1])
+  return min_node
 
 
 13. full
@@ -411,6 +473,17 @@ e. N-ary solution:
   if len(root.children) == 0 or len(root.children) == n:
       return all(full_n_ary(child, n) for child in root.children)
   return False
+
+f. full code:
+def full(root):
+  if root is None:
+    return True
+  if (root.left is not None and root.right is not None) or (root.left is None and root.right is None):
+    L = full(root.left)
+    R = full(root.right)
+    return L and R
+  elif root.left or root.right:
+    return False
 
 
 14. same(root_a, root_b)
@@ -445,6 +518,16 @@ e. N-ary solution:
     return True
   return False
 
+f. full code:
+def same(root_a, root_b):
+  if root_a is None and root_b is None:
+    return True
+  if root_a is not None and root_b is not None:
+    L = same(root_a.left, root_b.left)
+    R = same(root_a.right, root_b.right)
+    return (root_a.data == root_b.data) and L and R
+  return False
+
 
 15. almost_same(root_a, root_b)
 a. 
@@ -464,3 +547,5 @@ d. Verified:
 
 e. N-ary solution: 
   pass
+
+f. full code:
