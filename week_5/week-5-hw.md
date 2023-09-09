@@ -4,7 +4,8 @@ Identifying Recursive Relationships
 a. 
 
 b. base case: 
-  if root is None: return 0
+  if root is None: 
+    return 0
 
 c. recurrence relation: 
   sum(root) = sum(L) + sum(R) + root.data
@@ -18,54 +19,123 @@ d. Verified:
 
 e. N-ary solution: 
  root + sum(root.child)
+f. full code:
+def sum(root):
+  if root is None:
+    return 0
+  L = sum(root.left)
+  R = sum(root.right)
+  return L + R + root.data
 
 
 3. max_val
 a. 
 
 b. base case:
-  if root is None: return 0
+  if root is None: 
+    return 0
 
 c. recurrence relation: 
   max_val(root) = max(root.data, max(L, R))
 
 d. Verified: 
-  A. max(8, max(7,14)) = 14
-  B. max(1, max(None,5) = 5
+  max(root, max(L, R))
+  A. max(8, max(7, 14)) = 14
+  B. max(1, max(None, 5) = 5
   C. max(1, max(11, 7) = 11
   D. max(1, max(5, 5) = 5
   E. max(1, max(10, 9) = 10
 
 e. N-ary solution: 
   max(root.data, max(root.children))
+  ```
+  def max_val(root):
+    if root is None:
+        return 0
+
+    maxval = 0
+    for child in root.children:
+      maxval = max(maxval, max_val(child))
+    return maxval
+  ```
+
+f. full code:
+def max_val(root):
+  if root is None:
+    return 0
+  L = max_val(root.left)
+  R = max_val(root.right)
+  return max(root.data, max(L, R))
 
 
 4 is_symmetric
 a. 
 
 b. base case: 
-  if root is None: return False
+  if root is None:
+    return True
+
+  if left is None and right is not None:
+    return False
+  if left is not None and right is None:
+    return False
+  if left is None and right is None:
+    return True
 
 c. recurrence relation: 
-  is_symmetric(root) = preorder_traversal(L) == reverse_preorder_traversal(R)
+    if left.data == right.data:
+      return is_mirror(left.left, right.right) and is_mirror(left.right, right.left)
 
 d. Verified: 
-  A. 
-  B. 
-  C. 
-  D. 
-  E. 
+  A. False
+  B. False
+  C. False
+  D. True: L: 2,4,5, R: 2,5,4
+  E. False
 
 e. N-ary solution: 
-  pass
+# we start by adding all pairs of children of the root to the queue. Then, for each pair of nodes, we add their children to the queue in a symmetric manner: the first child of the left node with the last child of the right node, the second child of the left node with the second-to-last child of the right node, and so on.
+def is_symmetric(root):
+  if root is None:
+      return True
+  queue = [(child, root.children[-i-1]) for i, child in enumerate(root.children)]
+  while queue:
+      left, right = queue.pop(0)
+      if left is None and right is None:
+          continue
+      if left is None or right is None:
+          return False
+      if left.data != right.data:
+          return False
+      queue.extend((left_child, right.children[-i-1]) for i, left_child in enumerate(left.children))
+  return True
+
+f. full code: 
+def is_symmetric(root):
+  def is_mirror(left, right):
+    if left is None and right is not None:
+      return False
+    if left is not None and right is None:
+      return False
+    if left is None and right is None:
+      return True
+    if left.data == right.data:
+      return is_mirror(left.left, right.right) and is_mirror(left.right, right.left)
+    return False
+  
+  if root is None:
+    return True
+  else:
+    return is_mirror(root.left, root.right)
 
 
 5. height
 a. 
 
 b. base case: 
-  # if root is None: return 0
-  if root is None: return -1
+  # For a tree with a single node (the root), there are no edges, so the height is 0. So for an empty tree, the height is -1.
+  if root is None: 
+    return -1
 
 c. recurrence relation: 
   height(root) = max(height(L), height(R)) + 1
@@ -79,27 +149,55 @@ d. Verified:
 
 e. N-ary solution: 
   max(height(root.children)) + 1
+f. full code:
+def height(root):
+  if root is None:
+    return -1
+  L = height(root.left)
+  R = height(root.right)
+  return max(L, R) + 1
 
 
 6 diameter
 a. 
 
 b. base case: 
-  if root is None: return 0
+  if root is None:
+    return 0
 
 c. recurrence relation: 
     diameter(root) = max(diameter(L), diameter(R)) + 1
     return diameter(L) + diameter(R)
 
 d. Verified: 
-  A. 6
-  B. 4
-  C. 5
-  D. 4
-  E. 7
+  A. 6 (4 or 7 to 12)
+  B. 4 (5 to 1)
+  C. 5 (8, 9, 10, 11 to 6 or 7)
+  D. 4 (4 or 5 to 5 or 4)
+  E. 7 (10 to 9)
 
 e. N-ary solution: 
   sum(root.child)
+f. full code:
+class Diameter:
+  def __init__(self):
+    # stores the maximum diameter calculated
+    self.max_diameter = 0
+    
+  def depth(self, node) -> int:
+    if node is None:
+      return 0
+    
+    L = self.depth(node.left)
+    R = self.depth(node.right)    
+    # Calculate diameter
+    self.max_diameter = max(self.max_diameter, L + R)
+    # Make sure the parent node(s) get the correct depth from this node
+    return max(L, R) + 1
+  
+  def calc(self, root) -> int:
+    self.depth(root)
+    return self.max_diameter
 
 
 7 leafs
@@ -115,11 +213,11 @@ c. recurrence relation:
   leaf(L) + leaf(R)
 
 d. Verified: 
-  A. L: 3, R: 1 = 4
-  B. L: 0, R: 1 = 1
-  C. L: 4, R: 2 = 6
-  D. L: 2, R: 2 = 4
-  E. L: 2, R: 1 = 3
+  A. L: 3 (1, 4, 7), R: 1 (12) = 4
+  B. L: 0, R: 1 (5) = 1
+  C. L: 4 (8, 9, 10, 11), R: 2 (6, 7) = 6
+  D. L: 2 (4, 5), R: 2 (5, 4) = 4
+  E. L: 2 (10, 5), R: 1 (9) = 3
 
 e. N-ary solution: 
   sum(leaf(root.children))
@@ -129,6 +227,40 @@ e. N-ary solution:
 a. 
 
 b. base case: 
+  if root is None:
+    return False
+
+c. recurrence relation: 
+  if root.left and root.right:
+    if root.data < root.left.data and root.data < root.right.data:
+      return True
+    else:
+      return False
+  if root.left and root.right is None:
+    if root.data < root.left.data:
+      return True
+    else:
+      return False
+  if root.right and root.left is None:
+    if root.data < root.right.data:
+      return True
+    else:
+      return False
+
+  return top_ordered(L) and top_ordered(R)
+
+d. Verified: 
+(root < root.left and root < root.left)
+  A. False (Root: 8 < 3,10. False)
+  B. True (Root: 1 < 2. Right: 2 < 3 < 4 < 5)
+  C. True (Root: 1 < 2,3. Left: 2 < 4,5. 4 < 8,9. 5 < 10,11. Right: 3 < 6,7)
+  D. True (Root: 1 < 2,2. Left: 2 < 4,5. Right: 2 < 5,4)
+  E. True (Root: 1 < 2,3. Left: 2 < 4,5, 4 < 10. Right: 3 < 6 < 8 < 9)
+
+e. N-ary solution: 
+  pass
+f. full code:
+def top_ordered(root):
   if root is None:
     return False
   if root.left and root.right:
@@ -146,19 +278,9 @@ b. base case:
       return True
     else:
       return False
-
-c. recurrence relation: 
-  top_ordered(L) and top_ordered(R)
-
-d. Verified: 
-  A. False
-  B. True
-  C. True
-  D. True
-  E. True
-
-e. N-ary solution: 
-  pass
+  L = top_ordered(root.left)
+  R = top_ordered(root.right)
+  return L and R
 
 
 9. find_height
