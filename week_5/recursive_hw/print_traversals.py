@@ -63,6 +63,7 @@ def printPostOrder(node):
 
 ## Driver code
 if __name__ == "__main__":
+  pass
   # Function call
   # print("Inorder Traversal: ", end = "")
   
