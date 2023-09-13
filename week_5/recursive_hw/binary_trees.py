@@ -65,6 +65,7 @@ def bt_long_legs():
 
 def bt_a():
   root = Node(8)
+
   root.left = Node(3)
   root.left.left = Node(1)
   root.left.right = Node(6)
@@ -73,6 +74,23 @@ def bt_a():
 
   root.right = Node(10)
   root.right.right = Node(14)
+  root.right.right.left = Node(12)  
+  return root
+
+def bt_a_diff():
+  # diff
+  root = Node(8)
+
+  root.left = Node(3)
+  # diff
+  root.left.left = Node(2)
+  root.left.right = Node(6)
+  # diff
+  root.left.right.left = Node(4)
+  root.left.right.right = Node(7)
+
+  root.right = Node(11)
+  root.right.right = Node(15)
   root.right.right.left = Node(12)
   return root
 
