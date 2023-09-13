@@ -142,16 +142,14 @@ def find_height(root, height):
     return 0
   num_nodes = 0
   queue = Queue()
-  queue.put([root, 0])
+  queue.put((root, 0))
   while queue.empty() is False:
-    arr = queue.get()
-    node = arr[0]
-    h = arr[1]
+    node, h = queue.get()
     if node is not None:
       if h == height:
         num_nodes += 1
-      queue.put([node.left,h+1])
-      queue.put([node.right,h+1])
+      queue.put((node.left, h + 1))
+      queue.put((node.right, h + 1))
   return num_nodes
 
 
@@ -192,17 +190,14 @@ def level_min(root, height):
     return 0
   min_node = float('inf')
   queue = Queue()
-  queue.put([root, 0])
+  queue.put((root, 0))
   while queue.empty() is False:
-    arr = queue.get()
-    node = arr[0]
-    h = arr[1]
+    node, h = queue.get()
     if node is not None:
-      if h == height:
-        if node.data < min_node:
-          min_node = node.data
-      queue.put([node.left, h + 1])
-      queue.put([node.right, h + 1])
+      if h == height and node.data < min_node:
+        min_node = node.data
+      queue.put((node.left, h + 1))
+      queue.put((node.right, h + 1))
   return min_node
 
 
