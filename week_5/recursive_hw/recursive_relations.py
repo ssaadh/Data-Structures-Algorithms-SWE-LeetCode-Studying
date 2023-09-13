@@ -225,21 +225,30 @@ def same(root_a, root_b):
 
 
 # 15. almost_same
-def almost_same(root_a, root_b, k):  
-  def _recursive(a, b, count, k):
-    if a is None or b is None:
-      return True
-    if a is None and b is None:
-      return True
-    if count > k:
-      return False
+def almost_sameOld(root_a, root_b, k):
+  if root_a is None and root_b is None:
+    return True
+  if root_a is None or root_b is None:
+    return False
+  
+  if root_a.data != root_b.data:
+    k -= 1
+  if k < 0:
+    return False
+  L = almost_same(root_a.left, root_b.left, k)
+  R = almost_same(root_a.right, root_b.right, k)
+  return L and R
 
-    lefty = a.data
-    righty = b.data
-    if lefty == righty:
-      return _recursive(a.left, b.left, count, k) and _recursive(a.right, b.right, count, k)
-
-    left = _recursive(a.left, b.left, count + 1, k)
-    right = _recursive(a.right, b.right, count + 1, k)
-    return left + right
-  return _recursive(root_a, root_b, 0, k)
+def almost_same(root_a, root_b, k):
+  if root_a is None and root_b is None:
+    return True, k
+  if root_a is None or root_b is None:
+    return False, k
+  
+  if root_a.data != root_b.data:
+    k -= 1
+    if k < 0:
+      return False, k
+  L, k = almost_same(root_a.left, root_b.left, k)
+  R, k = almost_same(root_a.right, root_b.right, k)
+  return L and R, k
