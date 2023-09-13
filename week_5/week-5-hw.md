@@ -322,16 +322,14 @@ def find_height(root, height):
     return 0
   num_nodes = 0
   queue = Queue()
-  queue.put([root, 0])
+  queue.put((root, 0))
   while queue.empty() is False:
-    arr = queue.get()
-    node = arr[0]
-    h = arr[1]
+    node, h = queue.get()
     if node is not None:
       if h == height:
         num_nodes += 1
-      queue.put([node.left,h+1])
-      queue.put([node.right,h+1])
+      queue.put((node.left, h + 1))
+      queue.put((node.right, h + 1))
   return num_nodes
 
 
@@ -415,10 +413,17 @@ def sum_only_child(root, is_root = True):
 a. 
 
 b. base case: 
-  if root is None: return False
+  if root is None:
+    return 0
 
 c. recurrence relation: 
-  pass
+  queue: add root and 0 (level)
+  while there is something in the queue, do the following:
+    do FIFO for queue to get root and level
+    check if the node is valid
+      if the height matches the level and the current node value is the smallest so far, update a minimum node value
+      append the left and right nodes and add 1 to the heights (because these children are on the next level) to the queue
+
 
 d. Verified: 
   A. level_min(root, 2): min(1, 6, 14) = 1
@@ -434,20 +439,16 @@ f. full code:
 def level_min(root, height):
   if root is None:
     return 0
-  # min_node = 999
   min_node = float('inf')
   queue = Queue()
-  queue.put([root, 0])
+  queue.put((root, 0))
   while queue.empty() is False:
-    arr = queue.get()
-    node = arr[0]
-    h = arr[1]
+    node, h = queue.get()
     if node is not None:
-      if h == height:
-        if node.data < min_node:
-          min_node = node.data
-      queue.put([node.left, h + 1])
-      queue.put([node.right, h + 1])
+      if h == height and node.data < min_node:
+        min_node = node.data
+      queue.put((node.left, h + 1))
+      queue.put((node.right, h + 1))
   return min_node
 
 
@@ -455,17 +456,21 @@ def level_min(root, height):
 a. 
 
 b. base case: 
-  if root is None: return False
+  if root is None:
+    return True
 
 c. recurrence relation: 
-  pass
+  if (root.left is not None and root.right is not None) or (root.left is None and root.right is None):
+    return full(root.left) and full(root.right)
+  elif root.left or root.right:
+    return False
 
 d. Verified: 
-  A. 
-  B. 
-  C. 
-  D. 
-  E. 
+  A. L: True. R: 10, 14, have one child only. False.
+  B. root: 1 has one child. R: 2, 3, 4 have one child. False.
+  C. L: All 0 or 2 children. R: All 0 or 2 children. True.
+  D. L: All 0 or 2 children. R: All 0 or 2 children. True.
+  E. L: 4 has one child. R: 3, 6, 8 have one child. False.
 
 e. N-ary solution: 
   if root is None:
@@ -495,16 +500,10 @@ b. base case:
 
 c. recurrence relation: 
   if root_a is not None and root_b is not None:
-    L = same(root_a.left, root_b.left)
-    R = same(root_a.right, root_b.right)
-    return (root_a.data == root_b.data) and L and R
+    return (root_a.data == root_b.data) and same(root_a.left, root_b.left) and same(root_a.right, root_b.right)
 
 d. Verified: 
-  A. 
-  B. 
-  C. 
-  D. 
-  E. 
+verified
 
 e. N-ary solution: 
   if root_a is None and root_b is None:
@@ -549,3 +548,16 @@ e. N-ary solution:
   pass
 
 f. full code:
+def almost_same(root_a, root_b, k):
+  if root_a is None and root_b is None:
+    return True
+  if root_a is None or root_b is None:
+    return False
+  
+  if root_a.data != root_b.data:
+    k -= 1
+    if k < 0:
+      return False
+  L = almost_same(root_a.left, root_b.left, k)
+  R = almost_same(root_a.right, root_b.right, k)
+  return L and R
