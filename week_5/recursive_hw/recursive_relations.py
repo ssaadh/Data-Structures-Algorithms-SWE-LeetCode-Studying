@@ -68,7 +68,6 @@ def is_symmetric_queue(root):
 
 # 5. height
 def height(root):
-  # 0 or -1?
   if root is None:
     return -1
   L = height(root.left)
@@ -175,9 +174,6 @@ def sum_only_childDoesntWork(root, is_root = False):
     if root is None:
       return 0
     
-    # if_root = 0
-    # if is_root:
-    #   if_root = root.data
     if_root = root.data if is_root else 0
     
     if root.left is None and root.right is not None:
@@ -245,20 +241,6 @@ def same(root_a, root_b):
 
 
 # 15. almost_same
-def almost_sameOld(root_a, root_b, k):
-  if root_a is None and root_b is None:
-    return True
-  if root_a is None or root_b is None:
-    return False
-  
-  if root_a.data != root_b.data:
-    k -= 1
-  if k < 0:
-    return False
-  L = almost_same(root_a.left, root_b.left, k)
-  R = almost_same(root_a.right, root_b.right, k)
-  return L and R
-
 def almost_same(root_a, root_b, k):
   if root_a is None and root_b is None:
     return True, k
@@ -272,3 +254,17 @@ def almost_same(root_a, root_b, k):
   L, k = almost_same(root_a.left, root_b.left, k)
   R, k = almost_same(root_a.right, root_b.right, k)
   return L and R, k
+
+def almost_sameOld(root_a, root_b, k):
+  if root_a is None and root_b is None:
+    return True
+  if root_a is None or root_b is None:
+    return False
+  
+  if root_a.data != root_b.data:
+    k -= 1
+  if k < 0:
+    return False
+  L = almost_same(root_a.left, root_b.left, k)
+  R = almost_same(root_a.right, root_b.right, k)
+  return L and R
