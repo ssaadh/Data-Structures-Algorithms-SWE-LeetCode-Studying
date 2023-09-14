@@ -278,7 +278,13 @@ b. base case:
     return 0
 
 c. recurrence relation: 
-
+Do a level order traversal. Pass along a height to the queue.
+  queue: add root and 0 (height)
+  while there is something in the queue:
+    do FIFO for queue to get root and height
+    check if the node is valid
+      if the queue's height matches the height to find, iterate counter
+      append the left and right nodes and add 1 to the heights (because these children are on the next level) to the queue
 
 d. Verified: 
   A. find_height(root, 1) = 2 (3, 10)
