@@ -8,7 +8,7 @@ b. base case:
     return 0
 
 c. recurrence relation: 
-  sum(root) = sum(L) + sum(R) + root.data
+  recursive(L) + recursive(R) + root.data
 
 d. Verified: 
   A. L: 1+4+7+6+3 = 21, R: 12+14+10 = 36, rt: 8. Total = 65
@@ -36,7 +36,7 @@ b. base case:
     return 0
 
 c. recurrence relation: 
-  max_val(root) = max(root.data, max(L, R))
+  max(root.data, recursive(L, R))
 
 d. Verified: 
   max(root, max(L, R))
@@ -75,16 +75,14 @@ b. base case:
   if root is None:
     return True
 
-  if left is None and right is not None:
+  if ONLY L or ONLY R:
     return False
-  if left is not None and right is None:
-    return False
-  if left is None and right is None:
+  if NOT L or R:
     return True
 
 c. recurrence relation: 
-    if left.data == right.data:
-      return is_mirror(left.left, right.right) and is_mirror(left.right, right.left)
+  if L.data == R.data:
+    return recursive(L.left, R.right) and recursive(L.right, R.left)
 
 d. Verified: 
   A. False
@@ -138,7 +136,7 @@ b. base case:
     return -1
 
 c. recurrence relation: 
-  height(root) = max(height(L), height(R)) + 1
+  max(recursive(L), recursive(R)) + 1
 
 d. Verified: 
   A. (L = 2, R = 2) + 1 = 3
@@ -166,8 +164,7 @@ b. base case:
     return 0
 
 c. recurrence relation: 
-    diameter(root) = max(diameter(L), diameter(R)) + 1
-    return diameter(L) + diameter(R)
+    max_diameter = max(self.max_diameter, _recursive_depth(L) + _recursive_depth(R))
 
 d. Verified: 
   A. 6 (4 or 7 to 12)
@@ -206,11 +203,11 @@ a.
 b. base case: 
    if root is None:
     return 0
-  if root.left is None and root.right is None:
+  if L and R are None:
     return 1
 
 c. recurrence relation: 
-  leaf(L) + leaf(R)
+  recursive(L) + recursive(R)
 
 d. Verified: 
   A. L: 3 (1, 4, 7), R: 1 (12) = 4
@@ -226,28 +223,18 @@ e. N-ary solution:
 8. top_ordered
 a. 
 
-b. base case: 
+b, c. base case + recurrence relation
   if root is None:
     return False
 
-c. recurrence relation: 
-  if root.left and root.right:
-    if root.data < root.left.data and root.data < root.right.data:
-      return True
-    else:
-      return False
-  if root.left and root.right is None:
-    if root.data < root.left.data:
-      return True
-    else:
-      return False
-  if root.right and root.left is None:
-    if root.data < root.right.data:
-      return True
-    else:
-      return False
+  if L and R:
+    True if root.data is < than L.data and R.data
+  if L only:
+    True if root.data < L.data
+  if R only:
+    True if root.data < R.data
 
-  return top_ordered(L) and top_ordered(R)
+  return recursive(L) and recursive(R)
 
 d. Verified: 
 (root < root.left and root < root.left)
@@ -341,9 +328,10 @@ b. base case:
     return 0
 
 c. recurrence relation: 
-  if (root.left is None and root.right is not None) or (root.left is not None and root.right is None):
-    return sum_only_child_parents(root.left) + sum_only_child_parents(root.right) + root.data
-  return sum_only_child_parents(root.left) + sum_only_child_parents(root.right)
+  if only L or only R:
+    return recursive(L) + recursive(R) + root.data
+  else:
+    return recursive(L) + recursive(R)
 
 d. Verified: 
   A. L: 0, R: 10 + 14 = 24
@@ -380,7 +368,13 @@ b. base case:
     return 0
 
 c. recurrence relation: 
-  pass
+  if ONLY L:
+    return recursive(R) + R.data + root.data if root
+  if ONLY R:
+    return recursive() + L.data +  + root.data if root
+  # if there are 2 children
+  else:
+    return recursive(L) + recursive(R) + root.data if root
 
 d. Verified: 
   A. L: 0, R: 14 + 12, root: 8 = 34
@@ -418,7 +412,7 @@ b. base case:
 
 c. recurrence relation: 
   queue: add root and 0 (level)
-  while there is something in the queue, do the following:
+  while there is something in the queue:
     do FIFO for queue to get root and level
     check if the node is valid
       if the height matches the level and the current node value is the smallest so far, update a minimum node value
@@ -460,9 +454,10 @@ b. base case:
     return True
 
 c. recurrence relation: 
-  if (root.left is not None and root.right is not None) or (root.left is None and root.right is None):
-    return full(root.left) and full(root.right)
-  elif root.left or root.right:
+  # check if there are 2 children or no children
+  if (both L and R) or (both not L and not R):
+    return recursive(L) and recursive(R)
+  elif L or R aka one child:
     return False
 
 d. Verified: 
@@ -492,15 +487,16 @@ def full(root):
 
 
 14. same(root_a, root_b)
+aka same(A, B)
 a. 
 
 b. base case: 
-  if root_a is None and root_b is None:
+  if A is None and B is None:
     return True
 
 c. recurrence relation: 
-  if root_a is not None and root_b is not None:
-    return (root_a.data == root_b.data) and same(root_a.left, root_b.left) and same(root_a.right, root_b.right)
+  if A and B
+    return (A.data == B.data) and same(A.left, B.left) and same(A.right, B.right)
 
 d. Verified: 
 verified
@@ -529,20 +525,26 @@ def same(root_a, root_b):
 
 
 15. almost_same(root_a, root_b)
+aka almost_same(A, B)
 a. 
 
 b. base case: 
-  if root is None: return False
+  if not A and not B:
+    return True, k
+  if not A or not B:
+    return False, k
 
-c. recurrence relation: 
-  pass
+c. recurrence relation:
+  # if the values for each BT dont match, decrement k by 1 and check if k has fallen below 0. If so, then too many differences and return false
+  # return both left recursively and both right recursively
+  if A.data != B.data:
+    k -= 1
+    if k < 0:
+      return False, k
+  return recursive(A.left, B.left, k) and recursive(A.right, B.right, k), k
 
 d. Verified: 
-  A. 
-  B. 
-  C. 
-  D. 
-  E. 
+  changed 1, 2, and 3 integers for the binary tree examples
 
 e. N-ary solution: 
   pass
