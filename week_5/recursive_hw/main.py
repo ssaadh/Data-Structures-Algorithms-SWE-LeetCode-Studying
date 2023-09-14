@@ -6,6 +6,7 @@ from binary_trees import bt_c
 from binary_trees import bt_d
 from binary_trees import bt_e
 from binary_trees import bt_long_legs
+from binary_trees import bt_a_diff
 
 from recursive_relations import size
 from recursive_relations import qsum
@@ -13,6 +14,9 @@ from recursive_relations import is_symmetric
 from recursive_relations import diameter
 from recursive_relations import sum_only_child
 from recursive_relations import level_min
+from recursive_relations import full
+from recursive_relations import same
+from recursive_relations import almost_same
 
 # do not modify this function call
 retcode = pytest.main(['-v'])
@@ -58,14 +62,15 @@ if __name__ == "__main__":
   # print('c: ', diameter(bt_c()))
   # print('d: ', diameter(bt_d()))
   # print('e: ', diameter(bt_e()))
+  # print('k: ', diameter(bt_long_legs()))
 
-  print('')
-  print('sym')
-  print('a: ', is_symmetric(bt_a()))
-  print('b: ', is_symmetric(bt_b()))
-  print('c: ', is_symmetric(bt_c()))
-  print('d: ', is_symmetric(bt_d()))
-  print('e: ', is_symmetric(bt_e()))
+  # print('')
+  # print('sym')
+  # print('a: ', is_symmetric(bt_a()))
+  # print('b: ', is_symmetric(bt_b()))
+  # print('c: ', is_symmetric(bt_c()))
+  # print('d: ', is_symmetric(bt_d()))
+  # print('e: ', is_symmetric(bt_e()))
 
   # print('')
   # print('leafs')
@@ -99,13 +104,13 @@ if __name__ == "__main__":
   # print('d: ', sum_only_child_parents(bt_d()))
   # print('e: ', sum_only_child_parents(bt_e()))
 
-  # print('')
-  # print('sum_only_child')
-  # print('a: ', sum_only_child(bt_a()))
-  # print('b: ', sum_only_child(bt_b()))
-  # print('c: ', sum_only_child(bt_c()))
-  # print('d: ', sum_only_child(bt_d()))
-  # print('e: ', sum_only_child(bt_e()))
+  print('')
+  print('sum_only_child')
+  print('a: ', sum_only_child(bt_a(), True))
+  print('b: ', sum_only_child(bt_b(), True))
+  print('c: ', sum_only_child(bt_c(), True))
+  print('d: ', sum_only_child(bt_d(), True))
+  print('e: ', sum_only_child(bt_e(), True))
 
   # print('')
   # print('level_min')
@@ -115,13 +120,13 @@ if __name__ == "__main__":
   # print('d: ', level_min(bt_d(), 2))
   # print('e: ', level_min(bt_e(), 2))
 
-  # print('')
-  # print('full_binary_tree')
-  # print('a: ', full(bt_a()))
-  # print('b: ', full(bt_b()))
-  # print('c: ', full(bt_c()))
-  # print('d: ', full(bt_d()))
-  # print('e: ', full(bt_e()))
+  print('')
+  print('full_binary_tree')
+  print('a: ', full(bt_a()))
+  print('b: ', full(bt_b()))
+  print('c: ', full(bt_c()))
+  print('d: ', full(bt_d()))
+  print('e: ', full(bt_e()))
 
   # print('')
   # print('same')
@@ -133,4 +138,8 @@ if __name__ == "__main__":
 
   # print('')
   # print('almost_same')
-  # print(almost_same(bt_c(), bt_c(), 2))
+  # print('0: ', almost_same(bt_a(), bt_a_diff(), 0))
+  # print('1: ', almost_same(bt_a(), bt_a_diff(), 1))
+  # print('2: ', almost_same(bt_a(), bt_a_diff(), 2))
+  # print('3: ', almost_same(bt_a(), bt_a_diff(), 3))
+  # print('4: ', almost_same(bt_a(), bt_a_diff(), 4))
