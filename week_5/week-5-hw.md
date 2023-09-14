@@ -420,19 +420,20 @@ e. N-ary solution:
   pass
 
 f. full code:
-run as `sum_only_child(root, True)`
-def sum_only_child(root, is_root = False):
-  if root is None:
-    return 0
-  
-  if_root = root.data if is_root else 0  
-  if root.left is not None and root.right is None:
-    return sum_only_child(root.left) + root.left.data + if_root
-  elif root.left is None and root.right is not None:
-    return sum_only_child(root.right) + root.right.data + if_root
-  # if both children or if neither left or right, those will both return 0
-  else:
-    return sum_only_child(root.left) + sum_only_child(root.right) + if_root
+def sum_only_child(root, is_root = True):
+  def helper(root, is_root = False):
+    if root is None:
+      return 0
+    
+    if_root = root.data if is_root else 0
+    
+    if root.left is None and root.right is not None:
+      return helper(root.right) + root.right.data + if_root
+    elif root.left is not None and root.right is None:
+      return helper(root.left) + root.left.data + if_root
+    else:
+      return helper(root.left) + helper(root.right) + if_root
+  return helper(root, is_root)
 
 
 12. level_min
