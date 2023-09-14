@@ -156,36 +156,53 @@ prefix_exists(prefix: str) -> bool i.e. if our dictionary contains â€œdoghouseâ€
 
 class Node:
   def __init__(self) -> None:
-    self.childen = {}
+    self.children = {}
     self.word_exists = False
 
 class Trie:
-    def __init__(self) -> None:
-        """
-        Initialize your data structure here.
-        """
-        self.head = Node()
+  def __init__(self) -> None:
+    """
+    Initialize your data structure here.
+    """
+    self.head = Node()
 
-    def insert(self, word: str) -> None:
-        """
-        Inserts a word into the trie.
-        """
-        pass
+  def insert(self, word: str) -> None:
+    """
+    Inserts a word into the trie.
+    """
+    cur = self.head
+    for char in word:
+      if char not in cur.children:
+        cur.children[char] = Node()
+      cur = cur.children[char]
+    cur.word_exists = True
 
-            
-    def word_exists(self, word: str) -> bool:
-        """
-        Returns if the word is in the trie.
-        """
-        pass
-        
+          
+  def word_exists(self, word: str) -> bool:
+    """
+    Returns if the word is in the trie.
+    """
+    cur = self.head
+    for char in word:
+      if char in cur.children:
+        cur = cur.children[char]
+      else:
+        return False
+    return cur.word_exists
+      
 
-    def prefix_exists(self, prefix: str) -> bool:
-        """
-        Returns if there is any word in the trie that starts with the given prefix.
-        """
-        pass
+  def prefix_exists(self, prefix: str) -> bool:
+    """
+    Returns if there is any word in the trie that starts with the given prefix.
+    """
+    cur = self.head
+    for char in prefix:
+      if char in cur.children:
+        cur = cur.children[char]
+      else:
+        return False
+    return True
     
-    # def printS(self):
-    #   cur = self.head
-    #   print(cur.children)
+  # def printS(self):
+  #   cur = self.head
+  #   print(cur.children)
