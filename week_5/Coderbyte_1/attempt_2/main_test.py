@@ -40,20 +40,20 @@ def test_get_k_smallest_elements_1():
 def test_get_k_largest_elements_1():
   assert get_k_largest_elements(root, 4) == [7, 6, 5, 3]
 
-# trie = Trie()
-# trie.insert("doghouse")
+trie = Trie()
+trie.insert("doghouse")
 
-# def test_trie_word_exists_1():
-#   assert trie.word_exists("doghouse") == True
+def test_trie_word_exists_1():
+  assert trie.word_exists("doghouse") == True
 
-# def test_trie_word_exists_2():
-#   assert trie.word_exists("dog") == False
+def test_trie_word_exists_2():
+  assert trie.word_exists("dog") == False
 
-# def test_trie_word_exists_3():
-#   assert trie.word_exists("dogs") == False
+def test_trie_word_exists_3():
+  assert trie.word_exists("dogs") == False
 
-# def test_trie_prefix_exists_1():
-#   assert trie.prefix_exists("dog") == True
+def test_trie_prefix_exists_1():
+  assert trie.prefix_exists("dog") == True
 
-# def test_trie_prefix_exists_2():
-#   assert trie.prefix_exists("dogs") == False
+def test_trie_prefix_exists_2():
+  assert trie.prefix_exists("dogs") == False

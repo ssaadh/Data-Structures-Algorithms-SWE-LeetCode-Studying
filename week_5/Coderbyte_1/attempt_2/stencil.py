@@ -112,15 +112,17 @@ def level_order_traversal(root: TreeNode) -> list[list[int]]:
 '''
 Write a function to perform a traversal where we return the k smallest elements in ascending order in this BST.
 '''
-
+# this cant be a good solution??
 def get_k_smallest_elements(root: TreeNode, k: int) -> list[int]:
   def helper(root: TreeNode, lst: list[int], k) -> list[int]:
     if root is None:
       return
     helper(root.left, lst, k)
+    # this is such a bad way of checking?
     if len(lst) < k:
       lst.append(root.value)
     helper(root.right, lst, k)
+
   lst = []
   helper(root, lst, k)
   return lst
@@ -135,9 +137,11 @@ def get_k_largest_elements(root: TreeNode, k: int) -> list[int]:
     if root is None:
       return
     helper(root.right, lst, k)
+    # this is such a bad way of checking right?
     if len(lst) < k:
       lst.append(root.value)
     helper(root.left, lst, k)
+
   lst = []
   helper(root, lst, k)
   return lst
