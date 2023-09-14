@@ -93,23 +93,10 @@ d. Verified:
 
 e. N-ary solution: 
 # we start by adding all pairs of children of the root to the queue. Then, for each pair of nodes, we add their children to the queue in a symmetric manner: the first child of the left node with the last child of the right node, the second child of the left node with the second-to-last child of the right node, and so on.
-def is_symmetric(root):
-  if root is None:
-      return True
-  queue = [(child, root.children[-i-1]) for i, child in enumerate(root.children)]
-  while queue:
-      left, right = queue.pop(0)
-      if left is None and right is None:
-          continue
-      if left is None or right is None:
-          return False
-      if left.data != right.data:
-          return False
-      queue.extend((left_child, right.children[-i-1]) for i, left_child in enumerate(left.children))
-  return True
 
 f. full code: 
 def is_symmetric(root):
+  # helper
   def is_mirror(left, right):
     if left is None and right is not None:
       return False
@@ -120,11 +107,30 @@ def is_symmetric(root):
     if left.data == right.data:
       return is_mirror(left.left, right.right) and is_mirror(left.right, right.left)
     return False
-  
+  # is_symmetric base code
   if root is None:
     return True
   else:
     return is_mirror(root.left, root.right)
+
+# queue
+# Standard level order traversal
+# Base cases checked after popping the tuple of left and right subtrees from queue
+def is_symmetric_queue(root):
+  if root is None:
+    return True
+  queue = [(root.left, root.right)]
+  while queue:
+    left, right = queue.pop(0)
+    if left is None and right is None:
+      continue
+    if left is None or right is None:
+      return False
+    if left.data != right.data:
+      return False
+    queue.append((left.left, right.right))
+    queue.append((left.right, right.left))
+  return True
 
 
 5. height
@@ -218,6 +224,15 @@ d. Verified:
 
 e. N-ary solution: 
   sum(leaf(root.children))
+f. full code:
+def leafs(root):
+  if root is None:
+    return 0
+  if root.left is None and root.right is None:
+    return 1
+  L = leafs(root.left)
+  R = leafs(root.right)
+  return L + R
 
 
 8. top_ordered
@@ -393,20 +408,19 @@ e. N-ary solution:
   pass
 
 f. full code:
-def sum_only_child(root, is_root = True):
+run as `sum_only_child(root, True)`
+def sum_only_child(root, is_root = False):
   if root is None:
     return 0
   
-  if_root = 0
-  if is_root:
-    if_root = root.data
-  
-  if root.left is None and root.right is not None:
-    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + root.right.data + if_root
-  elif root.left is not None and root.right is None:
-    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + root.left.data + if_root
+  if_root = root.data if is_root else 0  
+  if root.left is not None and root.right is None:
+    return sum_only_child(root.left) + root.left.data + if_root
+  elif root.left is None and root.right is not None:
+    return sum_only_child(root.right) + root.right.data + if_root
+  # if both children or if neither left or right, those will both return 0
   else:
-    return sum_only_child(root.left, False) + sum_only_child(root.right, False) + if_root
+    return sum_only_child(root.left) + sum_only_child(root.right) + if_root
 
 
 12. level_min
@@ -484,7 +498,9 @@ f. full code:
 def full(root):
   if root is None:
     return True
-  if (root.left is not None and root.right is not None) or (root.left is None and root.right is None):
+  both = root.left is not None and root.right is not None
+  neither = root.left is None and root.right is None
+  if both or neither:
     L = full(root.left)
     R = full(root.right)
     return L and R
@@ -556,16 +572,31 @@ e. N-ary solution:
   pass
 
 f. full code:
-def almost_same(root_a, root_b, k):
-  if root_a is None and root_b is None:
-    return True
-  if root_a is None or root_b is None:
-    return False
-  
-  if root_a.data != root_b.data:
-    k -= 1
-    if k < 0:
+  def almost_same(root_a, root_b, k):
+    if root_a is None and root_b is None:
+      return True, k
+    if root_a is None or root_b is None:
+      return False, k
+    
+    if root_a.data != root_b.data:
+      k -= 1
+      if k < 0:
+        return False, k
+    L, k = almost_same(root_a.left, root_b.left, k)
+    R, k = almost_same(root_a.right, root_b.right, k)
+    return L and R, k
+
+  # wrong
+  def almost_same(root_a, root_b, k):
+    if root_a is None and root_b is None:
+      return True
+    if root_a is None or root_b is None:
       return False
-  L = almost_same(root_a.left, root_b.left, k)
-  R = almost_same(root_a.right, root_b.right, k)
-  return L and R
+    
+    if root_a.data != root_b.data:
+      k -= 1
+      if k < 0:
+        return False
+    L = almost_same(root_a.left, root_b.left, k)
+    R = almost_same(root_a.right, root_b.right, k)
+    return L and R
