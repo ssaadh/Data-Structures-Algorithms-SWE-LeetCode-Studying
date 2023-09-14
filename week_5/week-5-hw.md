@@ -18,7 +18,8 @@ d. Verified:
   E. L: 10+4+5+2 = 21, R: 9+8+6+3 = 26, rt: 1. Total = 48
 
 e. N-ary solution: 
- root + sum(root.child)
+ sum += root.data + sum(root.children)
+
 f. full code:
 def sum(root):
   if root is None:
@@ -48,16 +49,9 @@ d. Verified:
 
 e. N-ary solution: 
   max(root.data, max(root.children))
-  ```
-  def max_val(root):
-    if root is None:
-        return 0
-
-    maxval = 0
-    for child in root.children:
-      maxval = max(maxval, max_val(child))
-    return maxval
-  ```
+  
+  for child in root.children:
+    maxval = max(maxval, max_val(child))
 
 f. full code:
 def max_val(root):
@@ -152,7 +146,9 @@ d. Verified:
   E. (L = 2, R = 3) + 1 = 4
 
 e. N-ary solution: 
-  max(height(root.children)) + 1
+  # height is one more than the max height of any subtree
+  max_height = max(max_height, height(root.children)) + 1
+
 f. full code:
 def height(root):
   if root is None:
@@ -179,8 +175,13 @@ d. Verified:
   D. 4 (4 or 5 to 5 or 4)
   E. 7 (10 to 9)
 
-e. N-ary solution: 
-  sum(root.child)
+e. N-ary solution:
+Have 2 max variables for the top highest value height/depth
+Go through each child, get the recursive height/depth.
+If the recursive height is larger than either of the maxes, overwrite them
+When getting the max diameter, do a max of that variable or the sum of the two max heights
+Since we already know what is the current max height is in the larger max variable, can return that [+ 1]
+
 f. full code:
 class Diameter:
   def __init__(self):
@@ -222,8 +223,11 @@ d. Verified:
   D. L: 2 (4, 5), R: 2 (5, 4) = 4
   E. L: 2 (10, 5), R: 1 (9) = 3
 
-e. N-ary solution: 
-  sum(leaf(root.children))
+e. N-ary solution:
+  if len(root.children) == 0:
+    return 1
+  return sum(leafs(child) for child in root.children)
+
 f. full code:
 def leafs(root):
   if root is None:
@@ -260,7 +264,10 @@ d. Verified:
   E. True (Root: 1 < 2,3. Left: 2 < 4,5, 4 < 10. Right: 3 < 6 < 8 < 9)
 
 e. N-ary solution: 
-  pass
+  for child in root.children:
+    if child.val < root.val or not is_top_ordered(child):
+      return False
+
 f. full code:
 def top_ordered(root):
   if root is None:
@@ -321,8 +328,9 @@ d. Verified:
   E. find_height(root, 3) = 2 (10, 8)
 
 e. N-ary solution: 
-  for child in root:
-    queue.put([child, h+1])
+Same as the binary tree except when adding to the queue in the loop there isnt just left and right child so something like:
+for child in root.children:
+  queue.put((child, h + 1))
 
 f. full code:
 def find_height(root, height):
@@ -361,11 +369,15 @@ d. Verified:
   D. L: 0, R: 0 = 0
   E. L: 4, R: 3 + 6 + 8 = 21
 
-e. N-ary solution: 
-  child_count = sum(1 for child in root.children if child is not None)
-  if child_count == 1:
-      return sum(sum_only_child_parents(child) for child in root.children) + root.data
-  return sum(sum_only_child_parents(child) for child in root.children)
+e. N-ary solution:
+If the length of root children is 1, add on the root data to the ongoing sum.
+Iterate through each child and recursively run
+  if len(root.children) == 1:
+    sum += root.data
+  for child in root.children:
+    sum += sum_only_child_parents(child)
+
+OR if the root children is 1, return the recursive with the root data. Otherwise return just the recursive for each child
 
 f. full code: 
 def sum_only_child_parents(root):
@@ -487,12 +499,10 @@ d. Verified:
   D. L: All 0 or 2 children. R: All 0 or 2 children. True.
   E. L: 4 has one child. R: 3, 6, 8 have one child. False.
 
-e. N-ary solution: 
-  if root is None:
-      return True
+e. N-ary solution:
+  # how is n determined?
   if len(root.children) == 0 or len(root.children) == n:
-      return all(full_n_ary(child, n) for child in root.children)
-  return False
+    return all(recursive(child, n) for child in root.children)
 
 f. full code:
 def full(root):
@@ -523,14 +533,12 @@ c. recurrence relation:
 d. Verified: 
 verified
 
-e. N-ary solution: 
-  if root_a is None and root_b is None:
-    return True
-  if root_a is not None and root_b is not None:
-    if root_a.value != root_b.value or len(root_a.children) != len(root_b.children):
+e. N-ary solution:
+  if A and B:
+    if A.value != B.value or len(A.children) != len(B.children):
       return False
-    for i in range(len(root_a.children)):
-      if not same(root_a.children[i], root_b.children[i]):
+    for k in range(len(A.children)):
+      if not same(A.children[k], B.children[k]):
         return False
     return True
   return False
