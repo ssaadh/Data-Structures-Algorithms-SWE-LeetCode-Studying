@@ -10,16 +10,23 @@ from binary_trees import bt_a_diff
 
 from recursive_relations import size
 from recursive_relations import qsum
+from recursive_relations import max_val
 from recursive_relations import is_symmetric
+from recursive_relations import height
 from recursive_relations import diameter
+from recursive_relations import leafs
+from recursive_relations import top_ordered
+from recursive_relations import find_height
+from recursive_relations import sum_only_child_parents
 from recursive_relations import sum_only_child
 from recursive_relations import level_min
+from recursive_relations import is_symmetric
 from recursive_relations import full
 from recursive_relations import same
 from recursive_relations import almost_same
 
 # do not modify this function call
-retcode = pytest.main(['-v'])
+retcode = pytest.main(['-vv'])
 
 ## Driver code
 if __name__ == "__main__":
