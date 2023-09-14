@@ -28,8 +28,8 @@ def max_val(root):
 
 
 # 4. is_symmetric
-# straight up
 def is_symmetric(root):
+  # helper
   def is_mirror(left, right):
     if left is None and right is not None:
       return False
@@ -40,13 +40,15 @@ def is_symmetric(root):
     if left.data == right.data:
       return is_mirror(left.left, right.right) and is_mirror(left.right, right.left)
     return False
-  
+  # is_symmetric base code
   if root is None:
     return True
   else:
     return is_mirror(root.left, root.right)
 
 # queue
+# Standard level order traversal
+# Base cases checked after popping the tuple of left and right subtrees from queue
 def is_symmetric_queue(root):
   if root is None:
     return True
