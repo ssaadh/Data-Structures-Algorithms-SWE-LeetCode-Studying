@@ -370,14 +370,15 @@ d. Verified:
   E. L: 4, R: 3 + 6 + 8 = 21
 
 e. N-ary solution:
-If the length of root children is 1, add on the root data to the ongoing sum.
-Iterate through each child and recursively run
-  if len(root.children) == 1:
+# If the root children is 1, add on the root data to the ongoing sum.
+# Iterate through each child and recursively run
+# This is basically same as sum_only_child except getting the root/parent value
+  psuedocode:
+  child_count = sum(1 for child in root.children if child is not None)
+  if child_count == 1:
     sum += root.data
   for child in root.children:
     sum += sum_only_child_parents(child)
-
-OR if the root children is 1, return the recursive with the root data. Otherwise return just the recursive for each child
 
 f. full code: 
 def sum_only_child_parents(root):
@@ -417,7 +418,16 @@ d. Verified:
   E. L: 10, R: 6 + 8 + 9, root: 1 = 34
 
 e. N-ary solution: 
-  pass
+  # If root children is 1, add on the root data to the ongoing sum.
+  # Otherwise continue the recursion without
+  # code would need to do a sum += most likely not just return
+  # This is basically same as sum_only_child_parent except getting the child value
+  psuedocode:
+  child_count = sum(1 for child in root.children if child is not None)
+    if child_count == 1:
+        sum(sum_only_child_parents(child) for child in root.children) + root.child.data
+    else:
+        sum(sum_only_child_parents(child) for child in root.children)
 
 f. full code:
 def sum_only_child(root, is_root = True):
@@ -459,8 +469,9 @@ d. Verified:
   E. level_min(root, 2): min(4, 5, 5, 4) = 4
   D. level_min(root, 2): min(4, 5, 6) = 4
 
-e. N-ary solution: 
-  pass
+e. N-ary solution:
+  # when the height_counter is less than the height, recursively get the minimal value. pseudocode:
+  min_val = min([level_min(child, height, height_counter + 1, min_val) for child in root.children])
 
 f. full code:
 def level_min(root, height):
@@ -501,9 +512,14 @@ d. Verified:
   E. L: 4 has one child. R: 3, 6, 8 have one child. False.
 
 e. N-ary solution:
-  # how is n determined?
-  if len(root.children) == 0 or len(root.children) == n:
-    return all(recursive(child, n) for child in root.children)
+  - Check if length of tree children are 0 or the amt we are looking for.
+    - For example, this could be whichever subtree has the most children which would have to be calculated
+    - If the length is 0 or it's whatever amt of children we determine to make it "full" then:
+      - iterate through all children of root and recursively run the function
+
+  psuedocode:
+  if len(root.children) == 0 or len(root.children) == num_of_children_making_it_full:
+    return all(recursive(child, num_of_children_making_it_full) for child in root.children)
 
 f. full code:
 def full(root):
@@ -535,14 +551,13 @@ d. Verified:
 verified
 
 e. N-ary solution:
-  if A and B:
-    if A.value != B.value or len(A.children) != len(B.children):
+  # go through all the children of the two N-arys and check if all the children are the same value (base case) and verify the amt of children are the same. Zip changes each item in each iterator into a tuple.
+  if A.value != B.value or len(A.children) != len(B.children):
+    return False
+  for a_child, b_child in zip(A.children, B.children)
+    if not same(A.a_child, b_child):
       return False
-    for k in range(len(A.children)):
-      if not same(A.children[k], B.children[k]):
-        return False
-    return True
-  return False
+  return True
 
 f. full code:
 def same(root_a, root_b):
@@ -578,7 +593,23 @@ d. Verified:
   changed 1, 2, and 3 integers for the binary tree examples
 
 e. N-ary solution: 
-  pass
+# go through all the children of the two N-arys recursively via zip iterating
+# same check of if the data isnt the same, decrement and check the difference counter
+# verify the amt of children are the same
+  if A.data != B.data:
+    k -= 1
+    if k < 0:
+      return False, k
+
+  if len(A.children) != len(B.children):
+    return False, k
+
+  for child_a, child_b in zip(A.children, B.children):
+    result, k = almost_same(child_a, child_b, k)
+    if not result:
+      return False, k
+
+  return True, k
 
 f. full code:
   def almost_same(root_a, root_b, k):
