@@ -1,8 +1,6 @@
 Identifying Recursive Relationships
 
 2. sum
-a. 
-
 b. base case: 
   if root is None: 
     return 0
@@ -10,7 +8,7 @@ b. base case:
 c. recurrence relation: 
   recursive(L) + recursive(R) + root.data
 
-d. Verified: 
+a, d. Verified: 
   A. L: 1+4+7+6+3 = 21, R: 12+14+10 = 36, rt: 8. Total = 65
   B. L: 0, R: 5+4+3+2 = 14, rt: 1. Total = 15
   C. L: 8+9+4+10+11+5+2 = 49 , R: 6+7+3 = 16 , rt: 1. Total = 66
@@ -30,8 +28,6 @@ def sum(root):
 
 
 3. max_val
-a. 
-
 b. base case:
   if root is None: 
     return 0
@@ -39,7 +35,7 @@ b. base case:
 c. recurrence relation: 
   max(root.data, recursive(L, R))
 
-d. Verified: 
+a, d. Verified: 
   max(root, max(L, R))
   A. max(8, max(7, 14)) = 14
   B. max(1, max(None, 5) = 5
@@ -63,8 +59,6 @@ def max_val(root):
 
 
 4 is_symmetric
-a. 
-
 b. base case: 
   if root is None:
     return True
@@ -78,7 +72,7 @@ c. recurrence relation:
   if L.data == R.data:
     return recursive(L.left, R.right) and recursive(L.right, R.left)
 
-d. Verified: 
+a, d. Verified: 
   A. False
   B. False
   C. False
@@ -86,7 +80,8 @@ d. Verified:
   E. False
 
 e. N-ary solution: 
-# we start by adding all pairs of children of the root to the queue. Then, for each pair of nodes, we add their children to the queue in a symmetric manner: the first child of the left node with the last child of the right node, the second child of the left node with the second-to-last child of the right node, and so on.
+Like the queue BT solution except the initial queue and queue adding on logic is different. Add all pairs of children of the root to the queue. The children pairs should be the first child and last child. Then next child and 2nd to last child.
+After the base case checking of the popped nodes, do the same thing when adding on to the queue except it's the first child of the left child and the last child of the right node and so on.
 
 f. full code: 
 def is_symmetric(root):
@@ -128,8 +123,6 @@ def is_symmetric_queue(root):
 
 
 5. height
-a. 
-
 b. base case: 
   # For a tree with a single node (the root), there are no edges, so the height is 0. So for an empty tree, the height is -1.
   if root is None: 
@@ -138,7 +131,7 @@ b. base case:
 c. recurrence relation: 
   max(recursive(L), recursive(R)) + 1
 
-d. Verified: 
+a, d. Verified: 
   A. (L = 2, R = 2) + 1 = 3
   B. (L = 0, R = 3) + 1 = 4
   C. (L = 2, R = 1) + 1 = 3
@@ -159,8 +152,6 @@ def height(root):
 
 
 6 diameter
-a. 
-
 b. base case: 
   if root is None:
     return 0
@@ -168,7 +159,7 @@ b. base case:
 c. recurrence relation: 
     max_diameter = max(self.max_diameter, _recursive_depth(L) + _recursive_depth(R))
 
-d. Verified: 
+a, d. Verified: 
   A. 6 (4 or 7 to 12)
   B. 4 (5 to 1)
   C. 5 (8, 9, 10, 11 to 6 or 7)
@@ -205,8 +196,6 @@ class Diameter:
 
 
 7 leafs
-a. 
-
 b. base case: 
    if root is None:
     return 0
@@ -216,7 +205,7 @@ b. base case:
 c. recurrence relation: 
   recursive(L) + recursive(R)
 
-d. Verified: 
+a, d. Verified: 
   A. L: 3 (1, 4, 7), R: 1 (12) = 4
   B. L: 0, R: 1 (5) = 1
   C. L: 4 (8, 9, 10, 11), R: 2 (6, 7) = 6
@@ -240,8 +229,6 @@ def leafs(root):
 
 
 8. top_ordered
-a. 
-
 b, c. base case + recurrence relation
   if root is None:
     return False
@@ -255,7 +242,7 @@ b, c. base case + recurrence relation
 
   return recursive(L) and recursive(R)
 
-d. Verified: 
+a, d. Verified: 
 (root < root.left and root < root.left)
   A. False (Root: 8 < 3,10. False)
   B. True (Root: 1 < 2. Right: 2 < 3 < 4 < 5)
@@ -293,8 +280,6 @@ def top_ordered(root):
 
 
 9. find_height
-a. 
-
 b. base case: 
   if root is None:
     return 0
@@ -308,7 +293,7 @@ Do a level order traversal. Pass along a height to the queue.
       if the queue's height matches the height to find, iterate counter
       append the left and right nodes and add 1 to the heights (because these children are on the next level) to the queue
 
-d. Verified: 
+a, d. Verified: 
   A. find_height(root, 1) = 2 (3, 10)
   B. find_height(root, 1) = 1 (2)
   C. find_height(root, 1) = 2 (2, 3)
@@ -350,8 +335,6 @@ def find_height(root, height):
 
 
 10. sum_only_child_parents
-a. 
-
 b. base case: 
   if root is None:
     return 0
@@ -362,7 +345,7 @@ c. recurrence relation:
   else:
     return recursive(L) + recursive(R)
 
-d. Verified: 
+a, d. Verified: 
   A. L: 0, R: 10 + 14 = 24
   B. L: 0, R: 2 + 3 + 4, root: 1 = 10
   C. L: 0, R: 0 = 0
@@ -395,8 +378,6 @@ def sum_only_child_parents(root):
 
 
 11. sum_only_child
-a. 
-
 b. base case: 
   if root is None: 
     return 0
@@ -410,7 +391,7 @@ c. recurrence relation:
   else:
     return recursive(L) + recursive(R) + root.data if root
 
-d. Verified: 
+a, d. Verified: 
   A. L: 0, R: 14 + 12, root: 8 = 34
   B. L: 0, R: 2 + 3 + 4 + 5, root: 1 = 15
   C. L: 0, R: 0, root: 1 = 1
@@ -447,8 +428,6 @@ def sum_only_child(root, is_root = True):
 
 
 12. level_min
-a. 
-
 b. base case: 
   if root is None:
     return 0
@@ -462,7 +441,7 @@ c. recurrence relation:
       append the left and right nodes and add 1 to the heights (because these children are on the next level) to the queue
 
 
-d. Verified: 
+a, d. Verified: 
   A. level_min(root, 2): min(1, 6, 14) = 1
   B. level_min(root, 2): min(3) = 3
   C. level_min(root, 2): min(4, 5, 6, 7) = 4
@@ -491,8 +470,6 @@ def level_min(root, height):
 
 
 13. full
-a. 
-
 b. base case: 
   if root is None:
     return True
@@ -504,7 +481,7 @@ c. recurrence relation:
   elif L or R aka one child:
     return False
 
-d. Verified: 
+a, d. Verified: 
   A. L: True. R: 10, 14, have one child only. False.
   B. root: 1 has one child. R: 2, 3, 4 have one child. False.
   C. L: All 0 or 2 children. R: All 0 or 2 children. True.
@@ -537,8 +514,6 @@ def full(root):
 
 14. same(root_a, root_b)
 aka same(A, B)
-a. 
-
 b. base case: 
   if A is None and B is None:
     return True
@@ -547,7 +522,7 @@ c. recurrence relation:
   if A and B
     return (A.data == B.data) and same(A.left, B.left) and same(A.right, B.right)
 
-d. Verified: 
+a, d. Verified: 
 verified
 
 e. N-ary solution:
@@ -572,8 +547,6 @@ def same(root_a, root_b):
 
 15. almost_same(root_a, root_b)
 aka almost_same(A, B)
-a. 
-
 b. base case: 
   if not A and not B:
     return True, k
@@ -589,7 +562,7 @@ c. recurrence relation:
       return False, k
   return recursive(A.left, B.left, k) and recursive(A.right, B.right, k), k
 
-d. Verified: 
+a, d. Verified: 
   changed 1, 2, and 3 integers for the binary tree examples
 
 e. N-ary solution: 
