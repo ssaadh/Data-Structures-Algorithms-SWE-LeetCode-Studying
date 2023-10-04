@@ -42,6 +42,7 @@ def find_shortest_path_distance(s: str, d: str, edges: list[list[str]]) -> int:
         seen.add(neighbor)
         queue.put(neighbor)
         progress[neighbor] = curr
+  return -1
 
 '''
 Modify the above algorithm to return the path itself. 
@@ -73,6 +74,7 @@ def find_shortest_path(s: str, d: str, edges: list[list[str]]) -> list[str]:
         seen.add(neighbor)
         queue.put(neighbor)
         progress[neighbor] = curr
+  return -1
 
 '''
 Modify the above algorithm to work if each connection costs k where k > 0.
