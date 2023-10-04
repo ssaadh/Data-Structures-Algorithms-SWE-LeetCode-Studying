@@ -1,4 +1,5 @@
 from __future__ import annotations
+from queue import Queue
 
 '''
 Given a list of course prerequisites each in the form [0, 1] 
@@ -11,7 +12,32 @@ or None if not possible. Courses are numbered from 0 to n-1.
 
 # topological sort
 def find_valid_course_ordering_if_exists(prerequisites: list[list[int]], n: int) -> list[int] | None:
-  pass
+  inbound = [0] * n
+  outbound = [[] for _ in range(n)]
+
+  for first,second in prerequisites:
+    inbound[second] += 1
+    outbound[first].append(second)
+
+  queue = Queue()
+  res = []
+  for index,course in enumerate(inbound):
+    if course == 0:
+      queue.put(index)
+      res.append(index)
+  
+  # why does this not work if i do `while queue`
+  while not queue.empty():
+    curr = queue.get()
+    for course in outbound[curr]:
+      inbound[course] -= 1
+      if inbound[course] == 0:
+        queue.put(course)
+        res.append(course)
+  
+  if len(res) == n:
+    return res
+  return None
 
 '''
 Suppose you’re given a list of graph edges where each edge is of the form 
