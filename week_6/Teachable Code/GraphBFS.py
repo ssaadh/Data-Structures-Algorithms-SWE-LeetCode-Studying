@@ -1,5 +1,5 @@
 from buildAdjList import buildAdjList, prettyPrint
-from Queue import Queue
+from queue import Queue
 
 #is there a path from this node to that node
 
@@ -27,6 +27,31 @@ def BFS(adj_list, source, target):
 
     return False
 
+# BFS for storing the shortest path
+# From Coachable-AI
+def BFSU(adj_list, source, target):
+    Q = Queue()
+    Q.put(source)
+    seen = set([source])
+    predecessor = {source: None}  # Add a dictionary to keep track of predecessors
+    # print(predecessor)
+    while(not Q.empty()):
+        cur = Q.get()
+        if cur == target:
+            path = []
+            while cur is not None:  # Construct the path by backtracking through predecessors
+                path.append(cur)
+                cur = predecessor[cur]
+            return path[::-1]  # Reverse the path to get it from source to target
+        for neighbor in adj_list[cur]:
+            if neighbor not in seen:
+                seen.add(neighbor)
+                Q.put(neighbor)
+                predecessor[neighbor] = cur  # Update the predecessor of the neighbor
+                print(predecessor)
+
+    return None  # Return None if there is no path from source to target
+
 
 if __name__ == '__main__':
     love_connections = [("Hermia", "Lysander"), ("Demetrius", "Lysander"),
@@ -53,5 +78,6 @@ if __name__ == '__main__':
     #4 Oberon
 
     print(BFS(adj_list, "Hermia", "Oberon"))
+    print(BFSU(adj_list, "Hermia", "Oberon"))
 
     #prettyPrint(love_connections)
