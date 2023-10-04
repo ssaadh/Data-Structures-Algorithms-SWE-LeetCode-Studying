@@ -7,16 +7,75 @@ Given a DAG that is represented as a collection of edges, i.e. ["n1", "n2"] mean
 '''
 Create an adjacency list for it.
 '''
-def to_adjacency_list(edges: list[list[str]]) -> dict[str, list[str]]:
-  pass
+# def to_adjacency_list(edges: list[list[str]]) -> dict[str, list[str]]:
+def to_adjacency_list(edges: list) -> dict:
+  edge_dict = dict()
+  for edge_1,edge_2 in edges:
+    if edge_1 not in edge_dict:
+      edge_dict[edge_1] = [edge_2]
+    elif edge_1 in edge_dict:
+      edge_dict[edge_1].append(edge_2)
+    if edge_2 not in edge_dict:
+      edge_dict[edge_2] = []
+  return edge_dict
 
 '''
 Create an adjacency matrix for it where each 
 respective cell contains 0 for unconnected and 1 for connected.
 Index 0 represents "v1" and so on. 
 '''
+# def to_adjacency_matrix(edges: list[list[str]]) -> list[list[int]]:
+#   k = []
+#   for e in edges:
+#   for n in edge:
+#     if n not in k:
+#     k.append(n)
+    
 def to_adjacency_matrix(edges: list[list[str]]) -> list[list[int]]:
-  pass
+  # We need a list of unique nodes to determine the size of our matrix.
+  # We're also sorting the nodes to ensure a consistent ordering.
+  nodes = []
+  for edge in edges:
+    for node in edge:
+      if node not in nodes:
+        nodes.append(node)
+  nodes.sort()
+
+  # We create a dictionary mapping each node to its index in the sorted list.
+  # This will allow us to quickly find the correct row and column in the matrix for each edge.
+  node_indices = {}
+  for index, node in enumerate(nodes):
+    node_indices[node] = index
+
+  # print('-node_indices-')
+  # print(node_indices)
+
+  # We initialize an empty matrix of the correct size.
+  # The matrix is a 2D list, with the same number of rows and columns as there are nodes.
+  # Initially, all values are 0, indicating no connections between nodes.
+  matrix = []
+  for _ in nodes:
+    row = []
+    for _ in nodes:
+      row.append(0)
+    matrix.append(row)
+
+  # print('-matrix-')
+  # print(matrix)
+
+  # We iterate over the edges, and for each edge, we set the corresponding cell in the matrix to 1.
+  # This indicates that there is a connection from the first node in the edge to the second.
+  for k,j in edges:
+    row = node_indices[k]
+    col = node_indices[j]
+    matrix[row][col] = 1
+
+  # print('-matrix final-')
+  
+  return matrix
+
+edges = [["v1", "v2"], ["v1", "v3"], ["v2", "v4"], ["v2", "v5"], ["v4", "v3"], ["v5", "v6"], ["v6", "v4"]]
+print(to_adjacency_matrix(edges))
 
 '''
 Suppose you’re given a list of graph edges where 
