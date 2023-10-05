@@ -1,5 +1,6 @@
 from __future__ import annotations
 from queue import Queue
+import heapq
 
 '''
 Given a list of course prerequisites each in the form [0, 1] 
@@ -54,4 +55,45 @@ you should assume there is an equivalent edge (e2, e1, 3) as well.
 
 # Prim ??
 def output_mst(edges: list[tuple[str, str, int]]) -> list[tuple[str, str, int]]:
-  pass
+  adj_list = dict()
+  for parent, child, value in edges:
+    if parent not in adj_list:
+      adj_list[parent] = [(value, parent, child)]
+    else:
+      adj_list[parent].append((value, parent, child))
+    
+    if child not in adj_list:
+      adj_list[child] = [(value, child, parent)]
+    else:
+      adj_list[child].append((value, child, parent))
+
+  visited = set()
+  arr = []
+  res = []
+
+  starting = edges[0][0]
+
+  visited.add(starting)
+  for k in adj_list[starting]:
+    heapq.heappush(arr, k)
+
+  print(arr)
+  while arr and len(res) < len(edges):
+    value, parent, child = heapq.heappop(arr)
+    # print(arr)
+
+    for val, par, chi in adj_list[child]:
+      if chi not in visited:
+        heapq.heappush(arr, (val, par, chi))
+
+    if child in visited:
+      continue
+    else:
+      visited.add(child)
+    
+    if int(parent[1:]) < int(child[1:]):
+      res.append((parent, child, value))
+    else:
+      res.append((child, parent, value))
+  
+  return res

@@ -1,6 +1,7 @@
 from __future__ import annotations
-from stencil_1 import to_adjacency_list
 from queue import Queue
+
+from stencil_1 import to_adjacency_list
 
 '''
 Given a DAG that is represented as a collection of edges, i.e. ["n1", "n2"] means that n1 precedes n2 (visually, n1 -> n2),

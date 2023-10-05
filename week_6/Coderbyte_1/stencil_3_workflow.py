@@ -1,4 +1,5 @@
 from queue import Queue
+import heapq
 
 # Going through the example input completely manually:
 
@@ -89,4 +90,144 @@ def find_valid_course_ordering_if_exists(prerequisites: list[list[int]], n: int)
     return res
   return None
   
-print(find_valid_course_ordering_if_exists([[0, 1], [1, 2], [0, 2], [1, 3],[2, 3]], 4))
+# print(find_valid_course_ordering_if_exists([[0, 1], [1, 2], [0, 2], [1, 3],[2, 3]], 4))
+
+
+'''
+Suppose you’re given a list of graph edges where each edge is of the form 
+("e1", "e2", 3), meaning that "e1" is connected to "e2" and has an 
+edge weight of 3. The graph is connected. Write an algorithm to print 
+out the an MST of the graph.
+
+You can assume the graph is undirected for this problem. 
+If there is an edge (e1, e2, 3) in the input,
+you should assume there is an equivalent edge (e2, e1, 3) as well.
+'''
+
+# Will need to rearrange the data to be able to go thru each vertex and see the smallest connection.
+
+# If we do an adj list:
+
+# e1: [(e2, 6), (e3, 4), (e4, 5)]
+# e2: [(e1, 6), (e3, 2)]
+# e3: [(e1, 4), (e2, 2)]
+# e4: [(e1, 5), (e5, 3)]
+# e5: [(e4, 3)]
+
+# e4 <3> e5
+# |5
+# e1 <6> e2 
+#  \4   /2
+#    e3
+
+# Okay so it makes sense to use a PQ.
+# _Go thru last PQ lecture again_
+# _PQ representation isnt ordered in any way_
+
+# start at e1.
+# visited = [e1]
+
+# _smallest weight is (e3, 4). PQ pulls it out_
+# PQ: (e1, e2, 6), (e1, e3, 4), (e1, e4, 5)
+# visited = [e1, e3]
+# final: [(e1, e3, 4)]
+
+
+# Add anything from e3 that isnt in PQ. Can check visited to see that the e1, one, shouldnt be added?
+# PQ: (e1, e2, 6), (e1, e4, 5), (e2, e3, 2)
+# _smallest weight is (e2, e3, 2). PQ pulls it out_
+# visited = [e1, e2, e3]
+# final = [(e1, e3, 4), (e2, e3, 2)]
+
+# Add anything from e2 that isnt in PQ. Check visited and both e1 and 3 have been added.
+# PQ: (e1, e2, 6), (e1, e4, 5)
+# _smallest weight is (e1, e4, 5). PQ pulls it out_
+# visited = [e1, e2, e3, e4]
+# final = [(e1, e3, 4), (e2, e3, 2), (e1, e4, 5)]
+
+# Add anything from e4 into PQ. e1 is already visited. Add e5 connection
+# PQ: (e1, e2, 6), (e4, e5, 3)
+# _smallest weight is (e4, e5, 3), pull it out_
+# visited = [e1, e2, e3, e4, e5]
+# final = [(e1, e3, 4), (e2, e3, 2), (e1, e4, 5), (e4, e5, 3)]
+
+# Add anything from e5. Nothing.
+# PQ: (e1, e2, 6)
+# Pull out (e1, e2, 6). Which vertex is being checked for it already visited?
+# Both are already visited.
+
+# Done.
+
+# --
+
+# Create an adj list from the input. Edges are both directions. Always include the adj list current vertex first. The format should be (value, curr_vertex, connecting_vertex).
+# Create a visited set, a PQ (heapq) arr, and a final array of tuples (?).
+                                                                 
+# Start with any vertex so we'll do input[0][1]. Go thru the adjacent vertices for the first vertex and add them to the heapq. The heapq should include both vertices and the value first so the value can be compared.
+
+# Add input[0][1] to visited.
+
+# How to deal with the duplicate other way around edges? In the above trace I assumed the smallest vertex always is first but how would that be done and should that be done? NO as said below, always have the adj list vertex come before the vertex it is connecting to
+
+# Do a while heapq or while length of the result is less than len(edges)
+# heappop the smallest value. Loop through the adj list of the second/child vertex. If the last/child vertex isn't in visited, add the tuple to the heap. Outside of this neighbor checking, check if the second/child vertex is in visited. If so, go to the next iteration. We don't want to do anything else. Otherwise:
+# Add the second/child vertex to visited. Finally add the tuple to the result array but the order has to be changed.
+# Check which vertex is smaller and have that one be added first. Then the other vertex then the value. This is for the output.
+
+# Added info: The "fringe" vertex can always be the second value. That will let us check that in the visited. We already know the first value is in visited since we add it that way. That's the vertex we are connecting to for the mst and removing as a fringe vertex and adding to visited.
+
+# That's it. Outside of the loop, return the result
+
+# ('e1', 'e2', 6), ('e2', 'e3', 2), ('e1', 'e3', 4), ('e4', 'e5', 3), ('e1', 'e4', 5)
+
+# input = [('e1', 'e2', 6), ('e2', 'e3', 2), ('e1', 'e3', 4), ('e4', 'e5', 3), ('e1', 'e4', 5)]
+# output = set([("e2", "e3", 2), ("e4", "e5" , 3), ("e1", "e3" , 4), ("e1", "e4" , 5)])
+
+# Prim ??
+def output_mst(edges: list[tuple[str, str, int]]) -> list[tuple[str, str, int]]:
+  adj_list = dict()
+  for parent, child, value in edges:
+    if parent not in adj_list:
+      adj_list[parent] = [(value, parent, child)]
+    else:
+      adj_list[parent].append((value, parent, child))
+    
+    if child not in adj_list:
+      adj_list[child] = [(value, child, parent)]
+    else:
+      adj_list[child].append((value, child, parent))
+
+  visited = set()
+  arr = []
+  res = []
+
+  starting = edges[0][0]
+
+  visited.add(starting)
+  for k in adj_list[starting]:
+    heapq.heappush(arr, k)
+
+  print(arr)
+  while arr and len(res) < len(edges):
+    value, parent, child = heapq.heappop(arr)
+    # print(arr)
+
+    for val, par, chi in adj_list[child]:
+      if chi not in visited:
+        heapq.heappush(arr, (val, par, chi))
+
+    if child in visited:
+      continue
+    else:
+      visited.add(child)
+    
+    if int(parent[1:]) < int(child[1:]):
+      res.append((parent, child, value))
+    else:
+      res.append((child, parent, value))
+  
+  return res
+
+val = output_mst([('e1', 'e2', 6), ('e2', 'e3', 2), ('e1', 'e3', 4), ('e4', 'e5', 3), ('e1', 'e4', 5)])
+mst = [("e2", "e3", 2), ("e4", "e5" , 3), ("e1", "e3" , 4), ("e1", "e4" , 5)]
+print(set(val) == set(mst))

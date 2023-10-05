@@ -1,5 +1,6 @@
-from stencil_1 import to_adjacency_list
 from queue import Queue
+
+from stencil_1 import to_adjacency_list
 
 # i0
 
