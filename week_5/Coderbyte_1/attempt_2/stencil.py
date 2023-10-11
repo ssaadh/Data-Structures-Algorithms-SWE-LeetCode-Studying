@@ -95,11 +95,9 @@ Write a function to perform a level by level order traversal on the BT.
 def level_order_traversal(root: TreeNode) -> list[list[int]]:
   arr = []
   queue = []
-  queue.append([root, 0])
+  queue.append((root, 0))
   while len(queue) > 0:
-    res = queue.pop(0)
-    node = res[0]
-    height = res[1]
+    node, height = queue.pop(0)
     if node is not None:
       if height >= len(arr):
          arr.append([])
