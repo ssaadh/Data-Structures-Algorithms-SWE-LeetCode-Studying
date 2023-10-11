@@ -4,29 +4,26 @@ from buildAdjList import buildAdjList, prettyPrint
 
 #return true if the target can be reached from the source
 def DFS(adj_list, source, target):
-    #O(N^2) runtime
-    #O(N)
-    visited = set()
-    return _DFS(adj_list, source, target, visited)
-
+  #O(N^2) runtime
+  #O(N)
+  visited = set()
+  return _DFS(adj_list, source, target, visited)
 
 def _DFS(adj_list, cur_node, target, visited):
-    if cur_node == target:
-        return True
+  if cur_node == target:
+    return True
 
-    if cur_node in visited:
-        return False
-
-    visited.add(cur_node)
-    #O(N)
-    for neighbor in adj_list[cur_node]:
-
-        #O(N)
-        if (_DFS(adj_list, neighbor, target, visited)):
-            return True
+  if cur_node in visited:
     return False
 
+  visited.add(cur_node)
+  #O(N)
+  for neighbor in adj_list[cur_node]:
 
+    #O(N)
+    if (_DFS(adj_list, neighbor, target, visited)):
+      return True
+  return False
 
 if __name__ == '__main__':
     #start Hermia
