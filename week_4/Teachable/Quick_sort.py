@@ -16,7 +16,22 @@ def partition(arr, lo, hi):
   #[7,5,3,4,8,10,9,12]
   pivot = arr[lo]
   swap_index = lo + 1
-  for i in range(lo + 1, hi + 1):
+  for i in range(lo + 1, hi + 1):    
+    if arr[i] < pivot:
+      arr[i], arr[swap_index] = arr[swap_index], arr[i]
+      swap_index += 1
+  arr[lo], arr[swap_index - 1] = arr[swap_index - 1], arr[lo]
+  return swap_index - 1
+
+def partition_pp(arr, lo, hi):
+  #returns the index of our pivot element
+  #everything with index < index of pivot is < pivot
+  #[7,5,3,4,8,10,9,12]
+  pivot = arr[lo]
+  swap_index = lo + 1
+  print("swap index: ", swap_index)
+  for i in range(lo + 1, hi + 1):    
+    print(i)
     if arr[i] < pivot:
       arr[i], arr[swap_index] = arr[swap_index], arr[i]
       swap_index += 1
