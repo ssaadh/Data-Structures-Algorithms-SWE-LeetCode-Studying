@@ -24,7 +24,7 @@ class LunchLine:
             return True
         return False
 
-lst = [Customer('saadh', 5), Customer('nick', 10)]
+lst = [Customer('sad', 5), Customer('nn', 10)]
 ll = LunchLine(lst, time_end = 6)
 
 print(ll.line_size())

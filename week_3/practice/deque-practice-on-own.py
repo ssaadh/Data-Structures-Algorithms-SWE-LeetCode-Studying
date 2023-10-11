@@ -48,16 +48,17 @@ class Deque:
         # head <-> tail
         # head <-> 1 <-> tail
         # head <-> 2 <-> 1 <-> tail
+        # head <-> 3 <-> 2 <-> 1 <-> tail
 
         new_node = ListNode(item)
-        prev_first = self.head.next
+        first = self.head.next
         #update head.next.prev
         self.head.next.prev = new_node
         #update head.next
         self.head.next = new_node
         #update new nodes next and prev
         new_node.prev = self.head
-        new_node.next = prev_first
+        new_node.next = first
         self.size += 1
 
     # Return Type: None
@@ -66,13 +67,15 @@ class Deque:
         # head <-> tail
         # head <-> 1 <-> tail
         # head <-> 1 <-> 2 <-> tail
+        # head <-> 1 <-> 2 <-> 3 <-> tail
+
         new_node = ListNode( item )
-        initial_prev = self.tail.prev
+        first = self.tail.prev
         self.tail.prev.next = new_node
         self.tail.prev = new_node
 
         new_node.next = self.tail
-        new_node.prev = initial_prev
+        new_node.prev = first
         self.size += 1
 
     # Return Type: Object
@@ -81,7 +84,7 @@ class Deque:
         # head <-> 1 <-> 2 <-> tail
         # head <-> 2 <-> tail
         if self.isEmpty():
-            return false
+            return False
 
         target = self.head.next
         self.head.next = self.head.next.next
@@ -99,7 +102,7 @@ class Deque:
 
         # head <-> tail
         if self.isEmpty():
-            return false
+            return False
 
         target = self.tail.prev
         self.tail.prev = self.tail.prev.prev
