@@ -10,14 +10,14 @@ def insertion_sort_back(arr):
   # return [ num_swaps, arr ]
   return arr
 
-def insertion_sort_fwd( n ):
-  for i in range( 1, len( n ) ):
-      current = n[ i ]
+def insertion_sort_fwd(n):
+  for i in range(1, len(n)):
+      current = n[i]
       j = i - 1
-      while ( j >= 0 and current < n[ j ] ):
-        n[ j + 1 ] = n[ j ]
+      while (j >= 0 and current < n[j]):
+        n[j + 1] = n[j]
         j -= 1
-      n[ j + 1 ] = current
+      n[j + 1] = current
       # print( n )
   return n
 
