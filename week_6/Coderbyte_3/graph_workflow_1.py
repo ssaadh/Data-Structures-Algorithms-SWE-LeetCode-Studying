@@ -3,7 +3,7 @@ from __future__ import annotations
 from queue import Queue
 
 # import pytest
-# do not modify this function call
+# # do not modify this function call
 # retcode = pytest.main(['-v'])
 
 # =============== BEGIN DO NOT MODIFY ========================
@@ -193,3 +193,18 @@ class Dungeon:
           new_path.append(neighbor)
           queue.put((new_path, playa, new_percentage))
     return final
+
+  def print_queue(self, queue):
+    a = []
+    while queue.qsize > 0:
+      path, playa = queue.get()
+      a.append(path)
+    for m in path:
+      print(self.print_path(path))
+    print(playa)
+  
+  def print_path(self, path):
+    a = []
+    for m in path:
+      a.append(m.name)
+    return a
