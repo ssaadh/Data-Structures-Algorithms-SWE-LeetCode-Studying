@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+  ],
+  "settings": {
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none",
+    "files.exclude": {
+      "coachable-curriculum.code-workspace": true,
+      "curriculum-phase1": true,
+      "week_*": true,
+    }
+  }
+}
