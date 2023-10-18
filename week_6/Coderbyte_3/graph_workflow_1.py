@@ -1,11 +1,5 @@
 from __future__ import annotations
 
-from queue import Queue
-
-# import pytest
-# # do not modify this function call
-# retcode = pytest.main(['-v'])
-
 # =============== BEGIN DO NOT MODIFY ========================
 class Treasure:
     pass
@@ -29,6 +23,8 @@ class Player:
     def battle(self, monster: Monster):
         self.health -= monster.damage
 # =============== END DO NOT MODIFY ========================
+
+from queue import Queue
 
 class Dungeon:
   def __init__(self, monster: Monster):
@@ -76,6 +72,7 @@ class Dungeon:
   def can_at_least_one_path_make_it(self) -> bool:
     queue = Queue()
     queue.put(self.monster)
+
     while queue.qsize() > 0:
       cur = queue.get()
       for neighbor in cur.next:
@@ -119,7 +116,7 @@ class Dungeon:
   # next up lowers health to 3.
   # after next queue e and d get added
 
-  # No idea how to do this while also using player.battle method.
+  # No idea how to do this while also using player.battle method so won't do that any more.
 
   # Is it possible for player to make it to end without losing all their health? 
   def can_make_it(self, player: Player) -> bool:
@@ -151,6 +148,7 @@ class Dungeon:
     while queue.qsize() > 0:
       path, playa = queue.get()
       playa += path[-1].damage
+
       for neighbor in path[-1].next:
         if type(neighbor) is Treasure:
           if playa > player.health:
@@ -177,6 +175,7 @@ class Dungeon:
     final = 0.0
     # (monster, damage, percentage)
     queue.put(([self.monster], 0, 1.0))
+
     while queue.qsize() > 0:
       path, playa, percentage = queue.get()
       playa += path[-1].damage
@@ -194,6 +193,8 @@ class Dungeon:
           queue.put((new_path, playa, new_percentage))
     return final
 
+
+  ## Utilities
   def print_queue(self, queue):
     a = []
     while queue.qsize > 0:

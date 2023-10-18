@@ -1,9 +1,23 @@
 from queue import Queue
-
 from stencil_1 import to_adjacency_list
 
-# i0
+# input = ("v1", "v4", [["v1", "v2"], ["v1", "v3"], ["v2", "v4"], ["v2", "v5"], ["v4", "v3"], ["v5", "v6"], ["v6", "v4"]])
+# output = 2
+# BFS
+'''
+Suppose you’re given a list of graph edges where 
+each edge is of the form ["e1", "e2"], meaning that 
+"e1" is connected to "e2". You’re also given a source 
+node s and destination node d.
+'''
 
+'''
+Write an algorithm to return the distance of one of the shortest paths, 
+where each connection costs 1 to traverse. Return -1 if there is no path.
+'''
+# Tracing
+
+# i0
 # seen  = [v1]
 # queue = [v1]
 
@@ -56,12 +70,10 @@ from stencil_1 import to_adjacency_list
 # Add the reverse path to an array and do an array count, or just do a counter and return that
 
 # --
-
 # Overall doing BFS for graphs. Put the edges through adj list function. Set up a queue and add/put the source vertex. Set up a seen set initialized with the source vertex as an array. Also set up a progress dictionary with the source vertex as the key and set the value to something like None. What you set the value to will matter later on*. Look into what the best data type for this is.
 # Loop while the queue is not empty. Pop out the next queue item as the current vertex. For the first run through this will obviously be the source vertex.
 # Now the equivalent of base cases. Check if the current vertex matches the destination vertex. If so, instantiate an array. Do a loop while the current vertex does not equal None*. Add the current vertex to the new array and to iterate, overwrite the current vertex to be its value in the progress dictionary. This is because later on we make the value of each key in the progress dictionary equal to the vertex it came from. Eventually this will get us back to the source index key with a value of None. Return the length of the new array minus 1.
 # Loop through the neighbors of the current vertex in the adj list. Only add things in the loop if the current neighbor isn't in the seen set. If it has not been seen, add it to the seen set, the queue, and assign the neighbor key in the progress dictionary to the current vertex. This is to track that the neighbor is coming from the current vertex.
-
 # --
 
 # basic BFS with adj_list:
@@ -77,11 +89,6 @@ from stencil_1 import to_adjacency_list
 #         add to seen set
 #         add to queue
 
-
-
-# input = ("v1", "v4", [["v1", "v2"], ["v1", "v3"], ["v2", "v4"], ["v2", "v5"], ["v4", "v3"], ["v5", "v6"], ["v6", "v4"]])
-# output = 2
-# BFS
 def find_shortest_path_distance(s: str, d: str, edges: list[list[str]]) -> int:
   adj_list = to_adjacency_list(edges)
   queue = Queue()
@@ -89,7 +96,7 @@ def find_shortest_path_distance(s: str, d: str, edges: list[list[str]]) -> int:
   seen = set(s)
   progress = dict()
   progress[s] = None
-  while queue:
+  while queue.qsize() > 0:
     curr = queue.get()
     if curr == d:
       res = []
@@ -106,12 +113,14 @@ def find_shortest_path_distance(s: str, d: str, edges: list[list[str]]) -> int:
   return -1
 
 
-
-# This is the same as find_shortest_path_distance except return the reverse of the final array getting the vertices through the progress dictionary.
-
 # # input = ("v1", "v4", [["v1", "v2"], ["v1", "v3"], ["v2", "v4"], ["v2", "v5"], ["v4", "v3"], ["v5", "v6"], ["v6", "v4"]])
 # # output = ["v1", "v2", "v4"]
 # # BFS
+'''
+Modify the above algorithm to return the path itself. 
+For the test inputs, the path will always exist.
+'''
+# This is the same as find_shortest_path_distance except return the reverse of the final array getting the vertices through the progress dictionary.
 def find_shortest_path(s: str, d: str, edges: list[list[str]]) -> list[str]:
   adj_list = to_adjacency_list(edges)
   queue = Queue()
@@ -119,7 +128,7 @@ def find_shortest_path(s: str, d: str, edges: list[list[str]]) -> list[str]:
   seen = set(s)
   progress = dict()
   progress[s] = None
-  while queue:
+  while queue.qsize() > 0:
     curr = queue.get()
     if curr == d:
       res = []
@@ -137,18 +146,11 @@ def find_shortest_path(s: str, d: str, edges: list[list[str]]) -> list[str]:
   return -1
 
 
-
-
-# 'v1': ['v2', 'v3']
-# 'v2': ['v4', 'v5']
-# 'v3': []
-# 'v4': ['v3']
-# 'v5': ['v6']
-# 'v6': ['v4']
-
-# I don't think this is different. Uniform edge weights don't make a difference.
-
 # # input = ("v1", "v6", [["v1", "v2"], ["v1", "v3"], ["v2", "v4"], ["v2", "v5"], ["v4", "v3"], ["v5", "v6"], ["v6", "v4"]], 5)
 # # output = ["v1", "v2", "v5", "v6"]
+'''
+Modify the above algorithm to work if each connection costs k where k > 0.
+'''
+# I don't think this is different. Uniform edge weights don't make a difference.
 def find_shortest_path_wt(s: str, d: str, edges: list[list[str]], k: int) -> list[str]:
   return find_shortest_path(s, d, edges)

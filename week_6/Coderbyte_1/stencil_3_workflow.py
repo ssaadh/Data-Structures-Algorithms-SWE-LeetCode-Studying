@@ -1,6 +1,15 @@
 from queue import Queue
 import heapq
 
+# input = [[0, 1], [1, 2], [0, 2], [1, 3],[2, 3]], 4
+# output = [0, 1, 2, 3]
+# topological sort
+'''
+Given a list of course prerequisites each in the form [0, 1] 
+where 0 is a prerequisite of 1 and n, the total number of courses, 
+write a function to output a valid course ordering, 
+or None if not possible. Courses are numbered from 0 to n-1.
+'''
 # Going through the example input completely manually:
 
 # [0, 1]
@@ -17,8 +26,6 @@ import heapq
 
 # [2, 3]
 # 3 cant be done until 2 is done
-
-# --
 
 # Having the total number of courses lets us create data structures to track the courses.
 # We create an inbound and outbound array. Initialize the inbound as an n length array with all 0s. Init the outbound array as an n length array with each item being an array.
@@ -53,15 +60,6 @@ import heapq
 
 # Then for course 3, no outbound to loop through, the loop is finished.
 
-'''
-Given a list of course prerequisites each in the form [0, 1] 
-where 0 is a prerequisite of 1 and n, the total number of courses, 
-write a function to output a valid course ordering, 
-or None if not possible. Courses are numbered from 0 to n-1.
-'''
-# input = [[0, 1], [1, 2], [0, 2], [1, 3],[2, 3]], 4
-# output = [0, 1, 2, 3]
-# topological sort
 def find_valid_course_ordering_if_exists(prerequisites: list[list[int]], n: int) -> list[int] | None:
   inbound = [0] * n
   outbound = [[] for _ in range(n)]
@@ -77,7 +75,7 @@ def find_valid_course_ordering_if_exists(prerequisites: list[list[int]], n: int)
       queue.put(index)
       res.append(index)
   
-  # why does this not work if i do `while queue`
+  # why does this not work if i do `while queue`?
   while not queue.empty():
     curr = queue.get()
     for course in outbound[curr]:
@@ -89,10 +87,10 @@ def find_valid_course_ordering_if_exists(prerequisites: list[list[int]], n: int)
   if len(res) == n:
     return res
   return None
-  
-# print(find_valid_course_ordering_if_exists([[0, 1], [1, 2], [0, 2], [1, 3],[2, 3]], 4))
 
 
+# input = [('e1', 'e2', 6), ('e2', 'e3', 2), ('e1', 'e3', 4), ('e4', 'e5', 3), ('e1', 'e4', 5)]
+# output = set([("e2", "e3", 2), ("e4", "e5" , 3), ("e1", "e3" , 4), ("e1", "e4" , 5)])
 '''
 Suppose you’re given a list of graph edges where each edge is of the form 
 ("e1", "e2", 3), meaning that "e1" is connected to "e2" and has an 
@@ -107,13 +105,13 @@ you should assume there is an equivalent edge (e2, e1, 3) as well.
 # Will need to rearrange the data to be able to go thru each vertex and see the smallest connection.
 
 # If we do an adj list:
-
 # e1: [(e2, 6), (e3, 4), (e4, 5)]
 # e2: [(e1, 6), (e3, 2)]
 # e3: [(e1, 4), (e2, 2)]
 # e4: [(e1, 5), (e5, 3)]
 # e5: [(e4, 3)]
 
+# View of the graph
 # e4 <3> e5
 # |5
 # e1 <6> e2 
@@ -122,7 +120,6 @@ you should assume there is an equivalent edge (e2, e1, 3) as well.
 
 # Okay so it makes sense to use a PQ.
 # _Go thru last PQ lecture again_
-# _PQ representation isnt ordered in any way_
 
 # start at e1.
 # visited = [e1]
@@ -131,7 +128,6 @@ you should assume there is an equivalent edge (e2, e1, 3) as well.
 # PQ: (e1, e2, 6), (e1, e3, 4), (e1, e4, 5)
 # visited = [e1, e3]
 # final: [(e1, e3, 4)]
-
 
 # Add anything from e3 that isnt in PQ. Can check visited to see that the e1, one, shouldnt be added?
 # PQ: (e1, e2, 6), (e1, e4, 5), (e2, e3, 2)
@@ -155,7 +151,6 @@ you should assume there is an equivalent edge (e2, e1, 3) as well.
 # PQ: (e1, e2, 6)
 # Pull out (e1, e2, 6). Which vertex is being checked for it already visited?
 # Both are already visited.
-
 # Done.
 
 # --
@@ -167,7 +162,7 @@ you should assume there is an equivalent edge (e2, e1, 3) as well.
 
 # Add input[0][1] to visited.
 
-# How to deal with the duplicate other way around edges? In the above trace I assumed the smallest vertex always is first but how would that be done and should that be done? NO as said below, always have the adj list vertex come before the vertex it is connecting to
+# How to deal with the duplicate other way around edges? In the above trace I assumed the smallest vertex always is first but can always do parent or the key and then the child vertex. When adding the next smallest edge to the final result, check to see which is smaller and add it to the set. Sets only have unique values.
 
 # Do a while heapq or while length of the result is less than len(edges)
 # heappop the smallest value. Loop through the adj list of the second/child vertex. If the last/child vertex isn't in visited, add the tuple to the heap. Outside of this neighbor checking, check if the second/child vertex is in visited. If so, go to the next iteration. We don't want to do anything else. Otherwise:
@@ -177,13 +172,9 @@ you should assume there is an equivalent edge (e2, e1, 3) as well.
 # Added info: The "fringe" vertex can always be the second value. That will let us check that in the visited. We already know the first value is in visited since we add it that way. That's the vertex we are connecting to for the mst and removing as a fringe vertex and adding to visited.
 
 # That's it. Outside of the loop, return the result
-
 # ('e1', 'e2', 6), ('e2', 'e3', 2), ('e1', 'e3', 4), ('e4', 'e5', 3), ('e1', 'e4', 5)
+# Prim
 
-# input = [('e1', 'e2', 6), ('e2', 'e3', 2), ('e1', 'e3', 4), ('e4', 'e5', 3), ('e1', 'e4', 5)]
-# output = set([("e2", "e3", 2), ("e4", "e5" , 3), ("e1", "e3" , 4), ("e1", "e4" , 5)])
-
-# Prim ??
 def output_mst(edges: list[tuple[str, str, int]]) -> list[tuple[str, str, int]]:
   adj_list = dict()
   for parent, child, value in edges:
@@ -207,10 +198,8 @@ def output_mst(edges: list[tuple[str, str, int]]) -> list[tuple[str, str, int]]:
   for k in adj_list[starting]:
     heapq.heappush(arr, k)
 
-  print(arr)
   while arr and len(res) < len(edges):
     value, parent, child = heapq.heappop(arr)
-    # print(arr)
 
     for val, par, chi in adj_list[child]:
       if chi not in visited:
@@ -227,7 +216,3 @@ def output_mst(edges: list[tuple[str, str, int]]) -> list[tuple[str, str, int]]:
       res.append((child, parent, value))
   
   return res
-
-val = output_mst([('e1', 'e2', 6), ('e2', 'e3', 2), ('e1', 'e3', 4), ('e4', 'e5', 3), ('e1', 'e4', 5)])
-mst = [("e2", "e3", 2), ("e4", "e5" , 3), ("e1", "e3" , 4), ("e1", "e4" , 5)]
-print(set(val) == set(mst))
