@@ -29,6 +29,10 @@ class TreeNode:
     self.left = left
     self.right = right
 
+# Follow the TreeNode structure to add the nodes
+# I think of BTs in their recursive nature with their children
+# So splitting up into the left and right child
+# Since it's very few nodes, that's enough compartmentalization without being unwieldly
 def create_BST() -> TreeNode:
   L = TreeNode(2, TreeNode(1), None)
   R = TreeNode(6, TreeNode(5), TreeNode(7))
