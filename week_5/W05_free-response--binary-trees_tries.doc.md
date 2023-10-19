@@ -1,9 +1,10 @@
 <!-----
 Conversion notes:
 * Docs to Markdown version 1.0β34
-* Wed Oct 18 2023 16:25:05 GMT-0700 (PDT)
+* Thu Oct 19 2023 15:38:39 GMT-0700 (PDT)
 * Source doc: W5 Coachable Practice HW 2.0
 ----->
+
 
 # W5 Coachable Practice HW
 
@@ -541,25 +542,49 @@ Here is an example of `size(root)` computing the size of a binary tree. Please c
 5. A similar solution works but instead. `size(root) = 1 + sum(root.child) for each child node`​.
 2. ​`sum(root)` finds the sum of all the nodes in the binary tree. `sum(A) = 1+3+8+6+4+&+10+14+12= 65`
 
-    ```
     b. base case: 
+
+
       if root is None: 
+
+
         return 0
 
+
     c. recurrence relation: 
+
+
       recursive(L) + recursive(R) + root.data
 
+
     a, d. Verified: 
+
+
       A. L: 1+4+7+6+3 = 21, R: 12+14+10 = 36, rt: 8. Total = 65
+
+
       B. L: 0, R: 5+4+3+2 = 14, rt: 1. Total = 15
+
+
       C. L: 8+9+4+10+11+5+2 = 49 , R: 6+7+3 = 16 , rt: 1. Total = 66
+
+
       D. L: 4+5+2 = 11, R: 5+4+2 = 11, rt: 1. Total = 23
+
+
       E. L: 10+4+5+2 = 21, R: 9+8+6+3 = 26, rt: 1. Total = 48
 
+
     e. N-ary solution: 
+
+
      sum += root.data + sum(root.children)
 
+
     f. full code:
+
+
+    ```
     def sum(root):
       if root is None:
         return 0
@@ -571,30 +596,61 @@ Here is an example of `size(root)` computing the size of a binary tree. Please c
 
 3. `max_val(root)`​ finds the maximum value among all nodes in a binary tree. `max_val(A) = 14` since it is the largest element in the tree.
 
-    ```
     b. base case:
+
+
       if root is None: 
+
+
         return 0
 
+
     c. recurrence relation: 
+
+
       max(root.data, recursive(L, R))
 
+
     a, d. Verified: 
+
+
       max(root, max(L, R))
+
+
       A. max(8, max(7, 14)) = 14
+
+
       B. max(1, max(None, 5) = 5
+
+
       C. max(1, max(11, 7) = 11
+
+
       D. max(1, max(5, 5) = 5
+
+
       E. max(1, max(10, 9) = 10
 
+
     e. N-ary solution: 
+
+
       max(root.data, max(root.children))
-    
+
+
+      
+
 
       for child in root.children:
+
+
         maxval = max(maxval, max_val(child))
 
+
     f. full code:
+
+
+    ```
     def max_val(root):
       if root is None:
         return 0
@@ -606,31 +662,67 @@ Here is an example of `size(root)` computing the size of a binary tree. Please c
 
 4. `is_symmetric(root)` returns True if the tree is symmetric and False if it is not. `is_symmetric(A) = False` and `is_symmetric(D) = True`​. A tree is symmetric if the left and right subtrees are mirror images of each other.
 
-    ```
     b. base case: 
+
+
       if root is None:
+
+
         return True
+
 
       if ONLY L or ONLY R:
+
+
         return False
+
+
       if NOT L or R:
+
+
         return True
 
+
     c. recurrence relation: 
+
+
       if L.data == R.data:
+
+
         return recursive(L.left, R.right) and recursive(L.right, R.left)
 
+
     a, d. Verified: 
+
+
       A. False
+
+
       B. False
+
+
       C. False
+
+
       D. True: L: 2,4,5, R: 2,5,4
+
+
       E. False
 
+
     e. N-ary solution: 
+
+
     Like the queue BT solution except the initial queue and queue adding on logic is different. Add all pairs of children of the root to the queue. The children pairs should be the first child and last child. Then next child and 2nd to last child.
+
+
     After the base case checking of the popped nodes, do the same thing when adding on to the queue except it's the first child of the left child and the last child of the right node and so on.
+
+
     f. full code:
+
+
+    ```
     def is_symmetric(root):
       # helper
       def is_mirror(left, right):
@@ -956,7 +1048,7 @@ Here is an example of `size(root)` computing the size of a binary tree. Please c
         if root.data < root.left.data and root.data < root.right.data:
           return True
         else:
-        return False
+          return False
       if root.left and root.right is None:
         if root.data < root.left.data:
           return True
@@ -1198,13 +1290,13 @@ Here is an example of `size(root)` computing the size of a binary tree. Please c
       if ONLY L:
 
 
-        return recursive(R) + R.data + root.data if root
+        return recursive(L) + L.data + root.data if root
 
 
       if ONLY R:
 
 
-        return recursive() + L.data +  + root.data if root
+        return recursive(R) + R.data +  + root.data if root
 
 
       # if there are 2 children
@@ -1356,7 +1448,7 @@ Here is an example of `size(root)` computing the size of a binary tree. Please c
       min_node = float('inf')
       queue = Queue()
       queue.put((root, 0))
-      while queue.empty() is False:
+      while queue.qsize() > 0:
         node, h = queue.get()
         if node is not None:
           if h == height and node.data < min_node:
@@ -1723,7 +1815,7 @@ Here is an example of `size(root)` computing the size of a binary tree. Please c
 
 2. _Trace through how you would search for <code>"helping"</code> in this trie.</em>
 
-    Go through each character and follow each path: h -> e -> l -> p -> i -> n -> g. Now check if there’s a boolean for the word exists being toggled
+    Go through each character and follow each path: h -> e -> l -> p -> i -> n -> g. Now check if there’s a boolean for the word existing flag which there is.
 
 3. _Trace how you would find all words starting with the prefix ​<code>"he"</code> in this Trie.</em>
 

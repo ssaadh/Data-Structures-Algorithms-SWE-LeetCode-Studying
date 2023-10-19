@@ -474,7 +474,7 @@ b. base case:
   if root is None:
     return True
 
-c. recurrence relation: 
+c. recurrence relation:
   # check if there are 2 children or no children
   if (both L and R) or (both not L and not R):
     return recursive(L) and recursive(R)
