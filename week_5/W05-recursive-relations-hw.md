@@ -384,9 +384,9 @@ b. base case:
 
 c. recurrence relation: 
   if ONLY L:
-    return recursive(R) + R.data + root.data if root
+    return recursive(L) + L.data + root.data if root
   if ONLY R:
-    return recursive() + L.data +  + root.data if root
+    return recursive(R) + R.data +  + root.data if root
   # if there are 2 children
   else:
     return recursive(L) + recursive(R) + root.data if root
@@ -459,7 +459,7 @@ def level_min(root, height):
   min_node = float('inf')
   queue = Queue()
   queue.put((root, 0))
-  while queue.empty() is False:
+  while queue.qsize() > 0:
     node, h = queue.get()
     if node is not None:
       if h == height and node.data < min_node:
