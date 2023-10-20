@@ -15,7 +15,7 @@ def BFS(adj_list, source, target):
   seen = set(source)
 
   #N
-  while(not Q.empty()):
+  while(Q.qsize() > 0):
     cur = Q.get()
     if cur == target:
       return True
@@ -28,6 +28,7 @@ def BFS(adj_list, source, target):
   return False
 
 # BFS for storing the shortest path
+# BAD -- storing whole paths is better because it makes more sense in my head
 # From Coachable-AI
 def BFSU(adj_list, source, target):
   Q = Queue()
@@ -35,7 +36,7 @@ def BFSU(adj_list, source, target):
   seen = set([source])
   predecessor = {source: None}  # Add a dictionary to keep track of predecessors
   # print(predecessor)
-  while(not Q.empty()):
+  while(Q.qsize() > 0):
     cur = Q.get()
     if cur == target:
       path = []
