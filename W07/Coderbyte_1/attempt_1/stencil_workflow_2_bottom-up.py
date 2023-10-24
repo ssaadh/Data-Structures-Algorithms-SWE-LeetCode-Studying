@@ -19,12 +19,6 @@ Explanation: From the top-left corner, there are a total of 3 ways to reach the 
 '''
 
 '''
-Question 1. Solve the above problem using Top Down Dynamic Programming
-'''
-def unique_paths_top_down(m: int, n: int) -> int:
-  pass
-
-'''
 Question 2. Solve the above problem using Bottom Up Dynamic Programming
 '''
 def unique_paths_bottom_up(m: int, n: int) -> int:
