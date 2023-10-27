@@ -5,20 +5,47 @@ Conversion notes:
 * Source doc: W7 Coachable Practice HW
 ----->
 
-# W07 Dynamic Programming Work
+# W07 Dynamic Programming Work 
 
 ### **Free Response Questions**
 
 1. Describe dynamic programming.
 
+- Dynamic programming is a powerful optimization technique used in algorithm design, which solves complex problems by breaking them down into simpler, overlapping subproblems.
+- It exploits the principle of optimal substructure, meaning that the optimal solution to a problem can be constructed from the optimal solutions of its subproblems.
+
+- Dynamic programming involves two key steps:
+  - Subproblem decomposition: The original problem is divided into a set of overlapping subproblems. This is often done recursively, where each problem is broken down into smaller parts until a base case is reached.
+  - Solution storage and re-use: The solutions to each subproblem are stored, typically in a table or an array for easy access. This process, known as memoization, avoids redundant computation of the same subproblem, which significantly improves efficiency.
+
+- Dynamic programming is particularly effective when the problem exhibits overlapping subproblems and optimal substructure.
+
+It is widely used in various fields such as computer science, mathematics, economics, and bioinformatics, to solve problems ranging from shortest path finding in graph theory, to sequence alignment in bioinformatics, to control theory in systems engineering.
+
 
 2. When should you use dynamic programming? What types of problems where you should consider dynamic programming as a possible solution?
+
+- Numerical Solution: Problems that require a numerical answer, especially those asking for a "total" amount (such as total paths, combinations, or permutations). Vs returning all of the paths which is not DP-compatible.
+
+- Optimization Language: When the problem involves finding a "Maximum/Minimum" value (product, sum, etc.)
+
+- Repeated Subproblems: Notice if you're calculating the same solution multiple times in separate but similar subproblems. This redundancy is a classic hallmark
+
+- Overlapping Subproblems: When a problem can be divided into smaller parts that similar and reoccur throughout the problem.
+
+- Problems that can be solved by leveraging the optimal solutions of their subproblems ?? wat ??
 
 
 3. What is the difference between top-down and bottom-up dynamic programming?
 
+Bottom-up DP: starts with the simplest subproblems and uses their solutions to solve larger subproblems, building up to the original problem. This is often implemented using iteration and a table to store results of subproblems. The process starts from the "bottom" (the simplest subproblems) and works its way "up" to the original problem.
+
+Top-down DP: starts with the original problem and breaks it down into subproblems. This is often implemented using recursion, sometimes with memoization to store results of subproblems to avoid redundant computations. The process starts from the "top" (the original problem) and works its way "down" to the base cases.
+
 
 4. “Memoization” can be thought of as “caching” all the recursive calls that have already happened. What might be a reason why I wouldn’t want to do that?
+
+
 
 
 5. Oftentimes, the answer `f(n)` may only require the result from `f(n-1)`​ and `f(n-2)`. What kind of space/memory optimization can we do if this is the case? If it helps, you can give an example of a specific problem.
@@ -51,12 +78,67 @@ Each of the below problems can be solved with recursion. Please answer the follo
 
 1. Number of paths up a staircase of length `N` where you take `1` or `2` steps each time. **Example provided**.
 
+a. f(0) = 1, f(1) = 1, f(2) = 2, f(3) = 3, f(4) = 5
+
+b. f(n) = f(n-1) + f(n-2) This is because to get to step n you can get there by taking 1 step from n-1 or 2 steps from n-2 . Therefore the number of paths to n is the total number of paths from n-1 plus the number of paths from n-2
+
+c. f(0) = 1, f(1) = 1, f(2) = 2
+f(3) = f(2) + f(1) = 3
+f(4) = f(3) + f(2) = 5
+f(5) = f(4) + f(3) = 8
+f(6) = f(5) + f(4) = 13
+This shows the call stack.
+
+d. The bottom call `f(2)` is completed first.
+f(6) = f(5) + f(4) = 13 #f(6)=13 is stored in the memoization.
+f(5) = f(4) + f(3) = 8  #f(5)=8 is stored in the memoization.
+f(4) = f(3) + f(2) = 5  #f(4)=5 is stored in the memoization.
+f(3) = f(2) + f(1) = 3  #f(3)=3 is stored in the memoization.
+f(2) = f(1) + f(0) = 2  #f(2)=2 is stored in the memoization.
+
+e. Runtime is O(n) and space O(1) if we only cache the previous 2 elements. Otherwise O(n) space.
+
+f. Yes. If we used plain recursion, the runtime would be exponential. Dynamic programming gets us an O(n) runtime.
+
+
+-----
 
 2. Computing the number of permutations of `[1-n]` i.e. `[1,2,3,4,5,...n-1,n]`
 
+a. f(1) = 1 permutation: [1].
+f(2) = 2 permutations: [1,2] and [2,1].
+f(3) = 6 permutations: [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
+f(4) = 24 permutations
+
+b. f(n) = n * f(n - 1).
+This is because for each element in the set, there are n different positions it could take in a permutation, and for each of these positions, there are f(n - 1) ways to arrange the remaining n - 1 elements.
+
+base case: n == 1: return 1
+
+c. f(0) = 0, f(1) = 1
+f(2) = 2 * f(1) = 2
+f(3) = 3 * f(2) = 6
+f(4) = 4 * f(3) = 24
+f(5) = 5 * f(4) = 120
+f(6) = 6 * f(5) = 720
+
+d. The recursive stack so the bottom call gets called last and completed first:
+f(6) = 6 * f(5) = 720
+f(5) = 5 * f(4) = 120
+f(4) = 4 * f(3) = 24
+f(3) = 3 * f(2) = 6
+f(2) = 2 * f(1) = 2
+f(1) = 1
+
+
+
+-----
 
 3. Unique Paths: The number of paths from the top left corner of a grid to the bottom right corner when moving only down and to the right.
 
+
+
+-----
 
 4. Given a `2xN` grid, how many different ways can you fill the gird with `2x1`​ dominoes?
 
@@ -64,13 +146,13 @@ Each of the below problems can be solved with recursion. Please answer the follo
 5. Given a `3xN` grid, how many different ways can you fill the gird with `3x1`​ dominoes?
 
 
-6. Given a set `A = {1,2,3,...,N}`​ calculate the number of possible[ subsets](https://en.wikipedia.org/wiki/Subset)<span style="text-decoration:underline;"> </span>of `A`.
+6. Given a set `A = {1,2,3,...,N}`​ calculate the number of possible[ subsets](https://en.wikipedia.org/wiki/Subset)of `A`.
 
 
-7. Given a set `A = {1,2,3,...,N}`​ calculate the number of possible[ subsets](https://en.wikipedia.org/wiki/Subset)<span style="text-decoration:underline;"> </span>of `A` that do not contain any 2 numbers that are 1 apart. For example, `{1,2,4}` would not be valid because `1` and `2` are 1 apart.
+7. Given a set `A = {1,2,3,...,N}`​ calculate the number of possible[ subsets](https://en.wikipedia.org/wiki/Subset)of `A` that do not contain any 2 numbers that are 1 apart. For example, `{1,2,4}` would not be valid because `1` and `2` are 1 apart.
 
 
-8. Count the number of[ functions](https://en.wikipedia.org/wiki/Function_(mathematics))<span style="text-decoration:underline;"> </span>from `{1,2,3,...,N}` to a set of size `{1,2,3,...,M}`​. Here is an additional[ explanation of functions](https://www.mathsisfun.com/sets/function.html).
+8. Count the number of[ functions](https://en.wikipedia.org/wiki/Function_(mathematics))from `{1,2,3,...,N}` to a set of size `{1,2,3,...,M}`​. Here is an additional[ explanation of functions](https://www.mathsisfun.com/sets/function.html).
 
 
 9. A function has a[ fixed point](https://en.wikipedia.org/wiki/Fixed_point_(mathematics)) if `f(x) = x` for any `x` in the domain of `f` . How many functions are there from `{1,2,3,...,N}` to `{1,2,3,...,M}`​ without any fixed points? Hint, approach the problem in cases, then put it all together. \
