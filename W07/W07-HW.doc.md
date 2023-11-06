@@ -57,7 +57,7 @@ Top-down DP: starts with the original problem and breaks it down into subproblem
 7. Fibonacci is one example of a 1-dimensional recurrence relation optimized with dynamic programming. Identify and share 3 other classes of dynamic programming problems that seem similar and describe what makes them feel similar.
 
 
-8. Is this statement true or false? \
+8. Is this statement true or false?
 "Dynamic programming only helps problems that have a brute-force recursive solution."
 
 
@@ -130,26 +130,407 @@ f(3) = 3 * f(2) = 6
 f(2) = 2 * f(1) = 2
 f(1) = 1
 
+e. That's correct! The runtime complexity is indeed O(n) because we're performing a single operation for each value from 1 to n. The space complexity is also O(n) because we're storing the result for each value from 1 to n, either in the recursion stack (for the top-down approach) or in the memoization table (for the bottom-up approach).
+
+f.  Without dynamic programming, a naive recursive solution would have a time complexity of O(n!) because it would generate all permutations. However, with dynamic programming, we can reduce the time complexity to O(n) by avoiding redundant computations. 
 
 
 -----
 
 3. Unique Paths: The number of paths from the top left corner of a grid to the bottom right corner when moving only down and to the right.
 
+a,c. [0] = 0 paths
 
+(1,1)
+[1,0] = 1 path
+
+(2,2)
+[2,1]
+[1,0] = 2
+
+(3,3)
+[6, 3, 1]
+[3, 2, 1]
+[1, 1, 0] = 6
+
+(4,4)
+[20, 10, 4, 1]
+[10, 6,  3, 1]
+[4,  3,  2, 1]
+[1,  1,  1, 0] = 20
+
+(5,5)
+[70, 35, 15, 5, 1]
+[35, 20, 10, 4, 1]
+[15, 10,  6, 3, 1]
+[5,  4,   3, 2, 1]
+[1,  1,   1, 1, 0] = 70
+
+(6,6)
+[252, 126, 56, 21, 6, 1]
+[126,  70, 35, 15, 5, 1]
+[56,   35, 20, 10, 4, 1]
+[21,   15, 10, 6,  3, 1]
+[6,    5,  4,  3,  2, 1]
+[1,    1,  1,  1,  1, 0] = 252
+
+b. f(r, c) = f(r - 1, c) + f(r, c - 1) 
+
+base case:
+r == 0 or c == 0: return 1
+
+c. f(0, 0) = 0
+_if 0 is either number, it is 0 because there is nothing to go to_
+
+f(1, 1) = 1
+f(2, 2) = 2
+f(3, 3) = 6
+f(4, 4) = 20
+f(5, 5) = 70
+f(6, 6) = 252
+
+d. call stack:
+f(1, 1) = 1
+f(1, 2) = 1
+f(1, 3) = 1
+f(2, 1) = 1
+f(2, 2) = 2
+f(2, 3) = 3
+f(3, 1) = 1
+f(3, 2) = 3
+f(3, 3) = 6
+
+d. O(n * m) time
+O(n * m) array space
+
+e. Yes, runtime goes from O(2^n) to O(n^2);
+    
 
 -----
 
-4. Given a `2xN` grid, how many different ways can you fill the gird with `2x1`​ dominoes?
+4. Given a `2xN` grid, how many different ways can you fill the grid with `2x1`​ dominoes?
+
+a. 
+f(0) = 0, f(1) = 1, f(2) = 2, f(3) = 2, f(4) = 4
+
+b. 
+f(n) = f(n - 1) + f(n - 2)
+
+base case:
+if e == 0: return 1;
+
+c. 
+f(1) = 1
+f(2) = 2
+f(3) = f(2) + f(1) = 3
+f(4) = f(3) + f(2) = 5
+f(5) = f(4) + f(3) = 8
+f(6) = f(5) + f(4) = 13
 
 
-5. Given a `3xN` grid, how many different ways can you fill the gird with `3x1`​ dominoes?
+(1) = 1
+[1, 1]
+
+(2) = 2
+[1, 1]
+[2, 2]
+
+[1, 2]
+[2, 2]
+
+(3) = 3
+[1, 2, 3]
+[1, 2, 3]
+
+[1, 1, 3]
+[2, 2, 3]
+
+[3, 1, 1]
+[3, 2, 2]
 
 
-6. Given a set `A = {1,2,3,...,N}`​ calculate the number of possible[ subsets](https://en.wikipedia.org/wiki/Subset)of `A`.
+(4) = 5
+4 vertical
+[1, 2, 3, 4]
+[1, 2, 3, 4]
+
+4 horizontal
+[1, 1, 2, 2]
+[3, 3, 4, 4]
+
+2 horizontal then 2 vertical
+[1, 1, 3, 4]
+[2, 2, 3, 4]
+
+2 vertical then 2 horizontal
+[3, 4, 1, 1]
+[3, 4, 2, 2]
+
+1 vertical, 2 vertical, 1 vertical
+[1, 3, 3, 2]
+[1, 4, 4, 2]
+
+(5) = 8
+5 vertical
+[1, 2, 3, 4, 5]
+[1, 2, 3, 4, 5]
+
+4 horizontal, 1 vertical
+[1, 1, 2, 2, 5]
+[3, 3, 4, 4, 5]
+
+1 horizontal, 4 vertical
+[5, 1, 1, 3, 4]
+[5, 2, 2, 3, 4]
+
+2 horizontal then 3 vertical
+[1, 1, 3, 4, 5]
+[2, 2, 3, 4, 5]
+
+3 vertical then 2 horizontal
+[3, 4, 5, 1, 1]
+[3, 4, 5, 2, 2]
+
+2 vertical, 2 horizontal, 1 vertical
+[1, 2, 3, 3, 5]
+[1, 2, 4, 4, 5]
+
+1 vertical, 2 horizontal, 2 vertical
+[1, 2, 2, 4, 5]
+[1, 3, 3, 4, 5]
+
+2 horizontal, 1 vertical, 2 horizontal
+[1, 1, 3, 4, 4]
+[2, 2, 3, 5, 5]
+
+(6) = 13
+6 vertical, 
+
+2 horizontal + 4 vertical, 
+4 horizontal + 2 vertical, 
+
+2 vertical + 4 horizontal, 
+4 vertical + 2 horizontal, 
+
+2 horizontal + 2 vertical + 2 horizontal, 
+2 vertical + 2 horizontal + 2 vertical, 
+
+1 horizontal + 2 vertical + 3 vertical, 
+3 vertical + 2 horizontal + 1 vertical, 
+
+1 vertical + 4 horizontal + 1 vertical, 
+
+2 horizontal + 1 vertical + 2 horizontal + 1 vertical, 
+1 vertical + 2 horizontal + 1 vertical + 2 horizontal, 
+
+6 horizontal
+
+
+d. 
+f(1) = 1
+f(2) = 2
+f(3) = f(2) + f(1) = 3
+f(4) = f(3) + f(2) = 5
+f(5) = f(4) + f(3) = 8
+f(6) = f(5) + f(4) = 13
+
+
+e. 
+Runtime: O(n) because each subproblem is computed only once and the results are stored for future use.
+Space, it's O(n) for the top-down approach because of the additional space required for the recursion stack. For bottom-up approach, if we only keep track of the last two computed values (since f(n) depends only on f(n-1) and f(n-2)), the space complexity can be optimized to O(1).
+
+
+f. O(2^n) to O(n)
+
+
+
+5. Given a `3xN` grid, how many different ways can you fill the grid with `3x1`​ dominoes?
+
+a. 
+(1)
+[111]
+
+(2)
+[111]
+[222]
+
+1
+
+(3)
+[111]
+[222]
+[333]
+
+[123]
+[123]
+[123]
+
+2
+
+(4)
+[111] 
+[222]
+[333]
+[444]
+
+[123]
+[123]
+[123]
+[444]
+
+[444]
+[123]
+[123]
+[123]
+
+3
+
+(5)
+
+[111] 
+[222]
+[333]
+[444]
+[555]
+
+[123]
+[123]
+[123]
+[444]
+[555]
+
+[444]
+[123]
+[123]
+[123]
+[555]
+
+[444]
+[555]
+[123]
+[123]
+[123]
+
+(6)
+[111] 
+[222]
+[333]
+[444]
+[555]
+[666]
+
+[123]
+[123]
+[123]
+[444]
+[555]
+[666]
+
+[444]
+[123]
+[123]
+[123]
+[555]
+[666]
+
+[444]
+[555]
+[123]
+[123]
+[123]
+[666]
+
+[444]
+[555]
+[666]
+[123]
+[123]
+[123]
+
+5
+
+--
+
+Apparently this is wrong and the 3x1 domino is always vertical according to Coachable-AI.
+
+a, c, d:
+f(0) = 0
+f(1) = 1
+f(2) = 1
+f(3) = 1
+f(4) = 1
+f(5) = 1
+f(6) = 1
+
+f(0) = 0
+f(1) = 1
+f(2) = 1
+f(3) = 1
+f(4) = 1
+f(5) = 1
+f(6) = 1
+
+b.
+n == 0: return 0
+n == 1: return 1
+
+e. O(1)
+
+f. No, it's already so simple
+
+
+6. Given a set `A = {1,2,3,...,N}`​ calculate the number of possible [subsets](https://en.wikipedia.org/wiki/Subset)of `A`.
+
+a. f(0) = 1, f(1) = 2, f(2) = 4, f(3) = 8
+
+f(0) = 1 ({})
+f(1) = 2 ({1} and {})
+f(2) = 4 ({1,2}, {1}, {2}, {})
+
+b. 
+the number of subsets of a set with n elements is equal to twice the number of subsets of a set with n-1 elements. This is because for each subset of the n-1 elements, we have two options: either include the nth element or not.
+
+f(n) = 2 * f(n-1)
+base case: f(0) = 1
+
+c. 
+[1, 2, 4, 16, 32, 64]
+
+d.
+f(0) = 1
+f(1) = f(0) * 2 = 2
+f(2) = f(1) * 2 = 4
+f(3) = f(2) * 2 = 8
+f(4) = f(3) * 2 = 16
+f(5) = f(4) * 2 = 32
+f(6) = f(5) * 2 = 64
+
+e. 
+O(n) time complexity
+O(1) space if only keeping track of previous element. Otherwise O(n) for array/memo space. And for top-down, O(n) call stack space
+
+f. Yes. Can do it in O(n) vs O(2^n).
 
 
 7. Given a set `A = {1,2,3,...,N}`​ calculate the number of possible[ subsets](https://en.wikipedia.org/wiki/Subset)of `A` that do not contain any 2 numbers that are 1 apart. For example, `{1,2,4}` would not be valid because `1` and `2` are 1 apart.
+
+a. f(0) = 1, f(1) = 2, f(2) = 4, f(3) = 8
+
+
+b. 
+
+
+c. 
+
+
+d. 
+
+
+e. 
+
+
+f. 
+
 
 
 8. Count the number of[ functions](https://en.wikipedia.org/wiki/Function_(mathematics))from `{1,2,3,...,N}` to a set of size `{1,2,3,...,M}`​. Here is an additional[ explanation of functions](https://www.mathsisfun.com/sets/function.html).
