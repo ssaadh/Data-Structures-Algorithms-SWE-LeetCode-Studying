@@ -514,34 +514,146 @@ f. Yes. Can do it in O(n) vs O(2^n).
 
 7. Given a set `A = {1,2,3,...,N}`​ calculate the number of possible[ subsets](https://en.wikipedia.org/wiki/Subset)of `A` that do not contain any 2 numbers that are 1 apart. For example, `{1,2,4}` would not be valid because `1` and `2` are 1 apart.
 
-a. f(0) = 1, f(1) = 2, f(2) = 4, f(3) = 8
+a. f(0) = 1, f(1) = 2, f(2) = 3, f(3) = 5
 
 
-b. 
+b. f(n) = f(n - 2) + f(n - 1).
+If we have a set with n elements, we can either include the largest element (n) in our subset or not.
+
+If we include n, then we can't include n-1 (because they are 1 apart), so we're left with the problem of finding the number of valid subsets of the set {1, 2, ..., n-2}, which is f(n-2).
+
+If we don't include n, then we're left with the problem of finding the number of valid subsets of the set {1, 2, ..., n-1}, which is f(n-1).
+
+c, d. 
+f(0) = 1
+f(1) = 2
+f(2) = 3
+f(3) = 4
+f(4) = 8
+f(5) = 13
+f(6) = 21
+
+(0) = 1
+[]
+
+(1) = 2
+[],
+[1]
+
+(2) = 3
+[],
+[1],
+[2]
 
 
-c. 
+(3) = 4
+[],
+[1],
+[2],
+[3],
+[1, 3]
+
+(4) = 8
+[],
+[1],
+[2],
+[3],
+[4],
+[1, 3],
+[1, 4],
+[2, 4]
 
 
-d. 
+(5) = 13
+[],
+[1],
+[2],
+[3],
+[4],
+[5],
+[1, 3],
+[1, 4],
+[1, 5],
+[2, 4],
+[2, 5],
+[3, 5],
+[1, 3, 5]
+
+
+(6) = 21
+[],
+[1],
+[2],
+[3],
+[4],
+[5],
+[6],
+[1, 3],
+[1, 4],
+[1, 5],
+[1, 6],
+[2, 4],
+[2, 5],
+[2, 6],
+[3, 5],
+[3, 6],
+[4, 6],
+[1, 3, 5],
+[1, 3, 6],
+[1, 4, 6],
+[2, 4, 6]
 
 
 e. 
+The time complexity is O(n), because we're computing the number of valid subsets for each set from 0 to n.
+
+The space complexity is also O(n), because we're storing the number of valid subsets for each set from 0 to n. Or the call stack.
+Or only need the final result can keep track of the last two results.
 
 
-f. 
+f. Yes, better than original O(n^2) runtime.
 
 
 
-8. Count the number of[ functions](https://en.wikipedia.org/wiki/Function_(mathematics))from `{1,2,3,...,N}` to a set of size `{1,2,3,...,M}`​. Here is an additional[ explanation of functions](https://www.mathsisfun.com/sets/function.html).
+8. Count the number of[ functions](https://en.wikipedia.org/wiki/Function_(mathematics))from `{1,2,3,...,N}` to a set of size `{1,2,3,...,M}`​.
+
+a. 
+
+b. F(N, M) = M * F(N - 1, M)
+base case: F(1, M) = M
+there are M possible functions from a set of size 1 to a set of size M
 
 
-9. A function has a[ fixed point](https://en.wikipedia.org/wiki/Fixed_point_(mathematics)) if `f(x) = x` for any `x` in the domain of `f` . How many functions are there from `{1,2,3,...,N}` to `{1,2,3,...,M}`​ without any fixed points? Hint, approach the problem in cases, then put it all together. \
+c. 
+[1,  2,   3,     4,       5,   6]
+[1,  4,   9,     16,    25,   36]
+[1,  0,   0,     0,     0,   216]
+[1,  0,   0,     0,     0,  1296]
+[1,  0,   0,     0,     0,  7776]
+[1, 36, 216,  1296,  7776, 46656]
+
+d. 
+f(1) = m = 6
+f(2) = m * f(1) = 36
+f(3) = m * f(2) = 216
+f(4) = m * f(3) = 1296
+f(5) = m * f(4) = 7776
+f(6) = m * f(5) = 46656
+
+
+e. Time: O(N * M). Fill in a 2D table of size N x M.
+Space: O(N * M) because we need to store the entire 2D table.
+Could get space down to O(max(N, M)) only storing the last needed rows/columns as needed for the result
+
+f. Yes a normal function would be an awful runtime while this gets down to O(N * M) for runtime and space is much smaller
+
+
+9. A function has a[ fixed point](https://en.wikipedia.org/wiki/Fixed_point_(mathematics)) if `f(x) = x` for any `x` in the domain of `f` . How many functions are there from `{1,2,3,...,N}` to `{1,2,3,...,M}`​ without any fixed points? Hint, approach the problem in cases, then put it all together.
 
 1. Case 1: Assume that `M=N`
 
 
-2. Case 2: Assume that `N &lt;= M`
+2. Case 2: Assume that `N <= M`
 
 
 3. Case 3: Assume that `N > M`
@@ -551,13 +663,12 @@ f.
 
 
 
-10. Let's say a function is **reducing** if `f(x) &lt;= x`​ for all x in the domain of `f`. How many **reducing** functions are there from `{1,2,3,...,N}` to `{1,2,3,...,M}`​ ? \
-
+10. Let's say a function is **reducing** if `f(x) &lt;= x`​ for all x in the domain of `f`. How many **reducing** functions are there from `{1,2,3,...,N}` to `{1,2,3,...,M}`​?
 
 1. Case 1: Assume that `M=N`
 
 
-2. Case 2: Assume that `N &lt;= M`
+2. Case 2: Assume that `N <= M`
 
 
 3. Case 3: Assume that `N > M`
