@@ -1,5 +1,3 @@
-
-
 # Given an array of integers, see if any triple sums to 0.
 
 # nums = [-4,2,5,-1,2], return True
@@ -91,10 +89,3 @@ def three_sum_sort(nums, targetSum = 0):
         if result:
             return result
     return False
-
-
-
-
-
-
-    

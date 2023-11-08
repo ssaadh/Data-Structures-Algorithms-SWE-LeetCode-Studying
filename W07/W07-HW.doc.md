@@ -11,29 +11,18 @@ Conversion notes:
 
 1. Describe dynamic programming.
 
-- Dynamic programming is a powerful optimization technique used in algorithm design, which solves complex problems by breaking them down into simpler, overlapping subproblems.
-- It exploits the principle of optimal substructure, meaning that the optimal solution to a problem can be constructed from the optimal solutions of its subproblems.
-
-- Dynamic programming involves two key steps:
-  - Subproblem decomposition: The original problem is divided into a set of overlapping subproblems. This is often done recursively, where each problem is broken down into smaller parts until a base case is reached.
-  - Solution storage and re-use: The solutions to each subproblem are stored, typically in a table or an array for easy access. This process, known as memoization, avoids redundant computation of the same subproblem, which significantly improves efficiency.
-
-- Dynamic programming is particularly effective when the problem exhibits overlapping subproblems and optimal substructure.
-
-It is widely used in various fields such as computer science, mathematics, economics, and bioinformatics, to solve problems ranging from shortest path finding in graph theory, to sequence alignment in bioinformatics, to control theory in systems engineering.
+A programming technique where you break down a larger problem into smaller subproblems which you can solve. As you compute the solutions to the subproblems, you store the solution to each subproblem so that each sub-problem is computed at most once. Optimal substructure.
+Dynamic programming involves two key steps:
+    - Subproblem decomposition: The original problem is divided into a set of overlapping subproblems. This is often done recursively, where each problem is broken down into smaller parts until a base case is reached.
+    - Solution storage and re-use: The solutions to each subproblem are stored, typically in a table or an array for easy access. This process, known as memoization, avoids redundant computation of the same subproblem, which significantly improves efficiency.
 
 
 2. When should you use dynamic programming? What types of problems where you should consider dynamic programming as a possible solution?
 
 - Numerical Solution: Problems that require a numerical answer, especially those asking for a "total" amount (such as total paths, combinations, or permutations). Vs returning all of the paths which is not DP-compatible.
-
 - Optimization Language: When the problem involves finding a "Maximum/Minimum" value (product, sum, etc.)
-
 - Repeated Subproblems: Notice if you're calculating the same solution multiple times in separate but similar subproblems. This redundancy is a classic hallmark
-
 - Overlapping Subproblems: When a problem can be divided into smaller parts that similar and reoccur throughout the problem.
-
-- Problems that can be solved by leveraging the optimal solutions of their subproblems ?? wat ??
 
 
 3. What is the difference between top-down and bottom-up dynamic programming?
@@ -45,21 +34,31 @@ Top-down DP: starts with the original problem and breaks it down into subproblem
 
 4. “Memoization” can be thought of as “caching” all the recursive calls that have already happened. What might be a reason why I wouldn’t want to do that?
 
-
+Space complexity. Storing everything in memory when for something like binary tree traversal, that isn’t going to be worth it.
+This also relates to If the sub-problems aren’t repetitive enough. If we aren’t solving the same subproblems again and again, memoization likely isn’t worth it.
 
 
 5. Oftentimes, the answer `f(n)` may only require the result from `f(n-1)`​ and `f(n-2)`. What kind of space/memory optimization can we do if this is the case? If it helps, you can give an example of a specific problem.
 
+If the current state of f(n) only depends on a constant number of previous states, like f(n-1) and f(n-2), we don't need to store all the previous states. We can just keep the last two states and update them as we go, reducing the space complexity to O(1).
+
 
 6. What if we had a `f(r, c)` that relied only on ​`f(r-1, c)` for some arbitrary `c`? What kind of space/memory optimization can we do if this is the case? If it helps, you can give an example of a specific problem.
 
+Cache the last f(r - 1, c) computed value. So O(1) space.
+
 
 7. Fibonacci is one example of a 1-dimensional recurrence relation optimized with dynamic programming. Identify and share 3 other classes of dynamic programming problems that seem similar and describe what makes them feel similar.
+
+Climing Stairs: need to keep track of n-1 and n-2 variables or the current stair
+Sequences:  Like the longest increasing subsequence problem asks for the longest subsequence of a given sequence. We only need to keep track of the current position in the sequence
+Some grid problems work where you only need to keep track of the current/previous row and/or column
 
 
 8. Is this statement true or false?
 "Dynamic programming only helps problems that have a brute-force recursive solution."
 
+Not true. Dynamic programming can help optimize any problem that can be broken down into overlapping subproblems, whether or not a brute-force recursive solution exists. However, in practice, these tend to be problems that can also be solved using recursion.
 
 
 ### **Dynamic Programming and Recurrence Examples**
@@ -130,7 +129,7 @@ f(3) = 3 * f(2) = 6
 f(2) = 2 * f(1) = 2
 f(1) = 1
 
-e. That's correct! The runtime complexity is indeed O(n) because we're performing a single operation for each value from 1 to n. The space complexity is also O(n) because we're storing the result for each value from 1 to n, either in the recursion stack (for the top-down approach) or in the memoization table (for the bottom-up approach).
+e. That's correct. The runtime complexity is indeed O(n) because we're performing a single operation for each value from 1 to n. The space complexity is also O(n) because we're storing the result for each value from 1 to n, either in the recursion stack (for the top-down approach) or in the memoization table (for the bottom-up approach).
 
 f.  Without dynamic programming, a naive recursive solution would have a time complexity of O(n!) because it would generate all permutations. However, with dynamic programming, we can reduce the time complexity to O(n) by avoiding redundant computations. 
 
@@ -200,10 +199,10 @@ f(3, 1) = 1
 f(3, 2) = 3
 f(3, 3) = 6
 
-d. O(n * m) time
-O(n * m) array space
+d. Time: O(n * m)
+Space: O(n * m)
 
-e. Yes, runtime goes from O(2^n) to O(n^2);
+e. Yes, runtime goes from O(2^n) to O(n^2)
     
 
 -----
