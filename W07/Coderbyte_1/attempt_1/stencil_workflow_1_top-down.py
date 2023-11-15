@@ -24,9 +24,8 @@ Question 1. Solve the above problem using Top Down Dynamic Programming
 
 # brute force recursion
 # no optimization
-def uniquePaths(m: int, n: int) -> int:
-  return _helper(m, n, 0, 0)
-
+# Time, Space: O(n^2) at least
+def unique_paths_top_down_bf(m: int, n: int) -> int:
   def _helper(m, n, i, j):
     # m - 1 and n - 1 -> return 1
     # m + 1 or n + 1 -> return 0, off the board
@@ -36,23 +35,27 @@ def uniquePaths(m: int, n: int) -> int:
       return 1
     else:
       return _helper(m - 1, n, i, j) + _helper(m, n - 1, i, j)
-        
-# Adding memo
+    
+  return _helper(m, n, 0, 0)
+
+# Adding memo. Using dict because comfy with it.
+# Time: O(m * n)
+# Space: O(m * n) for the memo and O(m * n) in memory stack
 def unique_paths_top_down(m: int, n: int) -> int:
+  def _helper(m: int, n: int, memo: dict) -> int:
+    # if m, n in memo, return memo(m, n)
+    if (m, n) in memo:
+        return memo[(m, n)]
+    # m - 1 and n - 1 -> return 1
+    if m < 0 or n < 0:
+        memo[(m, n)] = 0
+    # m + 1 or n + 1 -> return 0, off the board
+    elif m == 0 and n == 0:
+        memo[(m, n)] = 1
+    else:
+        # return grid(m - 1, n) + grid(m, n - 1)
+        memo[(m, n)] = _helper(m - 1, n, memo) + _helper(m, n - 1, memo)
+    return memo[(m, n)]
+  
   memo = dict()
   return _helper(m - 1, n - 1, memo)
-
-def _helper(m: int, n: int, memo: dict) -> int:
-  # if m, n in memo, return memo(m, n)
-  if (m, n) in memo:
-      return memo[(m, n)]
-  # m - 1 and n - 1 -> return 1
-  if m < 0 or n < 0:
-      memo[(m, n)] = 0
-  # m + 1 or n + 1 -> return 0, off the board
-  elif m == 0 and n == 0:
-      memo[(m, n)] = 1
-  else:
-      # return grid(m - 1, n) + grid(m, n - 1)
-      memo[(m, n)] = _helper(m - 1, n, memo) + _helper(m, n - 1, memo)
-  return memo[(m, n)]

@@ -31,9 +31,17 @@ Question 2. Solve the above problem using Bottom Up Dynamic Programming
 # Start at 1st index so can add from the 0 index first column.
 # The first column and row so the top row and most left column are all 1. There is just 1 way to get to them. You can only go down or right.
 
+# Time: O(m * n)
+# Space: O(m * n) for the dp grid
 def unique_paths_bottom_up_dp(m: int, n: int) -> int:
+  # This will do something like:
+  # [1, 1, 1, 1, 1]
+  # [1, 0, 0, 0, 0]
+  # [1, 0, 0, 0, 0]
+  # each i is the values in the row and every j is a total row
   dp = [[1 if i == 0 or j == 0 else 0 for i in range(m)] for j in range(n)]
 
+  # the recursive relation is (m - 1, n) + (m, n - 1) 
   for i in range(1, n):
     for j in range(1, m):
       dp[i][j] = dp[i - 1][j] + dp[i][j - 1] 
@@ -51,19 +59,24 @@ def unique_paths_bottom_up_dp(m: int, n: int) -> int:
 # [1, 2, 3, 4, 1]
 # [1, 2, 3, 4, 5]
 # Now one inner loop is completely done.
+
+# Time: O(m * n) -> still doing both loops
+# Space: O(n) save space. Only the second parameter aka the columns is the extra space
 def unique_paths_bottom_up(m: int, n: int) -> int:
   cur = [1] * n
+
   for _ in range(1, m):
     for col in range(1, n):
       cur[col] += cur[col - 1]
-    print(cur)
+
   return cur[-1]
+
+#####
 
 # print(unique_paths_bottom_up(2, 2))
 print(unique_paths_bottom_up(5, 4))
 # print(uniquePaths(3, 3))
 
-
-[1, 1, 1, 1, 1]
-[1, 2, 3, 4, 5]
-[1, 3, 6, 10, 15]
+# [1, 1, 1, 1, 1]
+# [1, 2, 3, 4, 5]
+# [1, 3, 6, 10, 15]
