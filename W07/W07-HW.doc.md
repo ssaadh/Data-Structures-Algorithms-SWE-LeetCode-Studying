@@ -199,21 +199,19 @@ f(3, 1) = 1
 f(3, 2) = 3
 f(3, 3) = 6
 
-d. Time: O(n * m)
+e. Time: O(n * m)
 Space: O(n * m)
 
-e. Yes, runtime goes from O(2^n) to O(n^2)
+f. Yes, runtime goes from O(2^n) to O(n^2)
     
 
 -----
 
 4. Given a `2xN` grid, how many different ways can you fill the grid with `2x1`​ dominoes?
 
-a. 
-f(0) = 0, f(1) = 1, f(2) = 2, f(3) = 2, f(4) = 4
+a. f(0) = 0, f(1) = 1, f(2) = 2, f(3) = 2, f(4) = 4
 
-b. 
-f(n) = f(n - 1) + f(n - 2)
+b. f(n) = f(n - 1) + f(n - 2)
 
 base case:
 if e == 0: return 1;
@@ -225,7 +223,6 @@ f(3) = f(2) + f(1) = 3
 f(4) = f(3) + f(2) = 5
 f(5) = f(4) + f(3) = 8
 f(6) = f(5) + f(4) = 13
-
 
 (1) = 1
 [1, 1]
@@ -345,7 +342,7 @@ f. O(2^n) to O(n)
 
 5. Given a `3xN` grid, how many different ways can you fill the grid with `3x1`​ dominoes?
 
-a. 
+a, c. 
 (1)
 [111]
 
@@ -515,7 +512,6 @@ f. Yes. Can do it in O(n) vs O(2^n).
 
 a. f(0) = 1, f(1) = 2, f(2) = 3, f(3) = 5
 
-
 b. f(n) = f(n - 2) + f(n - 1).
 If we have a set with n elements, we can either include the largest element (n) in our subset or not.
 
@@ -616,7 +612,7 @@ f. Yes, better than original O(n^2) runtime.
 
 8. Count the number of[ functions](https://en.wikipedia.org/wiki/Function_(mathematics))from `{1,2,3,...,N}` to a set of size `{1,2,3,...,M}`​.
 
-a. 
+a. f(1, 1) = 1, f(2, 2) = 4, f(3, 3) = 27, f(4, 4) = 64
 
 b. F(N, M) = M * F(N - 1, M)
 base case: F(1, M) = M
